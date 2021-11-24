@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="navigation_view">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_home"
+            android:icon="@drawable/ic_home"
+            android:title="Inicio" />
+        <item
+            android:id="@+id/nav_mispublicaciones"
+            android:icon="@drawable/ic_publicaciones"
+            android:title="Mis Publicaciones" />
+        <item
+            android:id="@+id/nav_activar"
+            android:icon="@drawable/ic_activar"
+            android:title="Activar libro" />
+        <item
+            android:id="@+id/nav_descarga"
+            android:icon="@drawable/ic_descargar"
+            android:title="Descargar Contenido" />
+        <item
+            android:id="@+id/nav_terminos"
+            android:icon="@drawable/ic_terminos"
+            android:title="Términos y condiciones" />
+        <item
+            android:id="@+id/nav_cerrar"
+            android:icon="@drawable/ic_cerrar"
+            android:title="Cerrar sesión" />
+        <item
+            android:id="@+id/nav_contactanos"
+            android:icon="@drawable/ic_support"
+            android:title="Contactanos" />
+    </group>
+</menu>

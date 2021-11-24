@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mobile_navigation"
+    app:startDestination="@+id/nav_home">
+
+    <fragment
+        android:id="@+id/nav_home"
+        android:name="com.example.erreparseparatas.views.MisPublicacionesFragment"
+            android:label="Inicio"
+        tools:layout="@layout/fragment_mis_publicaciones" />
+
+    <fragment
+        android:id="@+id/nav_registrarme"
+        android:name="com.example.erreparseparatas.views.MisPublicacionesFragment"
+        android:label="Mis Publicaciones"
+        tools:layout="@layout/fragment_mis_publicaciones" />
+
+    <fragment
+        android:id="@+id/nav_activar"
+        android:name="com.example.erreparseparatas.views.DescargarContenidoFragment"
+        android:label="Descargar Contenido"
+        tools:layout="@layout/fragment_descargar_contenido" />
+
+    <fragment
+        android:id="@+id/nav_terminos"
+        android:name="com.example.erreparseparatas.views.TerminosYCondicionesFragment"
+        android:label="Términos y condiciones"
+        tools:layout="@layout/fragment_terminos_y_condiciones" />
+
+    <fragment
+        android:id="@+id/nav_contactanos"
+        android:name="com.example.erreparseparatas.views.ContactanosFragment"
+        android:label="Contactanos"
+        tools:layout="@layout/fragment_contactanos" />
+</navigation>
