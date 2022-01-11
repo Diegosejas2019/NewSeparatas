@@ -2,7 +2,12 @@ package com.example.erreparseparatas.presenter;
 
 import com.example.erreparseparatas.interactor.MainInteractor;
 import com.example.erreparseparatas.interfaces.MainContract;
+import com.example.erreparseparatas.model.Detalle;
+import com.example.erreparseparatas.model.Publicaciones;
+import com.example.erreparseparatas.model.ResponseUSER;
 import com.example.erreparseparatas.model.User;
+
+import java.util.List;
 
 public class MainPresenter implements MainContract.Presenter, MainContract.onOperationListener{
 
@@ -24,25 +29,55 @@ public class MainPresenter implements MainContract.Presenter, MainContract.onOpe
         mInteractor.performReadPlayers(user);
     }
 
-
     @Override
-    public void onSuccess() {
-
+    public void recoveryPlayers(User user) {
+        mInteractor.performRecoveryPlayers(user);
     }
 
     @Override
-    public void onSuccessCreate(User user) {
+    public void codeBook(User user) {
+        mInteractor.performCodeBook(user);
+    }
+
+    @Override
+    public void getBooks(User user) {
+        mInteractor.performGetCode(user);
+    }
+
+    @Override
+    public void getBooksDetails(User user) {
+        mInteractor.performGetCodeDetail(user);
+    }
+
+
+    @Override
+    public void onSuccess() {
+        mView.onProcessEnd();
+    }
+
+    @Override
+    public void onSuccessCreate(ResponseUSER user) {
         mView.onUserCreate(user);
     }
 
     @Override
-    public void onSuccessRead(User user) {
+    public void onSuccessRead(ResponseUSER user) {
         mView.onUserRead(user);
     }
 
     @Override
-    public void onFailure() {
-        mView.onCreatePlayerFailure();
+    public void onSuccessGetBook(List<Publicaciones> publicaciones) {
+        mView.onGetBook(publicaciones);
+    }
+
+    @Override
+    public void onSuccessGetBookDetail(List<Detalle> detalles) {
+        mView.onGetBookDetail(detalles);
+    }
+
+    @Override
+    public void onFailure(String mensaje) {
+        mView.onCreatePlayerFailure(mensaje);
     }
 
     @Override

@@ -1,5 +1,6 @@
 package com.example.erreparseparatas.views;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -11,6 +12,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
+import com.example.erreparseparatas.LoginActivity;
+import com.example.erreparseparatas.MainActivity;
 import com.example.erreparseparatas.R;
 
 import butterknife.BindView;
@@ -52,16 +55,14 @@ public class RegistrarPFFragment extends Fragment {
             @Override
             public void onClick(View view) {
 
-                /*CodesFragment nextFrag= new CodesFragment();
-                Bundle bundle=new Bundle();
-                bundle.putString("idUser", mParam1);
-                bundle.putString("Password", mParam2);
-                nextFrag.setArguments(bundle);
+                /*MisPublicacionesFragment nextFrag= new MisPublicacionesFragment();
 
                 getActivity().getSupportFragmentManager().beginTransaction()
-                        .replace(R.id.nav_host_fragment, nextFrag, "findThisFragment")
+                        .replace(R.id.host_fragment, nextFrag, "findThisFragment")
                         .addToBackStack(null)
                         .commit();*/
+                startActivity(new Intent(inflater.getContext(), MainActivity.class));
+
             }
         });
 

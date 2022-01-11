@@ -1,5 +1,7 @@
 package com.example.erreparseparatas.views;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -12,21 +14,31 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ProgressBar;
+import android.widget.Toast;
 
 import com.example.erreparseparatas.R;
+import com.example.erreparseparatas.interfaces.MainContract;
+import com.example.erreparseparatas.model.Detalle;
+import com.example.erreparseparatas.model.Publicaciones;
+import com.example.erreparseparatas.model.ResponseUSER;
 import com.example.erreparseparatas.model.User;
 import com.example.erreparseparatas.presenter.MainPresenter;
 import com.google.android.material.textfield.TextInputEditText;
 
+import java.util.List;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
+
+import static android.content.Context.MODE_PRIVATE;
+import static com.example.erreparseparatas.MainActivity.MY_PREFS_NAME;
 
 /**
  * A simple {@link Fragment} subclass.
  * Use the {@link RegistrarP3Fragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class RegistrarP3Fragment extends Fragment {
+public class RegistrarP3Fragment extends Fragment implements  MainContract.View{
     public MainPresenter mPresenter;
     @BindView(R.id.btnRegister)
     Button mRegister;
@@ -35,6 +47,7 @@ public class RegistrarP3Fragment extends Fragment {
     @BindView(R.id.txtVerificarContraseña) TextInputEditText mReContraseña;
     @BindView(R.id.progressBar)
     ProgressBar mProgressBar;
+    public Context context;
     private static final String ARG_PARAM1 = "email";
     private static final String ARG_PARAM2 = "nombre";
     private static final String ARG_PARAM3 = "telefono";
@@ -62,6 +75,7 @@ public class RegistrarP3Fragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        mPresenter = new MainPresenter(this);
         if (getArguments() != null) {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
@@ -73,7 +87,7 @@ public class RegistrarP3Fragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_registrar_p3, container, false);
-
+        context = inflater.getContext();
         ButterKnife.bind(this,view);
 
 
@@ -120,6 +134,59 @@ public class RegistrarP3Fragment extends Fragment {
             }
         });
         return view;
+
+    }
+
+    @Override
+    public void onCreatePlayerSuccessful() {
+
+    }
+
+    @Override
+    public void onCreatePlayerFailure(String mensaje) {
+        Toast.makeText(context,mensaje,Toast.LENGTH_LONG).show();
+    }
+
+    @Override
+    public void onProcessStart() {
+        mProgressBar.setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    public void onProcessEnd() {
+        mProgressBar.setVisibility(View.INVISIBLE);
+    }
+
+    @Override
+    public void onUserRead(ResponseUSER user) {
+
+    }
+
+    @Override
+    public void onUserCreate(ResponseUSER user) {
+        SharedPreferences.Editor editor = getActivity().getSharedPreferences(MY_PREFS_NAME, MODE_PRIVATE).edit();
+        editor.putString("password", mContraseña.getText().toString());
+        editor.putString("email", mParam1);
+        editor.putString("token", user.token);
+        editor.apply();
+
+        RegistrarPFFragment nextFrag= new RegistrarPFFragment();
+        Bundle bundle=new Bundle();
+        bundle.putString("token", user.token);
+        nextFrag.setArguments(bundle);
+
+        getActivity().getSupportFragmentManager().beginTransaction()
+                .replace(R.id.host_fragment, nextFrag, "findThisFragment")
+                .addToBackStack(null)
+                .commit();
+    }
+
+    @Override
+    public void onGetBook(List<Publicaciones> publicaciones) {
+
+    }
+    @Override
+    public void onGetBookDetail(List<Detalle> detalles) {
 
     }
 }

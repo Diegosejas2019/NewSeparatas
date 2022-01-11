@@ -25,13 +25,16 @@ import android.util.Base64;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import com.example.erreparseparatas.views.ActivarLibroFragment;
 import com.example.erreparseparatas.views.ContactanosFragment;
 import com.example.erreparseparatas.views.DescargarContenidoFragment;
+import com.example.erreparseparatas.views.LoginFragment;
 import com.example.erreparseparatas.views.MisPublicacionesFragment;
 import com.example.erreparseparatas.views.RegistrarFragment;
 import com.example.erreparseparatas.views.TerminosYCondicionesFragment;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.play.core.appupdate.AppUpdateManager;
@@ -41,6 +44,7 @@ import com.google.android.play.core.install.InstallStateUpdatedListener;
 import com.google.android.play.core.install.model.AppUpdateType;
 import com.google.android.play.core.install.model.InstallStatus;
 import com.google.android.play.core.install.model.UpdateAvailability;
+import com.google.firebase.messaging.FirebaseMessaging;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -58,7 +62,12 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-
+        /*FirebaseMessaging.getInstance().subscribeToTopic("news").addOnSuccessListener(new OnSuccessListener<Void>() {
+            @Override
+            public void onSuccess(Void aVoid) {
+                Toast.makeText(getApplicationContext(),"Success", Toast.LENGTH_LONG).show();
+            }
+        });*/
         Toolbar toolbar = findViewById(R.id.toolbar);
         toolbar.setTitle("");
         toolbar.setBackgroundColor(Color.WHITE);
@@ -75,7 +84,7 @@ public class MainActivity extends AppCompatActivity {
         if (savedInstanceState == null) {
 
             mAppBarConfiguration = new AppBarConfiguration.Builder(
-                    R.id.nav_home, R.id.nav_registrarme, R.id.nav_activar, R.id.nav_descarga, R.id.nav_terminos, R.id.nav_contactanos)
+                    R.id.nav_home, R.id.nav_activar, R.id.nav_descarga, R.id.nav_terminos, R.id.nav_contactanos)
                     .setDrawerLayout(drawer)
                     .build();
 
@@ -103,9 +112,9 @@ public class MainActivity extends AppCompatActivity {
                                 spreferencesEditor.clear();
                                 spreferencesEditor.commit();
 
-                                /*Intent mainIntent = new Intent(MainActivity.this,
-                                        LoginView.class);*/
-                                //startActivity(mainIntent);
+                                Intent mainIntent = new Intent(MainActivity.this,
+                                        LoginActivity.class);
+                                startActivity(mainIntent);
                                 MainActivity.this.finish();
                                 overridePendingTransition(R.anim.nav_default_enter_anim, R.anim.nav_default_exit_anim);
                                 break;
@@ -126,9 +135,6 @@ public class MainActivity extends AppCompatActivity {
                                 break;
                             case R.id.nav_terminos:
                                 nextFrag = new TerminosYCondicionesFragment();
-                                break;
-                            case R.id.nav_registrarme:
-                                nextFrag = new RegistrarFragment();
                                 break;
                         }
 
@@ -155,7 +161,22 @@ public class MainActivity extends AppCompatActivity {
                 }
             });
 
-            nextFrag = new LoginFragment();
+            String newString;
+            if (savedInstanceState == null) {
+                Bundle extras = getIntent().getExtras();
+                if(extras == null) {
+                    newString= null;
+                } else {
+                    newString= extras.getString("STRING_I_NEED");
+                }
+            } else {
+                newString= (String) savedInstanceState.getSerializable("STRING_I_NEED");
+            }
+
+            Bundle bundle=new Bundle();
+            bundle.putString("idPublicacion", newString);
+            nextFrag.setArguments(bundle);
+            nextFrag = new MisPublicacionesFragment();
             getSupportFragmentManager().beginTransaction()
                     .replace(R.id.nav_host_fragment, nextFrag, "findThisFragment")
                     .addToBackStack(null)

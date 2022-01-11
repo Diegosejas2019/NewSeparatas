@@ -1,59 +1,60 @@
 package com.example.erreparseparatas.views;
 
+import android.app.Activity;
+import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
+import com.example.erreparseparatas.MainActivity;
 import com.example.erreparseparatas.R;
+import com.example.erreparseparatas.interfaces.MainContract;
+import com.example.erreparseparatas.model.Detalle;
+import com.example.erreparseparatas.model.Publicaciones;
+import com.example.erreparseparatas.model.ResponseUSER;
+import com.example.erreparseparatas.model.User;
+import com.example.erreparseparatas.presenter.MainPresenter;
+import com.example.erreparseparatas.utils.PublicacionesAdapter;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link MisPublicacionesFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
-public class MisPublicacionesFragment extends Fragment {
+import java.util.ArrayList;
+import java.util.List;
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
+import butterknife.ButterKnife;
 
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
+import static android.content.Context.CONNECTIVITY_SERVICE;
+import static android.content.Context.MODE_PRIVATE;
+import static com.example.erreparseparatas.MainActivity.MY_PREFS_NAME;
 
-    public MisPublicacionesFragment() {
-        // Required empty public constructor
-    }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment MisPublicacionesFragment.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static MisPublicacionesFragment newInstance(String param1, String param2) {
-        MisPublicacionesFragment fragment = new MisPublicacionesFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
-    }
+public class MisPublicacionesFragment extends Fragment implements  MainContract.View{
 
+
+    List<Publicaciones> publicacionesList;
+
+    //the recyclerview
+    RecyclerView recyclerView;
+    public MainPresenter mPresenter;
+    public Context context;
+    private String mParam1 = "";
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        mPresenter = new MainPresenter(this);
         if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
+            mParam1 = getArguments().getString("idPublicacion");
+            //mParam2 = getArguments().getString(ARG_PARAM2);
         }
     }
 
@@ -61,6 +62,148 @@ public class MisPublicacionesFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_mis_publicaciones, container, false);
+        //return inflater.inflate(R.layout.fragment_mis_publicaciones, container, false);
+        View view = inflater.inflate(R.layout.fragment_mis_publicaciones, container, false);
+
+        context = inflater.getContext();
+
+        ButterKnife.bind(this,view);
+
+        //getting the recyclerview from xml
+        if (mParam1 != "")
+        {
+            android.app.Fragment fragment = new DetalleFragment();
+            Bundle args = new Bundle();
+            //args.putString("linkImg", product.getImageUrl());
+            args.putString("publicacionid", mParam1);
+
+            fragment.setArguments(args);
+            ((Activity) context).getFragmentManager().beginTransaction()
+                    .replace(R.id.nav_host_fragment, fragment)
+                    .addToBackStack(null)
+                    .commit();
+
+        }
+        recyclerView = (RecyclerView) view.findViewById(R.id.recyclerViewList);
+        recyclerView.setHasFixedSize(true);
+        recyclerView.setLayoutManager(new LinearLayoutManager(inflater.getContext()));
+
+        SharedPreferences prefs = context.getSharedPreferences(MY_PREFS_NAME, MODE_PRIVATE);
+        String restoredText = prefs.getString("token", "");
+        if (restoredText != "") {
+
+            Integer mIdUser = prefs.getInt("iduser", 0);
+            User user = new User();
+            user.setIdUser(mIdUser);
+            user.setToken(restoredText);
+
+            if(isConnected())
+            {
+                mPresenter.getBooks(user);
+            }
+        }
+        /*//initializing the productlist
+        publicacionesList = new ArrayList<>();
+
+
+        //adding some items to our list
+        publicacionesList.add(
+                new Publicaciones(
+                        1,
+                        "Publicacion 1","Descripcion 1","https://tiendaonline.errepar.com/3672-home_default/resoluciones-tecnicas-comentadas.jpg","https://www.errepar.com/resources/solicitudpaginas/IN%20I%20y%20II%20-%20999%20-%20Act.%20662%20OK.pdf","a","b","v"));
+
+        publicacionesList.add(
+                new Publicaciones(
+                        1,
+                        "Publicacion 2","Descripcion 2","https://tiendaonline.errepar.com/3600-home_default/codigo-procesal-civil-y-comercial-de-la-nacioncomenty-anot2.jpg","","a","b","v"));
+
+        publicacionesList.add(
+                new Publicaciones(
+                        1,
+                        "Publicacion 3","Descripcion 3","https://tiendaonline.errepar.com/2871-home_default/balances-guia-practica-para-su-presentacion.jpg","","a","b","v"));
+
+        publicacionesList.add(
+                new Publicaciones(
+                        1,
+                        "Publicacion 4","Descripcion 4","https://tiendaonline.errepar.com/3112-home_default/regimen-de-infortunios-laborales.jpg","","a","b","v"));
+
+        publicacionesList.add(
+                new Publicaciones(
+                        1,
+                        "Publicacion 5","Descripcion 5","https://tiendaonline.errepar.com/3635-home_default/impuesto-a-las-ganancias-impuestos-explicados-y-comentados.jpg","","a","b","v"));
+
+        publicacionesList.add(
+                new Publicaciones(
+                        1,
+                        "Publicacion 6","Descripcion 6","https://tiendaonline.errepar.com/3655-home_default/jubilaciones-y-pensiones.jpg","","a","b","v"));
+
+        publicacionesList.add(
+                new Publicaciones(
+                        1,
+                        "Publicacion 7","Descripcion 7","https://tiendaonline.errepar.com/3642-home_default/preventa-monotributo-2021.jpg","","a","b","v"));
+
+        publicacionesList.add(
+                new Publicaciones(
+                        1,
+                        "Publicacion 8","Descripcion 8","https://tiendaonline.errepar.com/3692-home_default/desarrollo-de-organizaciones-sostenibles-en-contextos-turbulentos.jpg","","a","b","v"));
+
+        publicacionesList.add(
+                new Publicaciones(
+                        1,
+                        "Publicacion 9","Descripcion 9","https://tiendaonline.errepar.com/3690-home_default/el-impuesto-sobre-los-ingresos-brutos-en-la-provincia-de-santa-fe.jpg","","a","b","v"));
+
+
+        //creating recyclerview adapter
+        PublicacionesAdapter adapter = new PublicacionesAdapter(inflater.getContext(), publicacionesList,1);
+
+        //setting adapter to recyclerview
+        recyclerView.setAdapter(adapter);*/
+        return view;
+    }
+
+    public boolean isConnected(){
+        ConnectivityManager connectivityManager = (ConnectivityManager) context.getSystemService( CONNECTIVITY_SERVICE );
+        NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
+        return activeNetworkInfo != null && activeNetworkInfo.isConnected();
+    }
+
+    @Override
+    public void onCreatePlayerSuccessful() {
+
+    }
+
+    @Override
+    public void onCreatePlayerFailure(String mensaje) {
+        Toast.makeText(context,mensaje,Toast.LENGTH_LONG).show();
+    }
+
+    @Override
+    public void onProcessStart() {
+
+    }
+
+    @Override
+    public void onProcessEnd() {
+
+    }
+
+    @Override
+    public void onUserRead(ResponseUSER user) {
+
+    }
+
+    @Override
+    public void onUserCreate(ResponseUSER user) {
+
+    }
+
+    @Override
+    public void onGetBook(List<Publicaciones> publicaciones) {
+        PublicacionesAdapter adapter = new PublicacionesAdapter(context, publicaciones,1);
+        recyclerView.setAdapter(adapter);
+    }
+    @Override
+    public void onGetBookDetail(List<Detalle> detalles) {
+
     }
 }

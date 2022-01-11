@@ -36,6 +36,9 @@ public class User {
     @SerializedName("TipoRed")
     public String TipoRed;
 
+    @SerializedName("token")
+    public String token;
+
     public int getIdUser() {
         return IdUser;
     }
@@ -115,5 +118,13 @@ public class User {
 
     public void setIdUserRedSocial(int idUserRedSocial) {
         IdUserRedSocial = idUserRedSocial;
+    }
+
+    public String getToken() {
+        return token;
+    }
+
+    public void setToken(String token) {
+        this.token = token;
     }
 }
