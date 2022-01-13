@@ -3,11 +3,14 @@ package com.example.erreparseparatas.views;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 
+import android.text.Editable;
 import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -54,6 +57,8 @@ public class ActivarLibroFragment extends Fragment implements  MainContract.View
     TextInputEditText mCodigo;
     @BindView(R.id.progressBar)
     ProgressBar mProgressbar;
+    @BindView(R.id.bookActivateError)
+    TextView mBookError;
     public MainPresenter mPresenter;
     public Integer midUser;
     public Context context;
@@ -116,6 +121,18 @@ public class ActivarLibroFragment extends Fragment implements  MainContract.View
             midUser = UserId;
         }
 
+        mCodigo.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                mBookError.setVisibility(View.INVISIBLE);
+                mCodigo.setTextColor(Color .rgb(0,0,0));
+            }
+            @Override
+            public void afterTextChanged(Editable s) {}
+        });
+
         mProgressbar.bringToFront();
         mEncontrarCodigo.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -172,12 +189,19 @@ public class ActivarLibroFragment extends Fragment implements  MainContract.View
 
     @Override
     public void onCreatePlayerSuccessful() {
-
+        Toast.makeText(context,"Activado Exitosamente",Toast.LENGTH_LONG).show();
+        mBookError.setVisibility(View.VISIBLE);
+        mBookError.setText("Activado exitosamente");
+        mBookError.setTextColor(Color .rgb(0,255,0));
     }
 
     @Override
     public void onCreatePlayerFailure(String mensaje) {
         Toast.makeText(context,mensaje,Toast.LENGTH_LONG).show();
+        mBookError.setVisibility(View.VISIBLE);
+        mBookError.setText(mensaje);
+        mBookError.setTextColor(Color .rgb(255,0,0));
+        mCodigo.setTextColor(Color .rgb(255,0,0));
     }
 
     @Override
@@ -190,8 +214,10 @@ public class ActivarLibroFragment extends Fragment implements  MainContract.View
         FirebaseMessaging.getInstance().subscribeToTopic(mCodigo.getText().toString().trim()).addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override
             public void onSuccess(Void aVoid) {
-                //Toast.makeText(context,mCodigo.getText().toString().trim(), Toast.LENGTH_LONG).show();
-                Toast.makeText(context,"Activación exitosa!", Toast.LENGTH_LONG).show();
+//                Toast.makeText(context,"Código erróneo",Toast.LENGTH_LONG).show();
+//                mBookError.setVisibility(View.VISIBLE);
+//                mBookError.setText("Código erróneo");
+//                mBookError.setTextColor(Color .rgb(255,0,0));
             }
         });
         mProgressbar.setVisibility(View.INVISIBLE);

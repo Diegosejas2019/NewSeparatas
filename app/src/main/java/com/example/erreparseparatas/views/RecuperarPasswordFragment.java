@@ -1,19 +1,24 @@
 package com.example.erreparseparatas.views;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 
+import android.text.Editable;
 import android.text.TextUtils;
+import android.text.TextWatcher;
+import android.util.Patterns;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.erreparseparatas.R;
@@ -41,6 +46,8 @@ public class RecuperarPasswordFragment extends Fragment implements  MainContract
     @BindView(R.id.btnContinuar)
     Button mContinuar;
     @BindView(R.id.txtEmail)  EditText mEmail;
+    @BindView(R.id.recoverError)
+    TextView mRecoverError;
     public MainPresenter mPresenter;
     public Context context;
     // TODO: Rename parameter arguments, choose names that match
@@ -111,6 +118,12 @@ public class RecuperarPasswordFragment extends Fragment implements  MainContract
                     cancel = true;
                 }
 
+                if (!isValidEmail(mEmail.getText())) {
+                    mEmail.setError("Email no válido");
+                    focusView = mEmail;
+                    cancel = true;
+                }
+
                 if (cancel) {
                     focusView.requestFocus();
                 } else {
@@ -123,18 +136,34 @@ public class RecuperarPasswordFragment extends Fragment implements  MainContract
             }
         });
 
+        mEmail.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                mRecoverError.setVisibility(View.INVISIBLE);
+            }
+            @Override
+            public void afterTextChanged(Editable s) {}
+        });
 
         return view;
     }
 
     @Override
     public void onCreatePlayerSuccessful() {
-
+//        mRecoverError.setVisibility(View.VISIBLE);
+//        mRecoverError.setTextColor(Color .rgb(0,185,0));
+//        mRecoverError.setText("Se le ha enviado un Email para cambiar la contraseña");
+        Toast.makeText(context,"Solicitud de cambio de contraseña exitosa! Se ha enviado un mail a su correo electronico.",Toast.LENGTH_LONG).show();
     }
 
     @Override
     public void onCreatePlayerFailure(String mensaje) {
-        Toast.makeText(context,mensaje,Toast.LENGTH_LONG).show();
+//        Toast.makeText(context,mensaje,Toast.LENGTH_LONG).show();
+        mRecoverError.setVisibility(View.VISIBLE);
+        mRecoverError.setText("Ese Email no está registrado");
+        mRecoverError.setTextColor(Color .rgb(255,0,0));
     }
 
     @Override
@@ -145,7 +174,7 @@ public class RecuperarPasswordFragment extends Fragment implements  MainContract
     @Override
     public void onProcessEnd() {
         mProgressbar.setVisibility(View.INVISIBLE);
-        Toast.makeText(context,"Solicitud de cambio de contraseña exitosa! Se ha enviado un mail a su correo electronico.",Toast.LENGTH_LONG).show();
+//        Toast.makeText(context,"Solicitud de cambio de contraseña exitosa! Se ha enviado un mail a su correo electronico.",Toast.LENGTH_LONG).show();
     }
 
     @Override
@@ -166,5 +195,9 @@ public class RecuperarPasswordFragment extends Fragment implements  MainContract
     @Override
     public void onGetBookDetail(List<Detalle> detalles) {
 
+    }
+
+    public static boolean isValidEmail(CharSequence target) {
+        return (!TextUtils.isEmpty(target) && Patterns.EMAIL_ADDRESS.matcher(target).matches());
     }
 }

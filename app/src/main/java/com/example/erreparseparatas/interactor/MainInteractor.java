@@ -48,8 +48,12 @@ public class MainInteractor implements MainContract.Interactor{
                     mListner.onEnd();
                 }
                 else  {
-                    mListner.onSuccess();
-                    mListner.onEnd();
+                    try {
+                        mListner.onFailure(response.errorBody().string());
+                        mListner.onEnd();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
                 }
             }
 

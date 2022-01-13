@@ -96,7 +96,7 @@ public class RegistrarFragment extends Fragment {
                 }
                 else {
                     if (!isValidEmail(mEmail.getText())){
-                        mEmail.setError("Formato invalido");
+                        mEmail.setError("Email no válido");
                         focusView = mEmail;
                         cancel = true;
                     }

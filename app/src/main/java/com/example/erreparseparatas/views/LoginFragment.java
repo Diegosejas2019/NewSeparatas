@@ -3,6 +3,7 @@ package com.example.erreparseparatas.views;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
@@ -11,7 +12,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 
+import android.text.Editable;
 import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -47,14 +50,21 @@ import static com.example.erreparseparatas.MainActivity.MY_PREFS_NAME;
  * Use the {@link LoginFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class LoginFragment extends Fragment implements  MainContract.View{
+public class LoginFragment extends Fragment implements MainContract.View {
 
     public MainPresenter mPresenter;
-    @BindView(R.id.btnRegister)  Button mRegistrar;
-    @BindView(R.id.btnContinuar) Button mContinuar;
-    @BindView(R.id.txtRecuperar) TextView mRecuperar;
-    @BindView(R.id.txtNroSuscriptor) EditText mEmail;
-    @BindView(R.id.txtContraseña) EditText mContraseña;
+    @BindView(R.id.btnRegister)
+    Button mRegistrar;
+    @BindView(R.id.btnContinuar)
+    Button mContinuar;
+    @BindView(R.id.txtRecuperar)
+    TextView mRecuperar;
+    @BindView(R.id.txtNroSuscriptor)
+    EditText mEmail;
+    @BindView(R.id.txtContraseña)
+    EditText mContraseña;
+    @BindView(R.id.loginError)
+    TextView mErrorMsg;
     @BindView(R.id.progressBar)
     ProgressBar mProgressBar;
     public Context context;
@@ -94,28 +104,25 @@ public class LoginFragment extends Fragment implements  MainContract.View{
 
         View view = inflater.inflate(R.layout.fragment_login, container, false);
         context = inflater.getContext();
-        ButterKnife.bind(this,view);
-
+        ButterKnife.bind(this, view);
         SharedPreferences prefs = context.getSharedPreferences(MY_PREFS_NAME, MODE_PRIVATE);
         String restoredText = prefs.getString("token", "");
         if (restoredText != "") {
 
             mEmail.setText(prefs.getString("email", ""));
             mContraseña.setText(prefs.getString("password", ""));
-            Log.println(Log.INFO,"mEmail",mEmail.getText().toString());
-            Log.println(Log.INFO,"mPassword",mContraseña.getText().toString());
+            Log.println(Log.INFO, "mEmail", mEmail.getText().toString());
+            Log.println(Log.INFO, "mPassword", mContraseña.getText().toString());
             User user = new User();
             user.setEmail(mEmail.getText().toString());
             user.setPassword(mContraseña.getText().toString());
 
-            if(isConnected())
-            {
+            if (isConnected()) {
                 mPresenter.readPlayers(user);
-            }
-            else{
+            } else {
                 Intent intent = new Intent(context, MainActivity.class);
 
-                Log.println(Log.INFO,"Opcion","Log");
+                Log.println(Log.INFO, "Opcion", "Log");
                 startActivity(intent);
                 getActivity().overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
             }
@@ -130,13 +137,13 @@ public class LoginFragment extends Fragment implements  MainContract.View{
                 View focusView = null;
                 boolean cancel = false;
 
-                if (TextUtils.isEmpty(email)){
+                if (TextUtils.isEmpty(email)) {
                     mEmail.setError("Campo requerido");
                     focusView = mEmail;
                     cancel = true;
                 }
 
-                if (TextUtils.isEmpty(password)){
+                if (TextUtils.isEmpty(password)) {
                     mContraseña.setError("Campo requerido");
                     focusView = mContraseña;
                     cancel = true;
@@ -150,14 +157,12 @@ public class LoginFragment extends Fragment implements  MainContract.View{
                     user.Email = email;
                     user.Password = password;
 
-                    if(isConnected())
-                    {
+                    if (isConnected()) {
                         mPresenter.readPlayers(user);
-                    }
-                    else{
+                    } else {
                         Intent intent = new Intent(context, MainActivity.class);
 
-                        Log.println(Log.INFO,"Opcion","Log");
+                        Log.println(Log.INFO, "Opcion", "Log");
                         startActivity(intent);
                         getActivity().overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
                     }
@@ -165,10 +170,36 @@ public class LoginFragment extends Fragment implements  MainContract.View{
             }
         });
 
+        mEmail.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                mEmail.setTextColor(Color.rgb(0, 0, 0));
+                mContraseña.setTextColor(Color.rgb(0, 0, 0));
+                mErrorMsg.setVisibility(View.INVISIBLE);
+            }
+            @Override
+            public void afterTextChanged(Editable s) {}
+        });
+
+        mContraseña.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                mEmail.setTextColor(Color.rgb(0, 0, 0));
+                mContraseña.setTextColor(Color.rgb(0, 0, 0));
+                mErrorMsg.setVisibility(View.INVISIBLE);
+            }
+            @Override
+            public void afterTextChanged(Editable s) {}
+        });
+
         mRegistrar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                RegistrarFragment nextFrag= new RegistrarFragment();
+                RegistrarFragment nextFrag = new RegistrarFragment();
                 getActivity().getSupportFragmentManager().beginTransaction()
                         .replace(R.id.host_fragment, nextFrag, "findThisFragment")
                         .addToBackStack(null)
@@ -179,7 +210,7 @@ public class LoginFragment extends Fragment implements  MainContract.View{
         mRecuperar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                RecuperarPasswordFragment nextFrag= new RecuperarPasswordFragment();
+                RecuperarPasswordFragment nextFrag = new RecuperarPasswordFragment();
                 getActivity().getSupportFragmentManager().beginTransaction()
                         .replace(R.id.host_fragment, nextFrag, "findThisFragment")
                         .addToBackStack(null)
@@ -190,8 +221,8 @@ public class LoginFragment extends Fragment implements  MainContract.View{
         return view;
     }
 
-    public boolean isConnected(){
-        ConnectivityManager connectivityManager = (ConnectivityManager) context.getSystemService( CONNECTIVITY_SERVICE );
+    public boolean isConnected() {
+        ConnectivityManager connectivityManager = (ConnectivityManager) context.getSystemService(CONNECTIVITY_SERVICE);
         NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
         return activeNetworkInfo != null && activeNetworkInfo.isConnected();
     }
@@ -203,7 +234,10 @@ public class LoginFragment extends Fragment implements  MainContract.View{
 
     @Override
     public void onCreatePlayerFailure(String mensaje) {
-        Toast.makeText(context,mensaje,Toast.LENGTH_LONG).show();
+        mEmail.setTextColor(Color.rgb(255, 0, 0));
+        mContraseña.setTextColor(Color.rgb(255, 0, 0));
+        mErrorMsg.setVisibility(View.VISIBLE);
+        mErrorMsg.setText("Email o contraseña incorrectos");
     }
 
     @Override
@@ -251,6 +285,7 @@ public class LoginFragment extends Fragment implements  MainContract.View{
     public void onGetBook(List<Publicaciones> publicaciones) {
 
     }
+
     @Override
     public void onGetBookDetail(List<Detalle> detalles) {
 

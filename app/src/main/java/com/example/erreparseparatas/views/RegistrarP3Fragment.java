@@ -2,18 +2,22 @@ package com.example.erreparseparatas.views;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 
+import android.text.Editable;
 import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.erreparseparatas.R;
@@ -47,6 +51,8 @@ public class RegistrarP3Fragment extends Fragment implements  MainContract.View{
     @BindView(R.id.txtVerificarContraseña) TextInputEditText mReContraseña;
     @BindView(R.id.progressBar)
     ProgressBar mProgressBar;
+    @BindView(R.id.registerUserError)
+    TextView mRegisterError;
     public Context context;
     private static final String ARG_PARAM1 = "email";
     private static final String ARG_PARAM2 = "nombre";
@@ -97,6 +103,7 @@ public class RegistrarP3Fragment extends Fragment implements  MainContract.View{
             public void onClick(View view) {
                 View focusView = null;
                 boolean cancel = false;
+                mRegisterError.setVisibility(View.INVISIBLE);
 
                 if (TextUtils.isEmpty(mReContraseña.getText())){
                     mReContraseña.setError("Campo requerido");
@@ -133,18 +140,47 @@ public class RegistrarP3Fragment extends Fragment implements  MainContract.View{
                 }
             }
         });
-        return view;
 
+        mContraseña.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                mRegisterError.setVisibility(View.INVISIBLE);
+            }
+            @Override
+            public void afterTextChanged(Editable s) {}
+        });
+        mReContraseña.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                mRegisterError.setVisibility(View.INVISIBLE);
+            }
+            @Override
+            public void afterTextChanged(Editable s) {}
+        });
+        return view;
     }
 
     @Override
     public void onCreatePlayerSuccessful() {
+        RegistrarPFFragment nextFrag= new RegistrarPFFragment();
+        Bundle bundle=new Bundle();
+        nextFrag.setArguments(bundle);
 
+        getActivity().getSupportFragmentManager().beginTransaction()
+                .replace(R.id.host_fragment, nextFrag, "findThisFragment")
+                .addToBackStack(null)
+                .commit();
     }
 
     @Override
     public void onCreatePlayerFailure(String mensaje) {
         Toast.makeText(context,mensaje,Toast.LENGTH_LONG).show();
+        mRegisterError.setText(mensaje);
+        mRegisterError.setVisibility(View.VISIBLE);
     }
 
     @Override

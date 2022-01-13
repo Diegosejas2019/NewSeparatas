@@ -1,23 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:background="?attr/fullscreenBackgroundColor"
+    android:background="@drawable/launchbackground"
     android:id="@+id/frameMain"
-    tools:context=".FullscreenActivity">
+    tools:context=".SplashActivity">
 
-    <!--<VideoView android:id="@+id/videoView" android:layout_gravity="center"
-        android:layout_width="fill_parent" android:layout_height="fill_parent"/>-->
-    <VideoView
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        android:id="@+id/videoView"
-        android:layout_centerInParent="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentTop="true">
-    </VideoView>
+    <pl.droidsonroids.gif.GifImageView
+        android:id="@+id/gifImageView"
+        android:layout_width="wrap_content"
+        android:layout_height="543dp"
+        android:layout_gravity="center"
+        android:src="@drawable/ezgif_com_gif_maker"
+        tools:ignore="ImageContrastCheck" />
 
 </FrameLayout>

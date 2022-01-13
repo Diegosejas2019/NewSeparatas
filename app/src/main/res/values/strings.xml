@@ -220,6 +220,7 @@
                     ERREPAR SA
 
                     </string>
+    <string name="startbackground">startBackground</string>
 
 
 </resources>
