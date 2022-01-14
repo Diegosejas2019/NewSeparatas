@@ -1,18 +1,22 @@
 package com.example.erreparseparatas.views;
 
+import android.graphics.Color;
 import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 
+import android.text.Editable;
 import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.util.Patterns;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import com.example.erreparseparatas.R;
 
@@ -32,6 +36,8 @@ public class RegistrarFragment extends Fragment {
     EditText mEmail;
     @BindView(R.id.txtNombre) EditText mNombre;
     @BindView(R.id.txtTelefono) EditText mTelefono;
+    @BindView(R.id.errorMsg)
+    TextView mErrorMsg;
 
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
@@ -78,25 +84,29 @@ public class RegistrarFragment extends Fragment {
                 boolean cancel = false;
 
                 if (TextUtils.isEmpty(mTelefono.getText())){
-                    mTelefono.setError("Campo requerido");
+                    mErrorMsg.setVisibility(View.VISIBLE);
+                    mErrorMsg.setText("Debe ingresar un Email, Contraseña y Teléfono");
                     focusView = mTelefono;
                     cancel = true;
                 }
 
                 if (TextUtils.isEmpty(mNombre.getText())){
-                    mNombre.setError("Campo requerido");
+                    mErrorMsg.setVisibility(View.VISIBLE);
+                    mErrorMsg.setText("Debe ingresar un Email, Contraseña y Teléfono");
                     focusView = mNombre;
                     cancel = true;
                 }
 
                 if (TextUtils.isEmpty(mEmail.getText())){
-                    mEmail.setError("Campo requerido");
+                    mErrorMsg.setVisibility(View.VISIBLE);
+                    mErrorMsg.setText("Debe ingresar un Email, Contraseña y Teléfono");
                     focusView = mEmail;
                     cancel = true;
                 }
                 else {
                     if (!isValidEmail(mEmail.getText())){
-                        mEmail.setError("Email no válido");
+                        mErrorMsg.setVisibility(View.VISIBLE);
+                        mErrorMsg.setText("Email no válido");
                         focusView = mEmail;
                         cancel = true;
                     }
@@ -125,6 +135,38 @@ public class RegistrarFragment extends Fragment {
             }
         });
 
+        mEmail.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                mErrorMsg.setVisibility(View.INVISIBLE);
+            }
+            @Override
+            public void afterTextChanged(Editable s) {}
+        });
+
+        mNombre.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                mErrorMsg.setVisibility(View.INVISIBLE);
+            }
+            @Override
+            public void afterTextChanged(Editable s) {}
+        });
+
+        mTelefono.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                mErrorMsg.setVisibility(View.INVISIBLE);
+            }
+            @Override
+            public void afterTextChanged(Editable s) {}
+        });
 
         return view;
     }

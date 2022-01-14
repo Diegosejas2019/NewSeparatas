@@ -106,20 +106,23 @@ public class RegistrarP3Fragment extends Fragment implements  MainContract.View{
                 mRegisterError.setVisibility(View.INVISIBLE);
 
                 if (TextUtils.isEmpty(mReContraseña.getText())){
-                    mReContraseña.setError("Campo requerido");
+                    mRegisterError.setText("Debe ingresar una contraseña");
+                    mRegisterError.setVisibility(View.VISIBLE);
                     focusView = mReContraseña;
                     cancel = true;
                 }
 
                 if (TextUtils.isEmpty(mContraseña.getText())){
-                    mContraseña.setError("Campo requerido");
+                    mRegisterError.setText("Debe ingresar una contraseña");
+                    mRegisterError.setVisibility(View.VISIBLE);
                     focusView = mContraseña;
                     cancel = true;
                 }
                 else{
                     if (!mContraseña.getText().toString().equals(mReContraseña.getText().toString()))
                     {
-                        mReContraseña.setError("Las contraseñas deben coincidir");
+                        mRegisterError.setText("Las contraseñas no coinciden");
+                        mRegisterError.setVisibility(View.VISIBLE);
                         focusView = mReContraseña;
                         cancel = true;
                     }

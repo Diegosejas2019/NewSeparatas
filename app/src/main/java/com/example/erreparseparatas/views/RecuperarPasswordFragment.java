@@ -162,7 +162,7 @@ public class RecuperarPasswordFragment extends Fragment implements  MainContract
     public void onCreatePlayerFailure(String mensaje) {
 //        Toast.makeText(context,mensaje,Toast.LENGTH_LONG).show();
         mRecoverError.setVisibility(View.VISIBLE);
-        mRecoverError.setText("Ese Email no está registrado");
+        mRecoverError.setText(mensaje);
         mRecoverError.setTextColor(Color .rgb(255,0,0));
     }
 
@@ -174,6 +174,7 @@ public class RecuperarPasswordFragment extends Fragment implements  MainContract
     @Override
     public void onProcessEnd() {
         mProgressbar.setVisibility(View.INVISIBLE);
+
 //        Toast.makeText(context,"Solicitud de cambio de contraseña exitosa! Se ha enviado un mail a su correo electronico.",Toast.LENGTH_LONG).show();
     }
 

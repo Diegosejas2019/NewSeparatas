@@ -16,6 +16,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.erreparseparatas.MainActivity;
@@ -31,17 +33,21 @@ import com.example.erreparseparatas.utils.PublicacionesAdapter;
 import java.util.ArrayList;
 import java.util.List;
 
+import butterknife.BindView;
 import butterknife.ButterKnife;
 
 import static android.content.Context.CONNECTIVITY_SERVICE;
 import static android.content.Context.MODE_PRIVATE;
 import static com.example.erreparseparatas.MainActivity.MY_PREFS_NAME;
 
-
 public class MisPublicacionesFragment extends Fragment implements  MainContract.View{
 
+    @BindView(R.id.empty_view)
+    TextView emptyView;
+    @BindView(R.id.goToCode)
+    Button goToCode;
 
-    List<Publicaciones> publicacionesList;
+    private List<Publicaciones> publicacionesList = new ArrayList<>();
 
     //the recyclerview
     RecyclerView recyclerView;
@@ -100,8 +106,11 @@ public class MisPublicacionesFragment extends Fragment implements  MainContract.
             if(isConnected())
             {
                 mPresenter.getBooks(user);
+
             }
         }
+
+
         /*//initializing the productlist
         publicacionesList = new ArrayList<>();
 
@@ -201,6 +210,28 @@ public class MisPublicacionesFragment extends Fragment implements  MainContract.
     public void onGetBook(List<Publicaciones> publicaciones) {
         PublicacionesAdapter adapter = new PublicacionesAdapter(context, publicaciones,1);
         recyclerView.setAdapter(adapter);
+
+        if(!publicaciones.isEmpty()) {
+            recyclerView.setVisibility(View.VISIBLE);
+            goToCode.setVisibility(View.GONE);
+            emptyView.setVisibility(View.GONE);
+        } else {
+            recyclerView.setVisibility(View.GONE);
+            goToCode.setVisibility(View.VISIBLE);
+            emptyView.setVisibility(View.VISIBLE);
+            goToCode.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    ActivarLibroFragment nextFrag= new ActivarLibroFragment();
+
+                    getActivity().getSupportFragmentManager().beginTransaction()
+                            .replace(R.id.nav_host_fragment, nextFrag, "findThisFragment")
+                            .addToBackStack(null)
+                            .commit();
+
+                }
+            });
+        }
     }
     @Override
     public void onGetBookDetail(List<Detalle> detalles) {

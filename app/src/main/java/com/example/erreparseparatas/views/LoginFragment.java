@@ -138,13 +138,15 @@ public class LoginFragment extends Fragment implements MainContract.View {
                 boolean cancel = false;
 
                 if (TextUtils.isEmpty(email)) {
-                    mEmail.setError("Campo requerido");
+                    mErrorMsg.setVisibility(View.VISIBLE);
+                    mErrorMsg.setText("Debe ingresar un Email y Contraseña");
                     focusView = mEmail;
                     cancel = true;
                 }
 
                 if (TextUtils.isEmpty(password)) {
-                    mContraseña.setError("Campo requerido");
+                    mErrorMsg.setVisibility(View.VISIBLE);
+                    mErrorMsg.setText("Debe ingresar un Email y Contraseña");
                     focusView = mContraseña;
                     cancel = true;
                 }
