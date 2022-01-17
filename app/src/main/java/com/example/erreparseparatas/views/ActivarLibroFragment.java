@@ -134,17 +134,29 @@ public class ActivarLibroFragment extends Fragment implements  MainContract.View
         });
 
         mProgressbar.bringToFront();
-//        mEncontrarCodigo.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                EncontrarCodigoFragment nextFrag= new EncontrarCodigoFragment();
-//
-//                getActivity().getSupportFragmentManager().beginTransaction()
-//                        .replace(R.id.nav_host_fragment, nextFrag, "findThisFragment")
-//                        .addToBackStack(null)
-//                        .commit();
-//            }
-//        });
+        mEncontrarCodigo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                EncontrarCodigoFragment nextFrag= new EncontrarCodigoFragment();
+
+                getActivity().getSupportFragmentManager().beginTransaction()
+                        .replace(R.id.nav_host_fragment, nextFrag, "findThisFragment")
+                        .addToBackStack(null)
+                        .commit();
+            }
+        });
+
+        mbtnMisPublicaciones.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                MisPublicacionesFragment nextFrag= new MisPublicacionesFragment();
+
+                getActivity().getSupportFragmentManager().beginTransaction()
+                        .replace(R.id.nav_host_fragment, nextFrag, "findThisFragment")
+                        .addToBackStack(null)
+                        .commit();
+            }
+        });
 
         mActivar.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -177,19 +189,19 @@ public class ActivarLibroFragment extends Fragment implements  MainContract.View
 
     @Override
     public void onCreatePlayerSuccessful() {
-                SuccessActivateBookFragment nextFrag= new SuccessActivateBookFragment();
-
-                getActivity().getSupportFragmentManager().beginTransaction()
-                        .replace(R.id.nav_host_fragment, nextFrag, "findThisFragment")
-                        .addToBackStack(null)
-                        .commit();
+        Toast.makeText(context,"Activado Exitosamente",Toast.LENGTH_LONG).show();
+        mBookError.setVisibility(View.VISIBLE);
+        mBookError.setText("Activado exitosamente");
+        mBookError.setTextColor(Color .rgb(0,255,0));
     }
 
     @Override
     public void onCreatePlayerFailure(String mensaje) {
+        Toast.makeText(context,mensaje,Toast.LENGTH_LONG).show();
         mBookError.setVisibility(View.VISIBLE);
         mBookError.setText(mensaje);
         mBookError.setTextColor(Color .rgb(255,0,0));
+        mCodigo.setTextColor(Color .rgb(255,0,0));
     }
 
     @Override
@@ -198,20 +210,27 @@ public class ActivarLibroFragment extends Fragment implements  MainContract.View
     }
 
     @Override
-    public void onProcessEnd() { mProgressbar.setVisibility(View.INVISIBLE); }
+    public void onProcessEnd() {
+        FirebaseMessaging.getInstance().subscribeToTopic(mCodigo.getText().toString().trim()).addOnSuccessListener(new OnSuccessListener<Void>() {
+            @Override
+            public void onSuccess(Void aVoid) {
+//                Toast.makeText(context,"Código erróneo",Toast.LENGTH_LONG).show();
+//                mBookError.setVisibility(View.VISIBLE);
+//                mBookError.setText("Código erróneo");
+//                mBookError.setTextColor(Color .rgb(255,0,0));
+            }
+        });
+        mProgressbar.setVisibility(View.INVISIBLE);
+    }
 
     @Override
     public void onUserRead(ResponseUSER user) {
+
     }
 
     @Override
     public void onUserCreate(ResponseUSER user) {
-                SuccessActivateBookFragment nextFrag= new SuccessActivateBookFragment();
 
-                getActivity().getSupportFragmentManager().beginTransaction()
-                        .replace(R.id.nav_host_fragment, nextFrag, "findThisFragment")
-                        .addToBackStack(null)
-                        .commit();
     }
 
     @Override

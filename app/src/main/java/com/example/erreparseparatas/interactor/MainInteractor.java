@@ -77,9 +77,13 @@ public class MainInteractor implements MainContract.Interactor{
                     mListner.onSuccessGetBook(response.body());
                     mListner.onEnd();
                 }
-                else  {
-                    mListner.onSuccess();
-                    mListner.onEnd();
+                else {
+                    try {
+                        mListner.onFailure(response.errorBody().string());
+                        mListner.onEnd();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
                 }
             }
 
@@ -103,9 +107,13 @@ public class MainInteractor implements MainContract.Interactor{
                     mListner.onSuccessGetBookDetail(response.body());
                     mListner.onEnd();
                 }
-                else  {
-                    mListner.onSuccess();
-                    mListner.onEnd();
+                else {
+                    try {
+                        mListner.onFailure(response.errorBody().string());
+                        mListner.onEnd();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
                 }
             }
 

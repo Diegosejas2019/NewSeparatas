@@ -30,6 +30,7 @@ import android.widget.Toast;
 import com.example.erreparseparatas.views.ActivarLibroFragment;
 import com.example.erreparseparatas.views.ContactanosFragment;
 import com.example.erreparseparatas.views.DescargarContenidoFragment;
+import com.example.erreparseparatas.views.DetalleFragment;
 import com.example.erreparseparatas.views.LoginFragment;
 import com.example.erreparseparatas.views.MisPublicacionesFragment;
 import com.example.erreparseparatas.views.RegistrarFragment;
@@ -81,6 +82,43 @@ public class MainActivity extends AppCompatActivity {
 
         NavigationView navigationView = findViewById(R.id.nav_view);
 
+        String publicacionid;
+        String linkImg;
+        if (savedInstanceState == null) {
+            Bundle extras = getIntent().getExtras();
+            if(extras == null) {
+                publicacionid= null;
+                linkImg = null;
+            } else {
+                publicacionid= extras.getString("publicacionid");
+                linkImg= extras.getString("linkImg");
+                nextFrag = new DetalleFragment();
+                Bundle args = new Bundle();
+                args.putString("linkImg", linkImg);
+                args.putString("publicacionid", publicacionid);
+
+                nextFrag.setArguments(args);
+                getSupportFragmentManager().beginTransaction()
+                        .replace(R.id.nav_host_fragment, nextFrag, "findThisFragment")
+                        .addToBackStack(null)
+                        .commit();
+            }
+        } else {
+            publicacionid= (String) savedInstanceState.getSerializable("publicacionid");
+            linkImg= (String) savedInstanceState.getSerializable("linkImg");
+            Bundle bundle=new Bundle();
+            bundle.putString("publicacionid", publicacionid);
+            bundle.putString("linkImg", linkImg);
+            nextFrag = new MisPublicacionesFragment();
+            nextFrag.setArguments(bundle);
+            getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.nav_host_fragment, nextFrag, "findThisFragment")
+                    .addToBackStack(null)
+                    .commit();
+        }
+
+
+
         if (savedInstanceState == null) {
 
             mAppBarConfiguration = new AppBarConfiguration.Builder(
@@ -127,7 +165,7 @@ public class MainActivity extends AppCompatActivity {
                             case R.id.nav_contactanos:
                                 nextFrag = new ContactanosFragment();
                                 break;
-                            case R.id.nav_home:
+                            case R.id.nav_mispublicaciones:
                                 nextFrag = new MisPublicacionesFragment();
                                 Bundle bundle = new Bundle();
                                 bundle.putString("Ingreso", "Menu");
@@ -137,6 +175,7 @@ public class MainActivity extends AppCompatActivity {
                                 nextFrag = new TerminosYCondicionesFragment();
                                 break;
                         }
+
 
                         getSupportFragmentManager().beginTransaction()
                                 .replace(R.id.nav_host_fragment, nextFrag, "findThisFragment")
@@ -161,26 +200,7 @@ public class MainActivity extends AppCompatActivity {
                 }
             });
 
-            String newString;
-            if (savedInstanceState == null) {
-                Bundle extras = getIntent().getExtras();
-                if(extras == null) {
-                    newString= null;
-                } else {
-                    newString= extras.getString("STRING_I_NEED");
-                }
-            } else {
-                newString= (String) savedInstanceState.getSerializable("STRING_I_NEED");
-            }
 
-            Bundle bundle=new Bundle();
-            bundle.putString("idPublicacion", newString);
-            nextFrag.setArguments(bundle);
-            nextFrag = new MisPublicacionesFragment();
-            getSupportFragmentManager().beginTransaction()
-                    .replace(R.id.nav_host_fragment, nextFrag, "findThisFragment")
-                    .addToBackStack(null)
-                    .commit();
         }
     }
 
@@ -200,8 +220,6 @@ public class MainActivity extends AppCompatActivity {
         else{
             super.onBackPressed();
         }
-
-        // LoginFragment.onBackPressed();
     }
 
     @Override
@@ -309,4 +327,6 @@ public class MainActivity extends AppCompatActivity {
             Log.e(TAG, "printHashKey()", e);
         }
     }
+
+
 }

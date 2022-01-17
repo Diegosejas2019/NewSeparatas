@@ -12,6 +12,7 @@ import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.util.Patterns;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -155,7 +156,10 @@ public class RecuperarPasswordFragment extends Fragment implements  MainContract
 //        mRecoverError.setVisibility(View.VISIBLE);
 //        mRecoverError.setTextColor(Color .rgb(0,185,0));
 //        mRecoverError.setText("Se le ha enviado un Email para cambiar la contraseña");
-        Toast.makeText(context,"Solicitud de cambio de contraseña exitosa! Se ha enviado un mail a su correo electronico.",Toast.LENGTH_LONG).show();
+        //Toast.makeText(context,"Solicitud de cambio de contraseña exitosa! Se ha enviado un mail a su correo electronico.",Toast.LENGTH_LONG).show();
+        Toast toast = Toast.makeText(context, "Solicitud de cambio de contraseña exitosa! Se ha enviado un mail a su correo electronico.", Toast.LENGTH_LONG);
+        toast.setGravity(Gravity.CENTER, 0, 0);
+        toast.show();
     }
 
     @Override

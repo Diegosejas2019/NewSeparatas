@@ -52,7 +52,7 @@ public class MainPresenter implements MainContract.Presenter, MainContract.onOpe
 
     @Override
     public void onSuccess() {
-        mView.onProcessEnd();
+        mView.onCreatePlayerSuccessful();
     }
 
     @Override

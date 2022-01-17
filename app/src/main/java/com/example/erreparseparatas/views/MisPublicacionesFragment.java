@@ -54,13 +54,14 @@ public class MisPublicacionesFragment extends Fragment implements  MainContract.
     public MainPresenter mPresenter;
     public Context context;
     private String mParam1 = "";
+    private String mParam2 = "";
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mPresenter = new MainPresenter(this);
         if (getArguments() != null) {
-            mParam1 = getArguments().getString("idPublicacion");
-            //mParam2 = getArguments().getString(ARG_PARAM2);
+            mParam1 = getArguments().getString("publicacionid");
+            mParam2 = getArguments().getString("linkImg");
         }
     }
 
@@ -72,20 +73,26 @@ public class MisPublicacionesFragment extends Fragment implements  MainContract.
         View view = inflater.inflate(R.layout.fragment_mis_publicaciones, container, false);
 
         context = inflater.getContext();
+        if (getArguments() != null) {
+            Bundle arguments = getArguments();
+            mParam1 = arguments.getString("publicacionid");
+            mParam2 = arguments.getString("linkImg");
+        }
+
 
         ButterKnife.bind(this,view);
 
         //getting the recyclerview from xml
-        if (mParam1 != "")
+        if (mParam1 != "" && mParam1 != null)
         {
-            android.app.Fragment fragment = new DetalleFragment();
+            Fragment fragment = new DetalleFragment();
             Bundle args = new Bundle();
-            //args.putString("linkImg", product.getImageUrl());
+            args.putString("linkImg", mParam2);
             args.putString("publicacionid", mParam1);
 
             fragment.setArguments(args);
-            ((Activity) context).getFragmentManager().beginTransaction()
-                    .replace(R.id.nav_host_fragment, fragment)
+            getActivity().getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.nav_host_fragment, fragment, "findThisFragment")
                     .addToBackStack(null)
                     .commit();
 

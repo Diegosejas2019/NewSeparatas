@@ -27,9 +27,24 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="50dp"
                     android:layout_marginLeft="5dp"
-                    android:layout_marginTop="5dp"
+                    android:layout_marginTop="25dp"
                     android:gravity="left"
                     android:paddingRight="130dp"
+                    android:textAlignment="gravity"
+                    android:textAppearance="@style/Base.TextAppearance.AppCompat.Small"
+                    android:textColor="#000000" />
+
+                <TextView
+                    android:id="@+id/txtArchivo3"
+                    android:layout_width="match_parent"
+                    android:layout_height="15dp"
+                    android:layout_alignParentTop="true"
+                    android:layout_marginStart="50dp"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginTop="0dp"
+                    android:gravity="left"
+                    android:paddingRight="130dp"
+                    android:text="Fecha : 11/02/2022"
                     android:textAlignment="gravity"
                     android:textAppearance="@style/Base.TextAppearance.AppCompat.Small"
                     android:textColor="#000000" />
@@ -68,7 +83,7 @@
 
                     android:layout_alignParentStart="true"
                     android:layout_marginStart="0dp"
-                    android:layout_marginTop="60dp"
+                    android:layout_marginTop="80dp"
                     android:layout_marginBottom="0dp"
                     android:background="@null"
                     android:src="@drawable/ic_video" />
@@ -80,7 +95,7 @@
 
                     android:layout_alignParentTop="true"
                     android:layout_marginStart="0dp"
-                    android:layout_marginTop="0dp"
+                    android:layout_marginTop="20dp"
                     android:layout_marginBottom="0dp"
                     android:background="@null"
                     android:src="@drawable/ic_descargar" />
@@ -92,7 +107,7 @@
 
                     android:layout_alignParentTop="true"
                     android:layout_marginStart="0dp"
-                    android:layout_marginTop="30dp"
+                    android:layout_marginTop="50dp"
                     android:layout_marginBottom="0dp"
                     android:background="@null"
                     android:src="@drawable/ic_audiotrack" />

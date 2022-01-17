@@ -2,7 +2,7 @@ package com.example.erreparseparatas.utils;
 
 import android.app.Activity;
 import android.app.AlertDialog;
-import android.app.Fragment;
+
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
@@ -18,6 +18,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.cardview.widget.CardView;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.erreparseparatas.R;
@@ -93,10 +95,14 @@ public class PublicacionesAdapter extends RecyclerView.Adapter<PublicacionesAdap
                 args.putString("publicacionid", String.valueOf(product.getId()));
 
                 fragment.setArguments(args);
-                ((Activity) mCtx).getFragmentManager().beginTransaction()
+
+                ((FragmentActivity)mCtx).getSupportFragmentManager().beginTransaction()
                         .replace(R.id.nav_host_fragment, fragment)
-                        .addToBackStack(null)
                         .commit();
+                /*((Activity) mCtx).getFragmentManager().beginTransaction()
+                        .replace(R.id.nav_host_fragment, fragment)
+                        .addToBackStack("Detalle")
+                        .commit();*/
             }
         });
         //binding the data with the viewholder views

@@ -1,22 +1,30 @@
 package com.example.erreparseparatas.views;
+import androidx.activity.OnBackPressedCallback;
 
+import android.app.Activity;
+import android.app.FragmentTransaction;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
 
-import android.app.Fragment;
 
+
+import android.preference.PreferenceManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.webkit.WebSettings;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.activity.OnBackPressedCallback;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -54,7 +62,7 @@ public class DetalleFragment extends Fragment implements  MainContract.View{
 
     // TODO: Rename and change types of parameters
     private String mParam1;
-    private String mParam2;
+    private String mParam2 = "";
     private String mParam3;
     private String mParam4;
     private String mParam5;
@@ -74,6 +82,34 @@ public class DetalleFragment extends Fragment implements  MainContract.View{
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
+
+        OnBackPressedCallback callback = new OnBackPressedCallback(true /* enabled by default */) {
+            @Override
+            public void handleOnBackPressed() {
+                MisPublicacionesFragment nextFrag= new MisPublicacionesFragment();
+
+                getActivity().getSupportFragmentManager().beginTransaction()
+                        .replace(R.id.nav_host_fragment, nextFrag, "findThisFragment")
+                        .addToBackStack(null)
+                        .commit();
+            }
+        };
+        requireActivity().getOnBackPressedDispatcher().addCallback(this, callback);
+    }
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
     }
 
     @Override
@@ -97,7 +133,7 @@ public class DetalleFragment extends Fragment implements  MainContract.View{
         SharedPreferences prefs = context.getSharedPreferences(MY_PREFS_NAME, MODE_PRIVATE);
         String restoredText = prefs.getString("token", "");
         if (restoredText != "") {
-
+            if (mParam2 != null){
             User user = new User();
             user.setIdUser(Integer.valueOf(mParam2));
             user.setToken(restoredText);
@@ -105,6 +141,7 @@ public class DetalleFragment extends Fragment implements  MainContract.View{
             if(isConnected())
             {
                 mPresenter.getBooksDetails(user);
+            }
             }
         }
         return view;
