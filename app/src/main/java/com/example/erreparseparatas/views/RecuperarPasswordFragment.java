@@ -11,6 +11,7 @@ import androidx.fragment.app.Fragment;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.util.Patterns;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -153,21 +154,16 @@ public class RecuperarPasswordFragment extends Fragment implements  MainContract
 
     @Override
     public void onCreatePlayerSuccessful() {
-//        mRecoverError.setVisibility(View.VISIBLE);
-//        mRecoverError.setTextColor(Color .rgb(0,185,0));
-//        mRecoverError.setText("Se le ha enviado un Email para cambiar la contraseña");
-        //Toast.makeText(context,"Solicitud de cambio de contraseña exitosa! Se ha enviado un mail a su correo electronico.",Toast.LENGTH_LONG).show();
-        Toast toast = Toast.makeText(context, "Solicitud de cambio de contraseña exitosa! Se ha enviado un mail a su correo electronico.", Toast.LENGTH_LONG);
-        toast.setGravity(Gravity.CENTER, 0, 0);
-        toast.show();
+        mRecoverError.setVisibility(View.VISIBLE);
+        mRecoverError.setTextColor(Color .rgb(0,185,0));
+        mRecoverError.setText("Se le ha enviado un Email para cambiar la contraseña");
     }
 
     @Override
     public void onCreatePlayerFailure(String mensaje) {
-//        Toast.makeText(context,mensaje,Toast.LENGTH_LONG).show();
         mRecoverError.setVisibility(View.VISIBLE);
-        mRecoverError.setText(mensaje);
         mRecoverError.setTextColor(Color .rgb(255,0,0));
+        mRecoverError.setText(mensaje);
     }
 
     @Override
@@ -176,31 +172,19 @@ public class RecuperarPasswordFragment extends Fragment implements  MainContract
     }
 
     @Override
-    public void onProcessEnd() {
-        mProgressbar.setVisibility(View.INVISIBLE);
-
-//        Toast.makeText(context,"Solicitud de cambio de contraseña exitosa! Se ha enviado un mail a su correo electronico.",Toast.LENGTH_LONG).show();
-    }
+    public void onProcessEnd() { mProgressbar.setVisibility(View.GONE); }
 
     @Override
-    public void onUserRead(ResponseUSER user) {
-
-    }
+    public void onUserRead(ResponseUSER user) { }
 
     @Override
-    public void onUserCreate(ResponseUSER user) {
-
-    }
+    public void onUserCreate(ResponseUSER user) { }
 
     @Override
-    public void onGetBook(List<Publicaciones> publicaciones) {
-
-    }
+    public void onGetBook(List<Publicaciones> publicaciones) { }
 
     @Override
-    public void onGetBookDetail(List<Detalle> detalles) {
-
-    }
+    public void onGetBookDetail(List<Detalle> detalles) { }
 
     public static boolean isValidEmail(CharSequence target) {
         return (!TextUtils.isEmpty(target) && Patterns.EMAIL_ADDRESS.matcher(target).matches());

@@ -54,6 +54,7 @@ public class RegistrarP3Fragment extends Fragment implements  MainContract.View{
     @BindView(R.id.registerUserError)
     TextView mRegisterError;
     public Context context;
+    String error_password = "Ingrese un minimo de 8 caracteres y verifique que las contraseñas coincidan";
     private static final String ARG_PARAM1 = "email";
     private static final String ARG_PARAM2 = "nombre";
     private static final String ARG_PARAM3 = "telefono";
@@ -106,22 +107,30 @@ public class RegistrarP3Fragment extends Fragment implements  MainContract.View{
                 mRegisterError.setVisibility(View.INVISIBLE);
 
                 if (TextUtils.isEmpty(mReContraseña.getText())){
-                    mRegisterError.setText("Debe ingresar una contraseña");
+                    mRegisterError.setText(error_password);
                     mRegisterError.setVisibility(View.VISIBLE);
                     focusView = mReContraseña;
                     cancel = true;
                 }
 
                 if (TextUtils.isEmpty(mContraseña.getText())){
-                    mRegisterError.setText("Debe ingresar una contraseña");
+                    mRegisterError.setText(error_password);
                     mRegisterError.setVisibility(View.VISIBLE);
                     focusView = mContraseña;
                     cancel = true;
                 }
+
+                if (mContraseña.getText().length() < 8) {
+                    mRegisterError.setText(error_password);
+                    mRegisterError.setVisibility(View.VISIBLE);
+                    focusView = mContraseña;
+                    cancel = true;
+                }
+
                 else{
                     if (!mContraseña.getText().toString().equals(mReContraseña.getText().toString()))
                     {
-                        mRegisterError.setText("Las contraseñas no coinciden");
+                        mRegisterError.setText(error_password);
                         mRegisterError.setVisibility(View.VISIBLE);
                         focusView = mReContraseña;
                         cancel = true;

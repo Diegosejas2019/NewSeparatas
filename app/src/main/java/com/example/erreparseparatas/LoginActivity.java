@@ -28,7 +28,6 @@ import butterknife.BindView;
 import static com.example.erreparseparatas.MainActivity.MY_PREFS_NAME;
 
 public class LoginActivity extends AppCompatActivity implements MainContract.View {
-    public MainPresenter mPresenter;
     @BindView(R.id.progressBar)
     ProgressBar mProgressBar;
     @Override
@@ -37,7 +36,8 @@ public class LoginActivity extends AppCompatActivity implements MainContract.Vie
         setContentView(R.layout.activity_login);
 
 
-        Fragment nextFrag= new Fragment();
+        new Fragment();
+        Fragment nextFrag;
         nextFrag = new LoginFragment();
         getSupportFragmentManager().beginTransaction()
                 .replace(R.id.host_fragment, nextFrag, "findThisFragment")
@@ -45,12 +45,8 @@ public class LoginActivity extends AppCompatActivity implements MainContract.Vie
                 .commit();
     }
 
-
-
     @Override
-    public void onCreatePlayerSuccessful() {
-
-    }
+    public void onCreatePlayerSuccessful() { }
 
     @Override
     public void onCreatePlayerFailure(String mensaje) {
@@ -58,32 +54,21 @@ public class LoginActivity extends AppCompatActivity implements MainContract.Vie
     }
 
     @Override
-    public void onProcessStart() {
-
-    }
+    public void onProcessStart() { }
 
     @Override
-    public void onProcessEnd() {
-
-    }
+    public void onProcessEnd() { }
 
     @Override
-    public void onUserRead(ResponseUSER user) {
-
-    }
+    public void onUserRead(ResponseUSER user) { }
 
     @Override
-    public void onUserCreate(ResponseUSER user) {
-
-    }
+    public void onUserCreate(ResponseUSER user) { }
 
     @Override
-    public void onGetBook(List<Publicaciones> publicaciones) {
-
-    }
+    public void onGetBook(List<Publicaciones> publicaciones) { }
 
     @Override
-    public void onGetBookDetail(List<Detalle> detalles) {
+    public void onGetBookDetail(List<Detalle> detalles) { }
 
-    }
 }

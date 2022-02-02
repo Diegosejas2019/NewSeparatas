@@ -1,31 +1,31 @@
 package com.example.erreparseparatas.utils;
 
-import android.app.Activity;
-import android.app.Fragment;
-import android.app.ProgressDialog;
+import static android.content.Context.CONNECTIVITY_SERVICE;
+import static com.example.erreparseparatas.MainActivity.MY_PREFS_NAME;
+
+import android.app.DownloadManager;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.net.Uri;
-import android.os.Bundle;
+import android.os.Environment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.erreparseparatas.R;
 import com.example.erreparseparatas.model.Detalle;
-import com.example.erreparseparatas.model.Publicaciones;
-import com.example.erreparseparatas.views.DetalleFragment;
-import com.squareup.picasso.Picasso;
 
-import org.json.JSONArray;
-import org.json.JSONObject;
-
+import java.io.File;
 import java.util.List;
+
+import butterknife.BindView;
 
 public class DetallesAdapter extends RecyclerView.Adapter<DetallesAdapter.ProductViewHolder> implements  android.view.View.OnClickListener {
 
@@ -33,21 +33,12 @@ public class DetallesAdapter extends RecyclerView.Adapter<DetallesAdapter.Produc
 
     private List<Detalle> detalleList;
 
-    private Integer mIdUser;
+    private Boolean downloadPermited;
 
-    private String View;
-
-    //the recyclerview
-    private ProgressDialog pDialog;
-
-    //getting the context and product list with constructor
-    public DetallesAdapter(Context mCtx, List<Detalle> productList,Integer iduser) {
+    public DetallesAdapter(Context mCtx, List<Detalle> productList, Integer iduser) {
         this.mCtx = mCtx;
         this.detalleList = productList;
-        this.mIdUser = iduser;
-
     }
-
 
     @Override
     public DetallesAdapter.ProductViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -60,50 +51,107 @@ public class DetallesAdapter extends RecyclerView.Adapter<DetallesAdapter.Produc
     @Override
     public void onBindViewHolder(final DetallesAdapter.ProductViewHolder holder, final int position) {
         Detalle detalle = detalleList.get(position);
-        holder.txtArchivo.setText(detalle.getFileTitle());
-        holder.txtArchivo.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(android.view.View v) {
-                Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.errepar.com/resources/images/appseparatas/" + detalle.getId() + detalle.getFileUrl()));
-                mCtx.startActivity(browserIntent);
-            }
-        });
-        holder.txtLinkVimeo.setText(detalle.getVideoTitle());
-        holder.txtLinkVimeo.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(android.view.View v) {
-                Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(detalle.getVideoUrl()));
-                mCtx.startActivity(browserIntent);
-            }
-        });
-        holder.txtLinkAudio.setText(detalle.getAudioTitle());
-        holder.txtLinkAudio.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(android.view.View v) {
-                Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(detalle.getAudioUrl()));
-                mCtx.startActivity(browserIntent);
-            }
-        });
+        if (detalle.getFecha() != null) {
+            holder.txtFecha.setText(detalle.getFecha());
+        } else {
+            holder.txtFecha.setText("Sin fecha");
+        }
+        SharedPreferences preferences = mCtx.getSharedPreferences(MY_PREFS_NAME, Context.MODE_PRIVATE);
+        downloadPermited = preferences.getBoolean("downloadPermited", false);
+        if (detalle.getFileTitle() == null) {
+            holder.txtArchivo.setVisibility(View.GONE);
+            holder.pdfIco.setVisibility(View.GONE);
+        } else {
+            holder.txtArchivo.setText(detalle.getFileTitle());
+            holder.txtArchivo.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(android.view.View v) {
+                    String downloadDirectory = String.valueOf(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS));
+                    File file = new File(downloadDirectory + "/" + detalle.getId() + ".pdf");
+                    if (isConnected()) {
+                        if (file.exists()) {
+                            Intent localIntent = new Intent(Intent.ACTION_OPEN_DOCUMENT, Uri.fromFile(file));
+                            mCtx.startActivity(localIntent);
+                        } else {
+                            Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.errepar.com/resources/images/appseparatas/" + detalle.getId() + detalle.getFileUrl()));
+                            mCtx.startActivity(browserIntent);
+                        }
+                        if (downloadPermited && !file.exists()) {
+                            DownloadManager downloadmanager = (DownloadManager) mCtx.getSystemService(Context.DOWNLOAD_SERVICE);
+                            Uri uri = Uri.parse("https://www.errepar.com/resources/images/appseparatas/" + detalle.getId() + detalle.getFileUrl());
+                            DownloadManager.Request request = new DownloadManager.Request(uri);
+                            request.setTitle(detalle.getId() + ".pdf");
+                            request.setDescription("Descargando libro...");
+                            request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED);
+                            request.setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS, detalle.getId() + ".pdf");
+                            downloadmanager.enqueue(request);
+                        }
+                    } else {
+                        if (file.exists()) {
+                            Intent localIntent = new Intent(Intent.ACTION_OPEN_DOCUMENT, Uri.fromFile(file));
+                            mCtx.startActivity(localIntent);
+                        } else {
+                            Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.errepar.com/resources/images/appseparatas/" + detalle.getId() + detalle.getFileUrl()));
+                            mCtx.startActivity(browserIntent);
+                        }
+                    }
+                }
+            });
+        }
+        if (detalle.getVideoTitle() == null) {
+            holder.txtLinkVimeo.setVisibility(View.GONE);
+            holder.vidIco.setVisibility(View.GONE);
+        } else  if (detalle.getVideoUrl() != null){
+            holder.txtLinkVimeo.setText(detalle.getVideoTitle());
+            holder.txtLinkVimeo.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(android.view.View v) {
+                    Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(detalle.getVideoUrl()));
+                    mCtx.startActivity(browserIntent);
+                }
+            });
+        }
+        if (detalle.getAudioTitle() == null) {
+            holder.txtLinkAudio.setVisibility(View.GONE);
+            holder.audIco.setVisibility(View.GONE);
+        } else  if (detalle.getAudioUrl() != null) {
+            holder.txtLinkAudio.setText(detalle.getAudioTitle());
+            holder.txtLinkAudio.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(android.view.View v) {
+                    Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(detalle.getAudioUrl()));
+                    mCtx.startActivity(browserIntent);
+                }
+            });
+        }
     }
-
 
     @Override
     public int getItemCount() {
         return detalleList.size();
     }
 
-
     class ProductViewHolder extends RecyclerView.ViewHolder {
 
-        TextView txtArchivo, txtLinkVimeo, txtLinkAudio, txtPdf;
+        TextView txtFecha, txtArchivo, txtLinkVimeo, txtLinkAudio;
+        ImageView pdfIco, vidIco, audIco;
 
         public ProductViewHolder(View itemView) {
             super(itemView);
+            txtFecha = itemView.findViewById(R.id.txtFecha);
             txtArchivo = itemView.findViewById(R.id.txtArchivo);
             txtLinkVimeo = itemView.findViewById(R.id.txtLinkVimeo);
             txtLinkAudio = itemView.findViewById(R.id.txtLinkAudio);
-            //txtPdf = itemView.findViewById(R.id.txtPdf);
+            pdfIco = itemView.findViewById(R.id.favorite2);
+            vidIco = itemView.findViewById(R.id.favorite);
+            audIco = itemView.findViewById(R.id.favorite3);
         }
+    }
+
+    public boolean isConnected(){
+        ConnectivityManager connectivityManager = (ConnectivityManager) mCtx.getSystemService( CONNECTIVITY_SERVICE );
+        NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
+        return activeNetworkInfo != null && activeNetworkInfo.isConnected();
     }
 
     @Override

@@ -34,8 +34,10 @@ import com.example.erreparseparatas.model.ResponseUSER;
 import com.example.erreparseparatas.model.User;
 import com.example.erreparseparatas.model.UserData;
 import com.example.erreparseparatas.presenter.MainPresenter;
+import com.google.gson.Gson;
 import com.google.gson.annotations.SerializedName;
 
+import java.io.FileOutputStream;
 import java.util.List;
 
 import butterknife.BindView;
@@ -116,7 +118,6 @@ public class LoginFragment extends Fragment implements MainContract.View {
             User user = new User();
             user.setEmail(mEmail.getText().toString());
             user.setPassword(mContraseña.getText().toString());
-
             if (isConnected()) {
                 mPresenter.readPlayers(user);
             } else {
@@ -131,6 +132,9 @@ public class LoginFragment extends Fragment implements MainContract.View {
         mContinuar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                mEmail.setTextColor(Color.rgb(0, 0, 0));
+                mContraseña.setTextColor(Color.rgb(0, 0, 0));
+                mErrorMsg.setVisibility(View.INVISIBLE);
                 String email = mEmail.getText().toString().trim();
                 String password = mContraseña.getText().toString().trim();
 
@@ -204,7 +208,7 @@ public class LoginFragment extends Fragment implements MainContract.View {
                 RegistrarFragment nextFrag = new RegistrarFragment();
                 getActivity().getSupportFragmentManager().beginTransaction()
                         .replace(R.id.host_fragment, nextFrag, "findThisFragment")
-                        .addToBackStack(null)
+                        .addToBackStack("login")
                         .commit();
             }
         });
@@ -239,7 +243,7 @@ public class LoginFragment extends Fragment implements MainContract.View {
         mEmail.setTextColor(Color.rgb(255, 0, 0));
         mContraseña.setTextColor(Color.rgb(255, 0, 0));
         mErrorMsg.setVisibility(View.VISIBLE);
-        mErrorMsg.setText("Email o contraseña incorrectos");
+        mErrorMsg.setText(mensaje);
     }
 
     @Override
@@ -264,32 +268,41 @@ public class LoginFragment extends Fragment implements MainContract.View {
         editor.putString("password", mContraseña.getText().toString());
         editor.apply();
 
-        /*MisPublicacionesFragment nextFrag= new MisPublicacionesFragment();
-        Bundle bundle=new Bundle();
-        bundle.putString("email", mEmail.getText().toString());
-        bundle.putString("password", mContraseña.getText().toString());
-        nextFrag.setArguments(bundle);
+        User userAux = new User();
 
-        getActivity().getSupportFragmentManager().beginTransaction()
-                .replace(R.id.host_fragment, nextFrag, "findThisFragment")
-                .addToBackStack(null)
-                .commit();*/
+        userAux.setToken(user.token);
+        userAux.setIdUser(user1.getId());
+        userAux.setEmail(mEmail.getText().toString());
+        userAux.setPassword(mContraseña.getText().toString());
+
+        mPresenter.getBooks(userAux);
+
         startActivity(new Intent(getActivity(), MainActivity.class));
         getActivity().finish();
     }
 
     @Override
-    public void onUserCreate(ResponseUSER user) {
-
-    }
+    public void onUserCreate(ResponseUSER user) { }
 
     @Override
     public void onGetBook(List<Publicaciones> publicaciones) {
-
+        mCreateAndSaveFile("BooksJson", publicaciones);
     }
 
     @Override
-    public void onGetBookDetail(List<Detalle> detalles) {
+    public void onGetBookDetail(List<Detalle> detalles) { }
 
+    public void mCreateAndSaveFile(String params, List<Publicaciones> publicaciones) {
+        String filename = params;
+        Gson gson = new Gson();
+        String s = gson.toJson(publicaciones);
+        FileOutputStream outputStream;
+        try {
+            outputStream = context.openFileOutput(filename, Context.MODE_PRIVATE);
+            outputStream.write(s.getBytes());
+            outputStream.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }

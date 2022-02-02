@@ -1,26 +1,28 @@
 package com.example.erreparseparatas.views;
 
-import android.app.Activity;
+import static android.content.Context.CONNECTIVITY_SERVICE;
+import static android.content.Context.MODE_PRIVATE;
+import static com.example.erreparseparatas.MainActivity.MY_PREFS_NAME;
+
+import android.app.AlertDialog;
 import android.content.Context;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
-
-import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.example.erreparseparatas.MainActivity;
+import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
+
 import com.example.erreparseparatas.R;
 import com.example.erreparseparatas.interfaces.MainContract;
 import com.example.erreparseparatas.model.Detalle;
@@ -29,32 +31,39 @@ import com.example.erreparseparatas.model.ResponseUSER;
 import com.example.erreparseparatas.model.User;
 import com.example.erreparseparatas.presenter.MainPresenter;
 import com.example.erreparseparatas.utils.PublicacionesAdapter;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 
+import java.io.BufferedReader;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-import static android.content.Context.CONNECTIVITY_SERVICE;
-import static android.content.Context.MODE_PRIVATE;
-import static com.example.erreparseparatas.MainActivity.MY_PREFS_NAME;
-
 public class MisPublicacionesFragment extends Fragment implements  MainContract.View{
-
-    @BindView(R.id.empty_view)
-    TextView emptyView;
+    @BindView(R.id.text1_home)
+    TextView text1_home;
+    @BindView(R.id.text2_home)
+    TextView text2_home;
+    @BindView(R.id.home_logo)
+    ImageView home_logo;
     @BindView(R.id.goToCode)
     Button goToCode;
-
-    private List<Publicaciones> publicacionesList = new ArrayList<>();
-
-    //the recyclerview
+    @BindView(R.id.pullToRefresh) SwipeRefreshLayout pullToRefresh;
+    @BindView(R.id.homeTitleText) TextView homeTitleText;
     RecyclerView recyclerView;
     public MainPresenter mPresenter;
     public Context context;
+    Boolean offlineList = false;
     private String mParam1 = "";
     private String mParam2 = "";
+    private List<Publicaciones> productList;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -63,14 +72,15 @@ public class MisPublicacionesFragment extends Fragment implements  MainContract.
             mParam1 = getArguments().getString("publicacionid");
             mParam2 = getArguments().getString("linkImg");
         }
+
     }
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        //return inflater.inflate(R.layout.fragment_mis_publicaciones, container, false);
         View view = inflater.inflate(R.layout.fragment_mis_publicaciones, container, false);
+
 
         context = inflater.getContext();
         if (getArguments() != null) {
@@ -78,7 +88,6 @@ public class MisPublicacionesFragment extends Fragment implements  MainContract.
             mParam1 = arguments.getString("publicacionid");
             mParam2 = arguments.getString("linkImg");
         }
-
 
         ButterKnife.bind(this,view);
 
@@ -100,8 +109,8 @@ public class MisPublicacionesFragment extends Fragment implements  MainContract.
         recyclerView = (RecyclerView) view.findViewById(R.id.recyclerViewList);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(inflater.getContext()));
-
         SharedPreferences prefs = context.getSharedPreferences(MY_PREFS_NAME, MODE_PRIVATE);
+        SharedPreferences.Editor editor = prefs.edit();
         String restoredText = prefs.getString("token", "");
         if (restoredText != "") {
 
@@ -110,71 +119,96 @@ public class MisPublicacionesFragment extends Fragment implements  MainContract.
             user.setIdUser(mIdUser);
             user.setToken(restoredText);
 
-            if(isConnected())
-            {
-                mPresenter.getBooks(user);
+            pullToRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+                @Override
+                public void onRefresh() {
+                    offlineList = prefs.getBoolean("offlineList", false);
+                    if (isConnected()){
+                        homeTitleText.setText("Mis publicaciones");
+                        getBooks(user);
+                    } else {
+                        homeTitleText.setText("Mis publicaciones (offline)");
+                        if (offlineList) {
+                            getOfflineBooks();
+                        } else {
+                            showAlert(editor);
+                        }
+                    }
+                    pullToRefresh.setRefreshing(false);
+                }
+            });
 
+            if(isConnected()) {
+                homeTitleText.setText("Mis publicaciones");
+                getBooks(user);
+                editor.putBoolean("offlineList", false);
+                editor.apply();
+            } else {
+                    homeTitleText.setText("Mis publicaciones (offline)");
+                    offlineList = prefs.getBoolean("offlineList", false);
+                    if (offlineList) {
+                        getOfflineBooks();
+                    } else {
+                        showAlert(editor);
+                    }
             }
         }
 
-
-        /*//initializing the productlist
-        publicacionesList = new ArrayList<>();
-
-
-        //adding some items to our list
-        publicacionesList.add(
-                new Publicaciones(
-                        1,
-                        "Publicacion 1","Descripcion 1","https://tiendaonline.errepar.com/3672-home_default/resoluciones-tecnicas-comentadas.jpg","https://www.errepar.com/resources/solicitudpaginas/IN%20I%20y%20II%20-%20999%20-%20Act.%20662%20OK.pdf","a","b","v"));
-
-        publicacionesList.add(
-                new Publicaciones(
-                        1,
-                        "Publicacion 2","Descripcion 2","https://tiendaonline.errepar.com/3600-home_default/codigo-procesal-civil-y-comercial-de-la-nacioncomenty-anot2.jpg","","a","b","v"));
-
-        publicacionesList.add(
-                new Publicaciones(
-                        1,
-                        "Publicacion 3","Descripcion 3","https://tiendaonline.errepar.com/2871-home_default/balances-guia-practica-para-su-presentacion.jpg","","a","b","v"));
-
-        publicacionesList.add(
-                new Publicaciones(
-                        1,
-                        "Publicacion 4","Descripcion 4","https://tiendaonline.errepar.com/3112-home_default/regimen-de-infortunios-laborales.jpg","","a","b","v"));
-
-        publicacionesList.add(
-                new Publicaciones(
-                        1,
-                        "Publicacion 5","Descripcion 5","https://tiendaonline.errepar.com/3635-home_default/impuesto-a-las-ganancias-impuestos-explicados-y-comentados.jpg","","a","b","v"));
-
-        publicacionesList.add(
-                new Publicaciones(
-                        1,
-                        "Publicacion 6","Descripcion 6","https://tiendaonline.errepar.com/3655-home_default/jubilaciones-y-pensiones.jpg","","a","b","v"));
-
-        publicacionesList.add(
-                new Publicaciones(
-                        1,
-                        "Publicacion 7","Descripcion 7","https://tiendaonline.errepar.com/3642-home_default/preventa-monotributo-2021.jpg","","a","b","v"));
-
-        publicacionesList.add(
-                new Publicaciones(
-                        1,
-                        "Publicacion 8","Descripcion 8","https://tiendaonline.errepar.com/3692-home_default/desarrollo-de-organizaciones-sostenibles-en-contextos-turbulentos.jpg","","a","b","v"));
-
-        publicacionesList.add(
-                new Publicaciones(
-                        1,
-                        "Publicacion 9","Descripcion 9","https://tiendaonline.errepar.com/3690-home_default/el-impuesto-sobre-los-ingresos-brutos-en-la-provincia-de-santa-fe.jpg","","a","b","v"));
-
-
-        //creating recyclerview adapter
-        PublicacionesAdapter adapter = new PublicacionesAdapter(inflater.getContext(), publicacionesList,1);
-
-        //setting adapter to recyclerview
-        recyclerView.setAdapter(adapter);*/
         return view;
+    }
+
+    void showAlert(SharedPreferences.Editor editor) {
+        Log.d("password", String.valueOf(editor));
+        AlertDialog alertDialog = new AlertDialog.Builder(context).create();
+        alertDialog.setTitle("Oops...");
+        alertDialog.setMessage("Parece que no hay conexión con internet. ¿Desea entrar en modo offline? Si oprime que no se cerrará la aplicación.");
+        alertDialog.setButton(AlertDialog.BUTTON_POSITIVE, "Sí",
+                (dialog, which) -> {
+                    editor.putBoolean("offlineList", true);
+                    editor.apply();
+                    getOfflineBooks();
+                    recyclerView.setVisibility(View.VISIBLE);
+                    dialog.dismiss();
+                });
+        alertDialog.setButton(AlertDialog.BUTTON_NEGATIVE, "No",
+                (dialog, which) -> {
+                    editor.putBoolean("offlineList", false);
+                    editor.apply();
+                    Objects.requireNonNull(getActivity()).finishAndRemoveTask();
+                    System.exit(0);
+                    dialog.dismiss();
+                });
+        alertDialog.show();
+    }
+
+    public void mReadJsonData(String params) {
+        try {
+            FileInputStream fis = context.openFileInput(params);
+            InputStreamReader isr = new InputStreamReader(fis);
+            BufferedReader bufferedReader = new BufferedReader(isr);
+            StringBuilder sb = new StringBuilder();
+            String line;
+            while ((line = bufferedReader.readLine()) != null) {
+                sb.append(line);
+            }
+
+            String json = sb.toString();
+            Gson gson = new Gson();
+            Type listPublicaciones = new TypeToken<ArrayList<Publicaciones>>(){}.getType();
+            List offlineProducts = gson.fromJson(json, listPublicaciones);
+            productList = offlineProducts;
+            PublicacionesAdapter adapter = new PublicacionesAdapter(context, productList,1);
+            recyclerView.setAdapter(adapter);
+            if(productList.isEmpty()) {
+                recyclerView.setVisibility(View.VISIBLE);
+                goToCode.setVisibility(View.GONE);
+                text1_home.setVisibility(View.GONE);
+                text2_home.setVisibility(View.GONE);
+                home_logo.setVisibility(View.GONE);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     public boolean isConnected(){
@@ -183,35 +217,33 @@ public class MisPublicacionesFragment extends Fragment implements  MainContract.
         return activeNetworkInfo != null && activeNetworkInfo.isConnected();
     }
 
-    @Override
-    public void onCreatePlayerSuccessful() {
-
+    void getOfflineBooks() {
+        mReadJsonData("BooksJson"); //get offline books
     }
+
+    void getBooks(User user) {
+        mPresenter.getBooks(user);
+    }
+
+    @Override
+    public void onCreatePlayerSuccessful() { }
 
     @Override
     public void onCreatePlayerFailure(String mensaje) {
-        Toast.makeText(context,mensaje,Toast.LENGTH_LONG).show();
+//        Toast.makeText(context,mensaje,Toast.LENGTH_LONG).show();
     }
 
     @Override
-    public void onProcessStart() {
-
-    }
+    public void onProcessStart() { }
 
     @Override
-    public void onProcessEnd() {
-
-    }
+    public void onProcessEnd() { }
 
     @Override
-    public void onUserRead(ResponseUSER user) {
-
-    }
+    public void onUserRead(ResponseUSER user) { }
 
     @Override
-    public void onUserCreate(ResponseUSER user) {
-
-    }
+    public void onUserCreate(ResponseUSER user) { }
 
     @Override
     public void onGetBook(List<Publicaciones> publicaciones) {
@@ -221,11 +253,15 @@ public class MisPublicacionesFragment extends Fragment implements  MainContract.
         if(!publicaciones.isEmpty()) {
             recyclerView.setVisibility(View.VISIBLE);
             goToCode.setVisibility(View.GONE);
-            emptyView.setVisibility(View.GONE);
-        } else {
+            text1_home.setVisibility(View.GONE);
+            text2_home.setVisibility(View.GONE);
+            home_logo.setVisibility(View.GONE);
+        } else if (publicaciones.isEmpty() && isConnected()){
             recyclerView.setVisibility(View.GONE);
             goToCode.setVisibility(View.VISIBLE);
-            emptyView.setVisibility(View.VISIBLE);
+            text1_home.setVisibility(View.VISIBLE);
+            text2_home.setVisibility(View.VISIBLE);
+            home_logo.setVisibility(View.VISIBLE);
             goToCode.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -240,8 +276,8 @@ public class MisPublicacionesFragment extends Fragment implements  MainContract.
             });
         }
     }
-    @Override
-    public void onGetBookDetail(List<Detalle> detalles) {
 
-    }
+    @Override
+    public void onGetBookDetail(List<Detalle> detalles) { }
+
 }

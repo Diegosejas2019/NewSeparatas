@@ -1,5 +1,9 @@
 package com.example.erreparseparatas.presenter;
 
+import android.content.Context;
+
+import androidx.annotation.Nullable;
+
 import com.example.erreparseparatas.interactor.MainInteractor;
 import com.example.erreparseparatas.interfaces.MainContract;
 import com.example.erreparseparatas.model.Detalle;
@@ -45,8 +49,8 @@ public class MainPresenter implements MainContract.Presenter, MainContract.onOpe
     }
 
     @Override
-    public void getBooksDetails(User user) {
-        mInteractor.performGetCodeDetail(user);
+    public void getBooksDetails(User user, Context context) {
+        mInteractor.performGetCodeDetail(user, context);
     }
 
 
@@ -76,7 +80,7 @@ public class MainPresenter implements MainContract.Presenter, MainContract.onOpe
     }
 
     @Override
-    public void onFailure(String mensaje) {
+    public void onFailure(String mensaje)  {
         mView.onCreatePlayerFailure(mensaje);
     }
 
@@ -89,5 +93,6 @@ public class MainPresenter implements MainContract.Presenter, MainContract.onOpe
     public void onEnd() {
         mView.onProcessEnd();
     }
+
 }
 

@@ -1,8 +1,8 @@
 <resources>
-    <string name="app_name">ErreparSeparatas</string>
+    <string name="app_name">ErreparFondoEditorial</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="title_activity_fullscreen">ErreparSeparatas</string>
+    <string name="title_activity_fullscreen">ErreparFondoEditorial</string>
     <string name="dummy_button">Dummy Button</string>
     <string name="dummy_content">DUMMY\nCONTENT</string>
     <string name="texto_activar">Te damos la bienvenida a la \n <b>App Errepar Fondo Editorial</b>

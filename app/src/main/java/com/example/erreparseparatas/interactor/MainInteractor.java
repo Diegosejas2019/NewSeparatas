@@ -1,6 +1,12 @@
 package com.example.erreparseparatas.interactor;
 
-import android.widget.Toast;
+import static android.content.Context.CONNECTIVITY_SERVICE;
+
+import android.content.Context;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
+import android.os.Environment;
+import android.util.Log;
 
 import com.example.erreparseparatas.interfaces.APIService;
 import com.example.erreparseparatas.interfaces.MainContract;
@@ -9,18 +15,20 @@ import com.example.erreparseparatas.model.Publicaciones;
 import com.example.erreparseparatas.model.ResponseUSER;
 import com.example.erreparseparatas.model.User;
 import com.example.erreparseparatas.utils.ApiUtils;
-import com.google.gson.JsonObject;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
-import java.util.Iterator;
+import java.io.InputStreamReader;
+import java.lang.reflect.Type;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
-import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -28,13 +36,13 @@ import retrofit2.Response;
 public class MainInteractor implements MainContract.Interactor{
     private APIService mAPIService;
     private MainContract.onOperationListener mListner;
-
-
+    private Context context;
     public MainInteractor(MainContract.onOperationListener mListner) {
         this.mListner = mListner;
         mAPIService = ApiUtils.getAPIService();
     }
 
+    private List<Detalle> detalleList;
     @Override
     public void performCodeBook(User user) {
         mListner.onStart();
@@ -96,7 +104,8 @@ public class MainInteractor implements MainContract.Interactor{
     }
 
     @Override
-    public void performGetCodeDetail(User user) {
+    public void performGetCodeDetail(User user, Context context) {
+        this.context = context;
         mListner.onStart();
         mAPIService.obtenerdetalle(user.getToken(), user.getIdUser()
         ).enqueue(new Callback<List<Detalle>>() {
@@ -106,21 +115,59 @@ public class MainInteractor implements MainContract.Interactor{
                 if(response.isSuccessful()) {
                     mListner.onSuccessGetBookDetail(response.body());
                     mListner.onEnd();
-                }
-                else {
+                    String filename = "bookdetail" + user.getIdUser();
+                    Gson gson = new Gson();
+                    String s = gson.toJson(response.body());
+                    FileOutputStream outputStream;
                     try {
-                        mListner.onFailure(response.errorBody().string());
-                        mListner.onEnd();
-                    } catch (IOException e) {
+                        outputStream = context.openFileOutput(filename, Context.MODE_PRIVATE);
+                        outputStream.write(s.getBytes());
+                        outputStream.close();
+                    } catch (Exception e) {
                         e.printStackTrace();
                     }
                 }
-            }
+                else {
+                        try {
+                            mListner.onFailure(response.errorBody().string());
+                            mListner.onEnd();
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }
 
             @Override
             public void onFailure(Call<List<Detalle>> call, Throwable t) {
-                mListner.onSuccess();
-                mListner.onEnd();
+                String filename = "bookdetail" + user.getIdUser();
+                try {
+                    if (context.openFileInput(filename) != null) {
+                        try {
+                            FileInputStream fis = context.openFileInput(filename);
+                            InputStreamReader isr = new InputStreamReader(fis);
+                            BufferedReader bufferedReader = new BufferedReader(isr);
+                            StringBuilder sb = new StringBuilder();
+                            String line;
+                            while ((line = bufferedReader.readLine()) != null) {
+                                sb.append(line);
+                            }
+                            String json = sb.toString();
+                            Gson gson = new Gson();
+                            Type listDetalle = new TypeToken<ArrayList<Detalle>>() {
+                            }.getType();
+                            detalleList = gson.<List>fromJson(json, listDetalle);
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                        mListner.onSuccessGetBookDetail(detalleList);
+                    } else {
+                        mListner.onSuccess();
+                    }
+                    mListner.onEnd();
+                } catch (FileNotFoundException e) {
+                    e.printStackTrace();
+                }
+
             }
         });
     }
@@ -191,15 +238,16 @@ public class MainInteractor implements MainContract.Interactor{
     @Override
     public void performRecoveryPlayers(User user) {
         mListner.onStart();
-        mAPIService.recoveryUser(user.getEmail()).enqueue(new Callback<ResponseUSER>() {
+        mAPIService.recoveryUser(user.getEmail()
+        ).enqueue(new Callback<ResponseUSER>() {
             @Override
             public void onResponse(Call<ResponseUSER> call, Response<ResponseUSER> response) {
 
                 if(response.isSuccessful()) {
-                    mListner.onSuccess();
+                    mListner.onSuccessCreate(response.body());
                     mListner.onEnd();
                 }
-                else{
+                else  {
                     try {
                         mListner.onFailure(response.errorBody().string());
                         mListner.onEnd();
@@ -211,12 +259,11 @@ public class MainInteractor implements MainContract.Interactor{
 
             @Override
             public void onFailure(Call<ResponseUSER> call, Throwable t) {
-                mListner.onFailure(t.getMessage());
+                mListner.onSuccess();
                 mListner.onEnd();
             }
         });
     }
-
 }
 
 

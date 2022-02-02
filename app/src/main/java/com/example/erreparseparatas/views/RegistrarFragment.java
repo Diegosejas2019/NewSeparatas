@@ -76,7 +76,6 @@ public class RegistrarFragment extends Fragment {
 
         ButterKnife.bind(this,view);
 
-
         mContinuar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

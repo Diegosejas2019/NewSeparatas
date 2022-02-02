@@ -27,6 +27,8 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
 
+import com.example.erreparseparatas.model.Publicaciones;
+import com.example.erreparseparatas.utils.DetallesAdapter;
 import com.example.erreparseparatas.views.ActivarLibroFragment;
 import com.example.erreparseparatas.views.ContactanosFragment;
 import com.example.erreparseparatas.views.DescargarContenidoFragment;
@@ -46,12 +48,20 @@ import com.google.android.play.core.install.model.AppUpdateType;
 import com.google.android.play.core.install.model.InstallStatus;
 import com.google.android.play.core.install.model.UpdateAvailability;
 import com.google.firebase.messaging.FirebaseMessaging;
+import com.google.gson.Gson;
+import com.google.gson.JsonObject;
+import com.google.gson.reflect.TypeToken;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.lang.reflect.Type;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
-
+    Context context;
     private static final String TAG = "info hash";
     private AppBarConfiguration mAppBarConfiguration;
     private AppUpdateManager mAppUpdateManager;
@@ -155,6 +165,18 @@ public class MainActivity extends AppCompatActivity {
                                 startActivity(mainIntent);
                                 MainActivity.this.finish();
                                 overridePendingTransition(R.anim.nav_default_enter_anim, R.anim.nav_default_exit_anim);
+
+                                try {
+                                    String filename = "BooksJson";
+                                    FileOutputStream outputStream = context.openFileOutput(filename, Context.MODE_PRIVATE);
+                                    File file = new File(String.valueOf(outputStream));
+                                    if (file.exists()) {
+                                        file.delete();
+                                    }
+                                } catch (FileNotFoundException e) {
+                                    e.printStackTrace();
+                                }
+
                                 break;
                             case R.id.nav_activar:
                                 nextFrag = new ActivarLibroFragment();
@@ -212,31 +234,23 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    @Override
-    public void onBackPressed() {
-        if(getFragmentManager().getBackStackEntryCount() > 0){
-            getFragmentManager().popBackStackImmediate();
-        }
-        else{
-            super.onBackPressed();
-        }
-    }
+//    @Override
+//    public void onBackPressed() {
+//        if(getFragmentManager().getBackStackEntryCount() > 0){
+//            getFragmentManager().popBackStackImmediate();
+//        }
+//        else{
+//            super.onBackPressed();
+//        }
+//    }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item){
-        int id = item.getItemId();
-
-        /*if (id == R.id.action_settings) {
-            showInfoAlert(0);
-        }*/
-
-        //showInfoAlert(0);
         return super.onOptionsItemSelected(item);
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
         super.onCreateOptionsMenu(menu);
         getMenuInflater().inflate(R.menu.activity_main_drawer, menu);
         return true;
@@ -256,7 +270,6 @@ public class MainActivity extends AppCompatActivity {
                     @Override
                     public void onStateUpdate(InstallState state) {
                         if (state.installStatus() == InstallStatus.DOWNLOADED){
-                            //CHECK THIS if AppUpdateType.FLEXIBLE, otherwise you can skip
                             popupSnackbarForCompleteUpdate();
                         } else if (state.installStatus() == InstallStatus.INSTALLED){
                             if (mAppUpdateManager != null){
@@ -285,7 +298,6 @@ public class MainActivity extends AppCompatActivity {
                 }
 
             } else if (appUpdateInfo.installStatus() == InstallStatus.DOWNLOADED){
-                //CHECK THIS if AppUpdateType.FLEXIBLE, otherwise you can skip
                 popupSnackbarForCompleteUpdate();
             } else {
                 Log.e("TAG2", "checkForAppUpdateAvailability: something else");
@@ -294,7 +306,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void popupSnackbarForCompleteUpdate() {
-
         Snackbar snackbar =
                 Snackbar.make(
                         findViewById(R.id.content),
@@ -306,26 +317,7 @@ public class MainActivity extends AppCompatActivity {
                 mAppUpdateManager.completeUpdate();
             }
         });
-
-
-        //snackbar.setActionTextColor(getResources().getColor(R.color.colorAccent));
         snackbar.show();
-    }
-
-    public void printHashKey(Context pContext) {
-        try {
-            PackageInfo info = getPackageManager().getPackageInfo(getPackageName(), PackageManager.GET_SIGNATURES);
-            for (android.content.pm.Signature signature : info.signatures) {
-                MessageDigest md = MessageDigest.getInstance("SHA");
-                md.update(signature.toByteArray());
-                String hashKey = new String(Base64.encode(md.digest(), 0));
-                Log.i(TAG, "printHashKey() Hash Key: " + hashKey);
-            }
-        } catch (NoSuchAlgorithmException e) {
-            Log.e(TAG, "printHashKey()", e);
-        } catch (Exception e) {
-            Log.e(TAG, "printHashKey()", e);
-        }
     }
 
 

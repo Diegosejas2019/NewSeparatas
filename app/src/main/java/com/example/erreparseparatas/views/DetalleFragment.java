@@ -1,29 +1,20 @@
 package com.example.erreparseparatas.views;
-import androidx.activity.OnBackPressedCallback;
 
-import android.app.Activity;
-import android.app.FragmentTransaction;
+import static android.content.Context.MODE_PRIVATE;
+import static com.example.erreparseparatas.MainActivity.MY_PREFS_NAME;
+
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
 import android.os.Bundle;
-
-
-
-import android.preference.PreferenceManager;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.webkit.WebSettings;
-import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.activity.OnBackPressedCallback;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -36,17 +27,12 @@ import com.example.erreparseparatas.model.ResponseUSER;
 import com.example.erreparseparatas.model.User;
 import com.example.erreparseparatas.presenter.MainPresenter;
 import com.example.erreparseparatas.utils.DetallesAdapter;
-import com.example.erreparseparatas.utils.PublicacionesAdapter;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-
-import static android.content.Context.CONNECTIVITY_SERVICE;
-import static android.content.Context.MODE_PRIVATE;
-import static com.example.erreparseparatas.MainActivity.MY_PREFS_NAME;
 
 public class DetalleFragment extends Fragment implements  MainContract.View{
 
@@ -55,24 +41,20 @@ public class DetalleFragment extends Fragment implements  MainContract.View{
     private static final String ARG_PARAM1 = "linkImg";
     private static final String ARG_PARAM2 = "publicacionid";
     @BindView(R.id.imageView) ImageView mImage;
+    @BindView(R.id.emptyDetailText)
+    TextView emptyDetail;
     RecyclerView recyclerView;
     public MainPresenter mPresenter;
     public Context context;
-
+    Boolean isEmpty = false;
 
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2 = "";
-    private String mParam3;
-    private String mParam4;
-    private String mParam5;
-    private String mParam6;
 
     public DetalleFragment() {
         // Required empty public constructor
     }
-
-
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -116,15 +98,9 @@ public class DetalleFragment extends Fragment implements  MainContract.View{
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-
         View view = inflater.inflate(R.layout.fragment_detalle, container, false);
         context = inflater.getContext();
         ButterKnife.bind(this,view);
-
-        Picasso.with(inflater.getContext())
-                .load(mParam1)
-                .resize(850, 1000)
-                .into(mImage);
 
         recyclerView = (RecyclerView) view.findViewById(R.id.recyclerViewList);
         recyclerView.setHasFixedSize(true);
@@ -133,30 +109,19 @@ public class DetalleFragment extends Fragment implements  MainContract.View{
         SharedPreferences prefs = context.getSharedPreferences(MY_PREFS_NAME, MODE_PRIVATE);
         String restoredText = prefs.getString("token", "");
         if (restoredText != "") {
-            if (mParam2 != null){
-            User user = new User();
-            user.setIdUser(Integer.valueOf(mParam2));
-            user.setToken(restoredText);
+            if (mParam2 != null) {
+                User user = new User();
+                user.setIdUser(Integer.valueOf(mParam2));
+                user.setToken(restoredText);
 
-            if(isConnected())
-            {
-                mPresenter.getBooksDetails(user);
-            }
+                mPresenter.getBooksDetails(user, context);
             }
         }
         return view;
     }
 
-    public boolean isConnected(){
-        ConnectivityManager connectivityManager = (ConnectivityManager) context.getSystemService( CONNECTIVITY_SERVICE );
-        NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
-        return activeNetworkInfo != null && activeNetworkInfo.isConnected();
-    }
-
     @Override
-    public void onCreatePlayerSuccessful() {
-
-    }
+    public void onCreatePlayerSuccessful() { }
 
     @Override
     public void onCreatePlayerFailure(String mensaje) {
@@ -164,33 +129,35 @@ public class DetalleFragment extends Fragment implements  MainContract.View{
     }
 
     @Override
-    public void onProcessStart() {
-
-    }
+    public void onProcessStart() { }
 
     @Override
-    public void onProcessEnd() {
-
-    }
+    public void onProcessEnd() { }
 
     @Override
-    public void onUserRead(ResponseUSER user) {
-
-    }
+    public void onUserRead(ResponseUSER user) { }
 
     @Override
-    public void onUserCreate(ResponseUSER user) {
-
-    }
+    public void onUserCreate(ResponseUSER user) { }
 
     @Override
-    public void onGetBook(List<Publicaciones> publicaciones) {
-
-    }
+    public void onGetBook(List<Publicaciones> publicaciones) { }
 
     @Override
     public void onGetBookDetail(List<Detalle> detalles) {
+        if (detalles.isEmpty()) {
+            Log.d("detalle", "vacio");
+            isEmpty = true;
+            emptyDetail.setVisibility(View.VISIBLE);
+        } else {
+            isEmpty = false;
+            emptyDetail.setVisibility(View.GONE);
+            Picasso.with(getLayoutInflater().getContext())
+                    .load(mParam1)
+                    .into(mImage);
+        }
         DetallesAdapter adapter = new DetallesAdapter(context, detalles,1);
         recyclerView.setAdapter(adapter);
     }
+
 }

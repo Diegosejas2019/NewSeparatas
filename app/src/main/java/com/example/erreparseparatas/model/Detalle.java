@@ -5,6 +5,7 @@ import com.google.gson.annotations.SerializedName;
 public class Detalle {
 
     private int id;
+    private String fecha;
     private String videoTitle;
     private String videoUrl;
     private String audioTitle;
@@ -12,8 +13,9 @@ public class Detalle {
     private String fileTitle;
     private String fileUrl;
 
-    public Detalle(int id, String videoTitle, String videoUrl, String audioTitle, String audioUrl, String fileTitle, String fileUrl) {
+    public Detalle(int id, String fecha, String videoTitle, String videoUrl, String audioTitle, String audioUrl, String fileTitle, String fileUrl) {
         this.id = id;
+        this.fecha = fecha;
         this.videoTitle = videoTitle;
         this.videoUrl = videoUrl;
         this.audioTitle = audioTitle;
@@ -32,6 +34,12 @@ public class Detalle {
     public void setId(int id) {
         this.id = id;
     }
+
+    public String getFecha() {
+        return fecha;
+    }
+
+    public void setFecha(String fecha) { this.fecha = fecha; }
 
     public String getVideoTitle() {
         return videoTitle;

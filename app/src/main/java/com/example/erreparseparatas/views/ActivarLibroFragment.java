@@ -1,13 +1,15 @@
 package com.example.erreparseparatas.views;
 
+import static android.content.Context.MODE_PRIVATE;
+import static com.example.erreparseparatas.MainActivity.MY_PREFS_NAME;
+
+import android.app.DownloadManager;
 import android.content.Context;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
+import android.net.Uri;
 import android.os.Bundle;
-
-import androidx.fragment.app.Fragment;
-
+import android.os.Environment;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
@@ -18,9 +20,9 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.example.erreparseparatas.MainActivity;
+import androidx.fragment.app.Fragment;
+
 import com.example.erreparseparatas.R;
 import com.example.erreparseparatas.interfaces.MainContract;
 import com.example.erreparseparatas.model.Detalle;
@@ -31,14 +33,15 @@ import com.example.erreparseparatas.presenter.MainPresenter;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.messaging.FirebaseMessaging;
+import com.google.gson.Gson;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-
-import static android.content.Context.MODE_PRIVATE;
-import static com.example.erreparseparatas.MainActivity.MY_PREFS_NAME;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -73,6 +76,9 @@ public class ActivarLibroFragment extends Fragment implements  MainContract.View
     private String mParam1;
     private String mParam2;
 
+    User user = new User();
+
+    private List<Publicaciones> publicacionesList = new ArrayList<>();
     public ActivarLibroFragment() {
         // Required empty public constructor
     }
@@ -175,7 +181,6 @@ public class ActivarLibroFragment extends Fragment implements  MainContract.View
                 } else {
                     String codigo = mCodigo.getText().toString().trim();
 
-                    User user = new User();
                     user.setFullUserName(codigo);
                     user.setIdUser(midUser);
                     user.setToken(mToken);
@@ -188,16 +193,10 @@ public class ActivarLibroFragment extends Fragment implements  MainContract.View
     }
 
     @Override
-    public void onCreatePlayerSuccessful() {
-        Toast.makeText(context,"Activado Exitosamente",Toast.LENGTH_LONG).show();
-        mBookError.setVisibility(View.VISIBLE);
-        mBookError.setText("Activado exitosamente");
-        mBookError.setTextColor(Color .rgb(0,255,0));
-    }
+    public void onCreatePlayerSuccessful() { }
 
     @Override
     public void onCreatePlayerFailure(String mensaje) {
-        Toast.makeText(context,mensaje,Toast.LENGTH_LONG).show();
         mBookError.setVisibility(View.VISIBLE);
         mBookError.setText(mensaje);
         mBookError.setTextColor(Color .rgb(255,0,0));
@@ -214,32 +213,66 @@ public class ActivarLibroFragment extends Fragment implements  MainContract.View
         FirebaseMessaging.getInstance().subscribeToTopic(mCodigo.getText().toString().trim()).addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override
             public void onSuccess(Void aVoid) {
-//                Toast.makeText(context,"Código erróneo",Toast.LENGTH_LONG).show();
-//                mBookError.setVisibility(View.VISIBLE);
-//                mBookError.setText("Código erróneo");
-//                mBookError.setTextColor(Color .rgb(255,0,0));
             }
         });
         mProgressbar.setVisibility(View.INVISIBLE);
     }
 
     @Override
-    public void onUserRead(ResponseUSER user) {
-
-    }
+    public void onUserRead(ResponseUSER user) { }
 
     @Override
     public void onUserCreate(ResponseUSER user) {
-
+        mPresenter.getBooks(this.user);
+        SuccessActivateBookFragment nextFrag= new SuccessActivateBookFragment();
+        getActivity().getSupportFragmentManager().beginTransaction()
+                .replace(R.id.nav_host_fragment, nextFrag, "findThisFragment")
+                .addToBackStack(null)
+                .commit();
     }
 
     @Override
     public void onGetBook(List<Publicaciones> publicaciones) {
+        publicacionesList = publicaciones;
 
+        //Download booklist.json for offline mode
+        mCreateAndSaveFile("BooksJson", publicaciones);
+        for (int i = 0; i < publicacionesList.size(); i++) {
+            downloadBooksImages(publicacionesList.get(i).getTitle(), publicacionesList.get(i).getImageUrl());
+        }
     }
 
     @Override
-    public void onGetBookDetail(List<Detalle> detalles) {
+    public void onGetBookDetail(List<Detalle> detalles) { }
 
+    private void downloadBooksImages(String filename, String downloadUrlOfImage){
+        try{
+            DownloadManager dm = (DownloadManager) context.getSystemService(Context.DOWNLOAD_SERVICE);
+            Uri downloadUri = Uri.parse(downloadUrlOfImage);
+            DownloadManager.Request request = new DownloadManager.Request(downloadUri);
+            request.setAllowedNetworkTypes(DownloadManager.Request.NETWORK_WIFI | DownloadManager.Request.NETWORK_MOBILE)
+                    .setAllowedOverRoaming(false)
+                    .setTitle(filename)
+                    .setMimeType("image/jpeg")
+                    .setNotificationVisibility(DownloadManager.Request.VISIBILITY_HIDDEN)
+                    .setDestinationInExternalPublicDir(Environment.DIRECTORY_PICTURES, File.separator + filename + ".jpg");
+            dm.enqueue(request);
+        }catch (Exception e){
+            Log.d("BOOK",e.getMessage());
+        }
+    }
+
+    public void mCreateAndSaveFile(String params, List<Publicaciones> publicaciones) {
+            String filename = params;
+            Gson gson = new Gson();
+            String s = gson.toJson(publicaciones);
+            FileOutputStream outputStream;
+            try {
+                outputStream = context.openFileOutput(filename, Context.MODE_PRIVATE);
+                outputStream.write(s.getBytes());
+                outputStream.close();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
     }
 }

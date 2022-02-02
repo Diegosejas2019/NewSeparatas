@@ -1,5 +1,7 @@
 package com.example.erreparseparatas.interfaces;
 
+import android.content.Context;
+
 import com.example.erreparseparatas.model.Detalle;
 import com.example.erreparseparatas.model.Publicaciones;
 import com.example.erreparseparatas.model.ResponseUSER;
@@ -25,12 +27,12 @@ public interface MainContract {
         void recoveryPlayers(User user);
         void codeBook(User user);
         void getBooks(User user);
-        void getBooksDetails(User user);
+        void getBooksDetails(User user, Context context);
     }
 
     interface Interactor{
         void performGetCode(User user);
-        void performGetCodeDetail(User user);
+        void performGetCodeDetail(User user, Context context);
         void performCodeBook(User user);
         void performCreatePlayer(User user);
         void performReadPlayers(User user);

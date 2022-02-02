@@ -14,7 +14,7 @@ public class Publicaciones {
     private String linkPDF2;
     private String linkVimeo;
     private String linkAudio;
-
+    public Publicaciones(){};
     public Publicaciones(int id, String title, String shortdesc, String image,String linkPDF1,String linkPDF2,String linkVimeo,String linkAudio) {
         this.id = id;
         this.title = title;

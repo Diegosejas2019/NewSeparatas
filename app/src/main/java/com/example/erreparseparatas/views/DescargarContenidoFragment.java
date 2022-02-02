@@ -1,14 +1,24 @@
 package com.example.erreparseparatas.views;
 
+import static com.example.erreparseparatas.MainActivity.MY_PREFS_NAME;
+
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
-
-import androidx.fragment.app.Fragment;
-
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CompoundButton;
+import android.widget.Switch;
+import android.widget.ToggleButton;
+
+import androidx.fragment.app.Fragment;
 
 import com.example.erreparseparatas.R;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -16,7 +26,13 @@ import com.example.erreparseparatas.R;
  * create an instance of this fragment.
  */
 public class DescargarContenidoFragment extends Fragment {
+    private Context mCtx;
 
+    @BindView(R.id.downloadSwitch)
+    Switch downloadSwitch;
+
+    Boolean permitted;
+//    @BindView(R.id.downloadSwitch) Switch downloadSwitch;
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -51,6 +67,7 @@ public class DescargarContenidoFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         if (getArguments() != null) {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
@@ -60,7 +77,28 @@ public class DescargarContenidoFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_descargar_contenido, container, false);
+
+        View view = inflater.inflate(R.layout.fragment_descargar_contenido, container, false);
+        mCtx = inflater.getContext();
+        ButterKnife.bind(this,view);
+
+        SharedPreferences preferences = mCtx.getSharedPreferences(MY_PREFS_NAME, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = preferences.edit();
+        Log.d("ASD","ENTER");
+        permitted = preferences.getBoolean("downloadPermited", false);
+
+        downloadSwitch.setChecked(permitted);
+
+        downloadSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                Log.d("ASD","ENTER");
+                editor.putBoolean("downloadPermited", isChecked);
+                editor.apply();
+            }
+        });
+
+        return view;
     }
+
 }

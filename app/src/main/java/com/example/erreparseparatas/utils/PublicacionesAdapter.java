@@ -1,21 +1,13 @@
 package com.example.erreparseparatas.utils;
 
-import android.app.Activity;
-import android.app.AlertDialog;
-
 import android.app.ProgressDialog;
 import android.content.Context;
-import android.content.Intent;
-import android.location.Location;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.RatingBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
@@ -28,14 +20,9 @@ import com.example.erreparseparatas.views.DetalleFragment;
 import com.squareup.picasso.Picasso;
 
 import org.json.JSONArray;
-import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.util.ArrayList;
 import java.util.List;
-
-
-import static android.content.Intent.FLAG_ACTIVITY_PREVIOUS_IS_TOP;
 
 public class PublicacionesAdapter extends RecyclerView.Adapter<PublicacionesAdapter.ProductViewHolder> implements  android.view.View.OnClickListener {
 
@@ -57,6 +44,7 @@ public class PublicacionesAdapter extends RecyclerView.Adapter<PublicacionesAdap
     JSONArray jsonarray;
     JSONObject jsonobject;
     private ProgressDialog pDialog;
+
 
     //getting the context and product list with constructor
     public PublicacionesAdapter(Context mCtx, List<Publicaciones> productList,Integer iduser) {
@@ -106,13 +94,8 @@ public class PublicacionesAdapter extends RecyclerView.Adapter<PublicacionesAdap
             }
         });
         //binding the data with the viewholder views
+
         holder.textViewTitle.setText(product.getTitle());
-
-
-
-        Url url = new Url();
-
-
         Picasso.with(mCtx)
                 //.load(url.getDireccion() + "/Imagenes/" + product.getImageUrl().substring((product.getImageUrl().length()-6)).replaceAll("\\\\", ""))
                 .load(product.getImageUrl())
@@ -173,5 +156,4 @@ public class PublicacionesAdapter extends RecyclerView.Adapter<PublicacionesAdap
                 break;
         }
     }
-
 }
