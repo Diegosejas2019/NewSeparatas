@@ -18,7 +18,6 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
         if (remoteMessage.getData().size() > 0) {
             Log.e(TAG, "Data Payload: " + remoteMessage.getData().toString());
             try {
-                //JSONObject json = new JSONObject(remoteMessage.getData().toString());
                 Map<String, String> params = remoteMessage.getData();
                 JSONObject object = new JSONObject(params);
                 Log.e("JSON_OBJECT", object.toString());
@@ -29,23 +28,15 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
         }
     }
 
-    //this method will display the notification
-    //We are passing the JSONObject that is received from
-    //firebase cloud messaging
     private void sendPushNotification(JSONObject json) {
-        //optionally we can display the json into log
         Log.e(TAG, "Notification JSON " + json.toString());
         try {
-
-            String title = "Errepar";
             String id = json.get("id").toString();
             String titulo = json.get("titulo").toString();
             String descripcion = json.get("descripcion").toString();
             String link = json.get("link").toString();
             MyNotificationManager mNotificationManager = new MyNotificationManager(getApplicationContext());
-
             mNotificationManager.showSmallNotification(titulo, id,descripcion,descripcion,link);
-
         } catch (JSONException e) {
             Log.e(TAG, "Json Exception: " + e.getMessage());
         } catch (Exception e) {

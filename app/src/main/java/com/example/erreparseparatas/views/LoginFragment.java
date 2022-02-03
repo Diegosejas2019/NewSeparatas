@@ -39,6 +39,7 @@ import com.google.gson.annotations.SerializedName;
 
 import java.io.FileOutputStream;
 import java.util.List;
+import java.util.Locale;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -110,7 +111,6 @@ public class LoginFragment extends Fragment implements MainContract.View {
         SharedPreferences prefs = context.getSharedPreferences(MY_PREFS_NAME, MODE_PRIVATE);
         String restoredText = prefs.getString("token", "");
         if (restoredText != "") {
-
             mEmail.setText(prefs.getString("email", ""));
             mContraseña.setText(prefs.getString("password", ""));
             Log.println(Log.INFO, "mEmail", mEmail.getText().toString());
@@ -234,16 +234,14 @@ public class LoginFragment extends Fragment implements MainContract.View {
     }
 
     @Override
-    public void onCreatePlayerSuccessful() {
-
-    }
+    public void onCreatePlayerSuccessful() { }
 
     @Override
     public void onCreatePlayerFailure(String mensaje) {
         mEmail.setTextColor(Color.rgb(255, 0, 0));
         mContraseña.setTextColor(Color.rgb(255, 0, 0));
         mErrorMsg.setVisibility(View.VISIBLE);
-        mErrorMsg.setText(mensaje);
+        mErrorMsg.setText(mensaje.toUpperCase());
     }
 
     @Override

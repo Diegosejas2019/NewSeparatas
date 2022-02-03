@@ -13,37 +13,33 @@
         tools:context=".views.RegisterFragment">
 
 
-        <TextView
-            android:id="@+id/textView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="20dp"
-            android:layout_marginTop="20dp"
-            android:layout_marginEnd="20dp"
-            android:gravity="center|center_vertical"
-            android:text="Descarga de Contenido"
-            android:textColor="@color/Grey"
-            android:textSize="28sp"
-            android:textStyle="bold"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
         <Switch
             android:id="@+id/downloadSwitch"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="75dp"
-            android:layout_marginTop="24dp"
+            android:layout_marginTop="29dp"
             android:layout_marginEnd="76dp"
             android:text="Habilitar la descarga de contenido"
-            android:textOff="Habilitar la descarga de contenido: NO"
-            android:textOn="Habilitar la descarga de contenido: SI"
             android:textSize="16sp"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.482"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView"
+            app:layout_constraintTop_toBottomOf="@+id/textView6"
             tools:ignore="TouchTargetSizeCheck" />
+
+        <TextView
+            android:id="@+id/textView6"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="40dp"
+            android:padding="10dp"
+            android:text="Usted tendra acceso a los PDF en el modo ofline una vez que acepte el boton que esta debajo de esta pantalla. Si ya acepto intente abrir un pdf entrando en el detalle de un libro, y el PDF se descargara en segundo plano."
+            android:textAlignment="center"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

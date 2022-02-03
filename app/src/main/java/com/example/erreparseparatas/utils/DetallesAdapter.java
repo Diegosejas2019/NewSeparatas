@@ -11,12 +11,14 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.Environment;
+import android.provider.DocumentsContract;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.core.content.FileProvider;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.erreparseparatas.R;
@@ -24,8 +26,6 @@ import com.example.erreparseparatas.model.Detalle;
 
 import java.io.File;
 import java.util.List;
-
-import butterknife.BindView;
 
 public class DetallesAdapter extends RecyclerView.Adapter<DetallesAdapter.ProductViewHolder> implements  android.view.View.OnClickListener {
 
@@ -67,29 +67,24 @@ public class DetallesAdapter extends RecyclerView.Adapter<DetallesAdapter.Produc
                 @Override
                 public void onClick(android.view.View v) {
                     String downloadDirectory = String.valueOf(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS));
-                    File file = new File(downloadDirectory + "/" + detalle.getId() + ".pdf");
+                    String fileName = (detalle.getFileTitle() + detalle.getId() + ".pdf").replace(" ", "_");
+                    File file = new File(downloadDirectory + "/" + fileName);
                     if (isConnected()) {
-                        if (file.exists()) {
-                            Intent localIntent = new Intent(Intent.ACTION_OPEN_DOCUMENT, Uri.fromFile(file));
-                            mCtx.startActivity(localIntent);
-                        } else {
-                            Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.errepar.com/resources/images/appseparatas/" + detalle.getId() + detalle.getFileUrl()));
-                            mCtx.startActivity(browserIntent);
-                        }
+                        Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.errepar.com/resources/images/appseparatas/" + detalle.getId() + detalle.getFileUrl()));
+                        mCtx.startActivity(browserIntent);
                         if (downloadPermited && !file.exists()) {
                             DownloadManager downloadmanager = (DownloadManager) mCtx.getSystemService(Context.DOWNLOAD_SERVICE);
                             Uri uri = Uri.parse("https://www.errepar.com/resources/images/appseparatas/" + detalle.getId() + detalle.getFileUrl());
                             DownloadManager.Request request = new DownloadManager.Request(uri);
-                            request.setTitle(detalle.getId() + ".pdf");
+                            request.setTitle(fileName);
                             request.setDescription("Descargando libro...");
                             request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED);
-                            request.setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS, detalle.getId() + ".pdf");
+                            request.setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS, fileName);
                             downloadmanager.enqueue(request);
                         }
                     } else {
                         if (file.exists()) {
-                            Intent localIntent = new Intent(Intent.ACTION_OPEN_DOCUMENT, Uri.fromFile(file));
-                            mCtx.startActivity(localIntent);
+                            openFile(file);
                         } else {
                             Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.errepar.com/resources/images/appseparatas/" + detalle.getId() + detalle.getFileUrl()));
                             mCtx.startActivity(browserIntent);
@@ -98,7 +93,7 @@ public class DetallesAdapter extends RecyclerView.Adapter<DetallesAdapter.Produc
                 }
             });
         }
-        if (detalle.getVideoTitle() == null) {
+        if (detalle.getVideoTitle() == null || detalle.getVideoTitle().equals("")) {
             holder.txtLinkVimeo.setVisibility(View.GONE);
             holder.vidIco.setVisibility(View.GONE);
         } else  if (detalle.getVideoUrl() != null){
@@ -148,7 +143,7 @@ public class DetallesAdapter extends RecyclerView.Adapter<DetallesAdapter.Produc
         }
     }
 
-    public boolean isConnected(){
+    public boolean isConnected() {
         ConnectivityManager connectivityManager = (ConnectivityManager) mCtx.getSystemService( CONNECTIVITY_SERVICE );
         NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
         return activeNetworkInfo != null && activeNetworkInfo.isConnected();
@@ -160,15 +155,18 @@ public class DetallesAdapter extends RecyclerView.Adapter<DetallesAdapter.Produc
     }
 
     @Override
-    public void onClick(View v)
-    {
+    public void onClick(View v) {
         int id = v.getId();
-
         switch (id) {
             case R.id.imageView:
-
                 break;
         }
     }
-
+    private void openFile(File file) {
+        Intent intent = new Intent(Intent.ACTION_OPEN_DOCUMENT, FileProvider.getUriForFile(mCtx, mCtx.getApplicationContext().getPackageName() + ".provider", file));
+        intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+        intent.addCategory(Intent.CATEGORY_OPENABLE);
+        intent.setType("*/*");
+        mCtx.startActivity(intent);
+    }
 }

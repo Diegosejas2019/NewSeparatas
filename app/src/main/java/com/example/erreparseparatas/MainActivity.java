@@ -1,5 +1,18 @@
 package com.example.erreparseparatas;
 
+import android.content.Context;
+import android.content.Intent;
+import android.content.IntentSender;
+import android.content.SharedPreferences;
+import android.graphics.Color;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
+import android.os.Bundle;
+import android.preference.PreferenceManager;
+import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -10,34 +23,12 @@ import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
-import android.content.Context;
-import android.content.Intent;
-import android.content.IntentSender;
-import android.content.SharedPreferences;
-import android.content.pm.PackageInfo;
-import android.content.pm.PackageManager;
-import android.graphics.Color;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
-import android.os.Bundle;
-import android.preference.PreferenceManager;
-import android.util.Base64;
-import android.util.Log;
-import android.view.Menu;
-import android.view.MenuItem;
-import android.widget.Toast;
-
-import com.example.erreparseparatas.model.Publicaciones;
-import com.example.erreparseparatas.utils.DetallesAdapter;
 import com.example.erreparseparatas.views.ActivarLibroFragment;
 import com.example.erreparseparatas.views.ContactanosFragment;
 import com.example.erreparseparatas.views.DescargarContenidoFragment;
 import com.example.erreparseparatas.views.DetalleFragment;
-import com.example.erreparseparatas.views.LoginFragment;
 import com.example.erreparseparatas.views.MisPublicacionesFragment;
-import com.example.erreparseparatas.views.RegistrarFragment;
 import com.example.erreparseparatas.views.TerminosYCondicionesFragment;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.play.core.appupdate.AppUpdateManager;
@@ -47,18 +38,10 @@ import com.google.android.play.core.install.InstallStateUpdatedListener;
 import com.google.android.play.core.install.model.AppUpdateType;
 import com.google.android.play.core.install.model.InstallStatus;
 import com.google.android.play.core.install.model.UpdateAvailability;
-import com.google.firebase.messaging.FirebaseMessaging;
-import com.google.gson.Gson;
-import com.google.gson.JsonObject;
-import com.google.gson.reflect.TypeToken;
 
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
-import java.lang.reflect.Type;
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
-import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
     Context context;
@@ -73,12 +56,6 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        /*FirebaseMessaging.getInstance().subscribeToTopic("news").addOnSuccessListener(new OnSuccessListener<Void>() {
-            @Override
-            public void onSuccess(Void aVoid) {
-                Toast.makeText(getApplicationContext(),"Success", Toast.LENGTH_LONG).show();
-            }
-        });*/
         Toolbar toolbar = findViewById(R.id.toolbar);
         toolbar.setTitle("");
         toolbar.setBackgroundColor(Color.WHITE);
@@ -127,15 +104,11 @@ public class MainActivity extends AppCompatActivity {
                     .commit();
         }
 
-
-
         if (savedInstanceState == null) {
-
             mAppBarConfiguration = new AppBarConfiguration.Builder(
                     R.id.nav_home, R.id.nav_activar, R.id.nav_descarga, R.id.nav_terminos, R.id.nav_contactanos)
                     .setDrawerLayout(drawer)
                     .build();
-
 
             NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
             NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
@@ -144,28 +117,21 @@ public class MainActivity extends AppCompatActivity {
             navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
                 @Override
                 public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
-
-                    if (isConnected()) {
-                        Fragment nextFrag = new Fragment();
-                        switch (menuItem.getItemId()) {
-                            case R.id.nav_cerrar:
-
-                                SharedPreferences spreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
-                                SharedPreferences.Editor spreferencesEditor = spreferences.edit();
-                                spreferencesEditor.clear();
-                                spreferencesEditor.commit();
-
-                                SharedPreferences prefs = getSharedPreferences(MY_PREFS_NAME, MODE_PRIVATE);
-                                spreferencesEditor = prefs.edit();
-                                spreferencesEditor.clear();
-                                spreferencesEditor.commit();
-
-                                Intent mainIntent = new Intent(MainActivity.this,
-                                        LoginActivity.class);
+                    Fragment nextFrag = new Fragment();
+                    switch (menuItem.getItemId()) {
+                        case R.id.nav_cerrar:
+                            SharedPreferences spreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+                            SharedPreferences.Editor spreferencesEditor = spreferences.edit();
+                            spreferencesEditor.clear();
+                            spreferencesEditor.commit();
+                            SharedPreferences prefs = getSharedPreferences(MY_PREFS_NAME, MODE_PRIVATE);
+                            spreferencesEditor = prefs.edit();
+                            spreferencesEditor.clear();
+                            spreferencesEditor.commit();
+                            Intent mainIntent = new Intent(MainActivity.this, LoginActivity.class);
                                 startActivity(mainIntent);
                                 MainActivity.this.finish();
                                 overridePendingTransition(R.anim.nav_default_enter_anim, R.anim.nav_default_exit_anim);
-
                                 try {
                                     String filename = "BooksJson";
                                     FileOutputStream outputStream = context.openFileOutput(filename, Context.MODE_PRIVATE);
@@ -176,13 +142,16 @@ public class MainActivity extends AppCompatActivity {
                                 } catch (FileNotFoundException e) {
                                     e.printStackTrace();
                                 }
-
                                 break;
                             case R.id.nav_activar:
-                                nextFrag = new ActivarLibroFragment();
+                                if (isConnected()) {
+                                    nextFrag = new ActivarLibroFragment();
+                                }
                                 break;
                             case R.id.nav_descarga:
-                                nextFrag = new DescargarContenidoFragment();
+                                if (isConnected()) {
+                                    nextFrag = new DescargarContenidoFragment();
+                                }
                                 break;
                             case R.id.nav_contactanos:
                                 nextFrag = new ContactanosFragment();
@@ -197,32 +166,14 @@ public class MainActivity extends AppCompatActivity {
                                 nextFrag = new TerminosYCondicionesFragment();
                                 break;
                         }
-
-
                         getSupportFragmentManager().beginTransaction()
                                 .replace(R.id.nav_host_fragment, nextFrag, "findThisFragment")
                                 .addToBackStack(null)
                                 .commit();
                         drawer.closeDrawers();
                         return true;
-                    } else {
-                    /*Fragment nextFrag= new OfflineFragment();
-
-                    getSupportFragmentManager().beginTransaction()
-                            .replace(R.id.nav_host_fragment, nextFrag, "findThisFragment")
-                            .addToBackStack(null)
-                            .commit();
-                    drawer.closeDrawers();
-                    Toast.makeText(MasterView.this, "Sin Conexión",Toast.LENGTH_LONG).show();*/
-                        drawer.closeDrawers();
-                        //showInfoAlert();
-
-                        return true;
                     }
-                }
             });
-
-
         }
     }
 
