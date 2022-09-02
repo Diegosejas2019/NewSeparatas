@@ -28,13 +28,13 @@ tools:context=".views.RegistrarFragment">
 
     <ImageView
         android:id="@+id/imageView"
-        android:layout_width="120dp"
-        android:layout_height="120dp"
+        android:layout_width="80dp"
+        android:layout_height="100dp"
         android:layout_marginTop="12dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/logo" />
+        app:srcCompat="@drawable/logo_new" />
 
     <TextView
         android:id="@+id/textView"
@@ -46,7 +46,8 @@ tools:context=".views.RegistrarFragment">
         android:layout_marginRight="64dp"
         android:gravity="center|center_vertical"
         android:text="Registración"
-        android:textColor="@color/Grey"
+        android:textColor="@color/colorPrimary"
+        android:fontFamily="@font/raleway_bold"
         android:textSize="28sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toTopOf="@+id/button"

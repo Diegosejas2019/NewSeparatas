@@ -1,5 +1,43 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="DesignSurface">
+    <option name="filePathToZoomLevelMap">
+      <map>
+        <entry key="..\:/Users/jonathan.castillo/Desktop/Errepar Separatas/ErreparSeparatas/app/src/main/res/drawable/buttonroundblack.xml" value="0.2115" />
+        <entry key="..\:/Users/jonathan.castillo/Desktop/Errepar Separatas/ErreparSeparatas/app/src/main/res/drawable/buttonroundprimary.xml" value="0.1" />
+        <entry key="..\:/Users/jonathan.castillo/Desktop/Errepar Separatas/ErreparSeparatas/app/src/main/res/drawable/home_button.xml" value="0.1" />
+        <entry key="..\:/Users/jonathan.castillo/Desktop/Errepar Separatas/ErreparSeparatas/app/src/main/res/drawable/ic_activar.xml" value="0.1" />
+        <entry key="..\:/Users/jonathan.castillo/Desktop/Errepar Separatas/ErreparSeparatas/app/src/main/res/drawable/ic_circle_background.xml" value="0.1" />
+        <entry key="..\:/Users/jonathan.castillo/Desktop/Errepar Separatas/ErreparSeparatas/app/src/main/res/drawable/ic_circle_foreground.xml" value="0.1" />
+        <entry key="..\:/Users/jonathan.castillo/Desktop/Errepar Separatas/ErreparSeparatas/app/src/main/res/drawable/ic_descargar.xml" value="0.1" />
+        <entry key="..\:/Users/jonathan.castillo/Desktop/Errepar Separatas/ErreparSeparatas/app/src/main/res/drawable/ic_publicaciones.xml" value="0.1" />
+        <entry key="..\:/Users/jonathan.castillo/Desktop/Errepar Separatas/ErreparSeparatas/app/src/main/res/layout/activity_fullscreen.xml" value="0.20416666666666666" />
+        <entry key="..\:/Users/jonathan.castillo/Desktop/Errepar Separatas/ErreparSeparatas/app/src/main/res/layout/activity_login.xml" value="0.20416666666666666" />
+        <entry key="..\:/Users/jonathan.castillo/Desktop/Errepar Separatas/ErreparSeparatas/app/src/main/res/layout/activity_main.xml" value="0.20416666666666666" />
+        <entry key="..\:/Users/jonathan.castillo/Desktop/Errepar Separatas/ErreparSeparatas/app/src/main/res/layout/app_main_bar.xml" value="0.20416666666666666" />
+        <entry key="..\:/Users/jonathan.castillo/Desktop/Errepar Separatas/ErreparSeparatas/app/src/main/res/layout/content_main.xml" value="0.20416666666666666" />
+        <entry key="..\:/Users/jonathan.castillo/Desktop/Errepar Separatas/ErreparSeparatas/app/src/main/res/layout/fragment_activar_libro.xml" value="0.25" />
+        <entry key="..\:/Users/jonathan.castillo/Desktop/Errepar Separatas/ErreparSeparatas/app/src/main/res/layout/fragment_book_code_success.xml" value="0.20416666666666666" />
+        <entry key="..\:/Users/jonathan.castillo/Desktop/Errepar Separatas/ErreparSeparatas/app/src/main/res/layout/fragment_contactanos.xml" value="0.20416666666666666" />
+        <entry key="..\:/Users/jonathan.castillo/Desktop/Errepar Separatas/ErreparSeparatas/app/src/main/res/layout/fragment_descargar_contenido.xml" value="0.20416666666666666" />
+        <entry key="..\:/Users/jonathan.castillo/Desktop/Errepar Separatas/ErreparSeparatas/app/src/main/res/layout/fragment_detalle.xml" value="0.20416666666666666" />
+        <entry key="..\:/Users/jonathan.castillo/Desktop/Errepar Separatas/ErreparSeparatas/app/src/main/res/layout/fragment_encontrar_codigo.xml" value="0.2" />
+        <entry key="..\:/Users/jonathan.castillo/Desktop/Errepar Separatas/ErreparSeparatas/app/src/main/res/layout/fragment_login.xml" value="0.18" />
+        <entry key="..\:/Users/jonathan.castillo/Desktop/Errepar Separatas/ErreparSeparatas/app/src/main/res/layout/fragment_mis_publicaciones.xml" value="0.11363636363636363" />
+        <entry key="..\:/Users/jonathan.castillo/Desktop/Errepar Separatas/ErreparSeparatas/app/src/main/res/layout/fragment_recuperar_password.xml" value="0.20416666666666666" />
+        <entry key="..\:/Users/jonathan.castillo/Desktop/Errepar Separatas/ErreparSeparatas/app/src/main/res/layout/fragment_registrar.xml" value="0.20416666666666666" />
+        <entry key="..\:/Users/jonathan.castillo/Desktop/Errepar Separatas/ErreparSeparatas/app/src/main/res/layout/fragment_registrar_p3.xml" value="0.20416666666666666" />
+        <entry key="..\:/Users/jonathan.castillo/Desktop/Errepar Separatas/ErreparSeparatas/app/src/main/res/layout/fragment_registrar_p_f.xml" value="0.20416666666666666" />
+        <entry key="..\:/Users/jonathan.castillo/Desktop/Errepar Separatas/ErreparSeparatas/app/src/main/res/layout/fragment_terminos_y_condiciones.xml" value="0.11045364891518737" />
+        <entry key="..\:/Users/jonathan.castillo/Desktop/Errepar Separatas/ErreparSeparatas/app/src/main/res/layout/layout_detalle.xml" value="0.20416666666666666" />
+        <entry key="..\:/Users/jonathan.castillo/Desktop/Errepar Separatas/ErreparSeparatas/app/src/main/res/layout/layout_publicaciones.xml" value="0.20416666666666666" />
+        <entry key="..\:/Users/jonathan.castillo/Desktop/Errepar Separatas/ErreparSeparatas/app/src/main/res/layout/nav_header_main.xml" value="0.1743659420289855" />
+        <entry key="..\:/Users/jonathan.castillo/Desktop/Errepar Separatas/ErreparSeparatas/app/src/main/res/menu/activity_main_drawer.xml" value="0.20416666666666666" />
+        <entry key="..\:/Users/jonathan.castillo/Desktop/Errepar Separatas/ErreparSeparatas/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.1" />
+        <entry key="..\:/Users/jonathan.castillo/Desktop/Errepar Separatas/ErreparSeparatas/app/src/main/res/mipmap-anydpi-v26/ic_launcher_round.xml" value="0.1" />
+      </map>
+    </option>
+  </component>
   <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="11" project-jdk-type="JavaSDK">
     <output url="file://$PROJECT_DIR$/build/classes" />
   </component>

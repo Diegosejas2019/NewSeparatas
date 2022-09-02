@@ -4,16 +4,23 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:background="@drawable/launchbackground"
+    android:background="@color/white"
     android:id="@+id/frameMain"
     tools:context=".SplashActivity">
 
-    <pl.droidsonroids.gif.GifImageView
+    <!--<pl.droidsonroids.gif.GifImageView
         android:id="@+id/gifImageView"
         android:layout_width="wrap_content"
         android:layout_height="543dp"
         android:layout_gravity="center"
-        android:src="@drawable/ezgif_com_gif_maker"
-        tools:ignore="ImageContrastCheck" />
+        android:src="@drawable/logo_errepar_ai"
+        tools:ignore="ImageContrastCheck" />-->
 
+    <ImageView
+        android:layout_width="347dp"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:layout_gravity="center"
+        android:src="@drawable/logo_errepar_ai" />
 </FrameLayout>

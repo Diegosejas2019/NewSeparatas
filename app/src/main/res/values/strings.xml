@@ -5,47 +5,152 @@
     <string name="title_activity_fullscreen">Mis Libros Errepar</string>
     <string name="dummy_button">Dummy Button</string>
     <string name="dummy_content">DUMMY\nCONTENT</string>
-    <string name="texto_activar">Te damos la bienvenida a la \n <b>App Errepar Fondo Editorial</b>
-    \n Activá tus libros y descubri todos los
-    \n beneficios que tenemos para vos</string>
+    <string name="texto_activar">Te damos la bienvenida a la \n <b>App Errepar Fondo Editorial</b> \nActivá tus libros y descubri todos los \nbeneficios que tenemos para vos</string>
     <string name="terminos">
-                1. Las bases, términos y condiciones aquí establecidas rigen, reglamentan y
-                   se aplican a todo tipo de suscripciones suministradas por ERREPAR SA.
-                   Esto incluye sus marcas comerciales Errepar y Erreius sean en soporte papel,
-                   bajo modalidad online o en cualquier otro soporte o medio, incluyendo sus módulos
-                   personalizables y demás aplicaciones individuales y/o asociadas.
+                <b>TÉRMINOS:</b> Los términos y condiciones particulares de uso (en adelante) los ("TDU") reglamentan
+                    las condiciones de acceso y uso de la aplicación de propiedad de la Editorial ERREPAR / ERREIUS,
+                    en adelante (ERREPAR) cuya denominación es (App Mis Libros Errepar) en adelante ("La App").
                 \n\n
-                2. Cada suscripción, incluyendo las que se otorguen a modo de prueba o cortesía se rigen por las condiciones especiales
-                    convenidas según el tipo de producto suministrado, pero además se complementa con lo establecido en las presentes
-                    condiciones y términos de uso.
+                <b>1.CONFORMIDAD:</b> La obtención de (La App) e incorporación a cualquier dispositivo autorizado
+                    por ERREPAR /ERREIUS para su uso así como la utilización efectiva de (La App) constituye y
+                    otorga el carácter de "USUARIO" (en adelante: "EL USUARIO") a quien lo realice e implica ante
+                    cualquiera de tales eventos lo que ocurra primero - que el mismo ha tomado conocimientodetenidamente
+                    de los (TDU) aceptándolos y dando su completa conformidad a todos y cada uno de los mismos en
+                    forma total y sin cuestionamientos ni reservas, entendiéndose que ha prestado el consentimiento
+                    a la totalidad de las estipulaciones contenidas en dichos (TDU) publicados al momento en que el
+                    USUARIO acceda. En consecuencia, es imprescindible que EL USUARIO efectúe una minuciosa lectura
+                    de los (TDU) en cada oportunidad en que acceda a (La App), dado que siempre tales (TDU) se entienden
+                    provisorios y susceptibles de sufrir modificaciones sin que para ello sea necesario difusión alguna
+                    o aviso de tales cambios, dando desde su primer acceso el "USUARIO" su conformidad para ello liberando
+                    de toda responsabilidad a ERREPAR por la omisión o eventual falta de lectura de las mismas,
+                    presumiéndose por tanto que el solo acceso a la App por el USUARIO importa ineludiblemente
+                    aceptación sin reservas de los TDU vigentes al momento del acceso.
                 \n\n
-                3. Consideramos “usuario” al suscriptor y a las personas físicas y jurídicas autorizadas por él para el uso del producto
-                    suministrado. Si el suscriptor fuere empleador del usuario, el solo hecho de acceder por el último a este sitio implicará
-                    la aceptación de las presentes bases y condiciones por ambos. A tal fin consideraremos sin excepción que el referido usuario
-                    cuenta con expresa autorización y representación de su empleador para aceptar las presentes bases y condiciones, importando
-                    el acceso declaración explícita del usuario de que lo hace bajo su responsabilidad, en la representación invocada y bajo
-                    autorización de su empleador.
+                <b>2.("LA APP"):</b> Toda persona física o jurídica que hubiera adquirido las obras o productos, en
+                    adelante (LAS OBRAS) que se identifican en anexo 1 de los (TDU) podrá acceder a (LA APP) sin costo
+                    alguno de activación ni uso. Esto significa que NO se requiere para ser USUARIO de (LA APP) ser
+                    suscriptor de ERREPAR/ERREIUS ni efectuar pago alguno para poder bajarla al dispositivo autorizado
+                    ni efectuar pago adicional o complementario para poder de una vez descargada al dispositivo hacer uso
+                    ilimitado de la misma siempre de acuerdo a las presentes (TDU). Se accede a LA APP únicamente
+                    a través de la descarga en terminales móviles Smartphone con sistema operativo Android y
+                    IPhone con sistema operativo IOS. La aplicación es válida únicamente para USUARIOS que al menos
+                    hubieran adquirido alguna de "(LAS OBRAS)" y en su caso además haber cumplido alguna de las
+                    condiciones exigidas por ERREPAR ERREIUS para acceder a (LA APP) si es que estas se hubieran
+                    eventualmente establecido y surgieran la mismas del (TDU) vigente al momento de la descarga.
+                    En defecto de esto último solo se requerirá la adquisición de alguna de "(LAS OBRAS)". La
+                    descarga de la aplicación en el dispositivo móvil del USUARIO permite acceder gratuitamente a las
+                    actualizaciones normativas o de legislación y/o relacionadas con la obra y/o el producto comprado,
+                    siendo que dicha información y actualización será completamente gratuita y sin costo alguno.
+                    Además el USUARIO se benficiará accediendo a contenidos afines adicionales proporcionados
+                    por ERREPAR/ERREIUS según el último considere. Adicionalmente (LA APP) puede incluir alertas
+                    de novedades y/o notificaciones que pongan en conocimientos de (EL USUARIO) la existencia
+                    de modificaciones o actualizaciones ocurridas respecto el producto comprado. También podrá
+                    incluir todo tipo de comunicación que a criterio de ERREPAR ERREIUS esta considere pertinente tales
+                    como novedades de nuevos productos, obras, promociones y general cualquier contenido que a
+                    solo criterio de ERREPAR ERREIUS se considere de interés para EL USUARIO. EL USUARIO entiende y
+                    acepta que ERREPAR ERREIUS no asume ninguna responsabilidad por la demora, supresión, envío
+                    equivocado o desperfecto al guardar cualquier comunicación del USUARIO o sus configuraciones
+                    personales. EL USUARIO será considerado siempre único responsable del adecuado uso de LA APP, por
+                    lo que queda obligado a mantener su contraseña y/o PIN y/o cualquier elemento que se utilice
+                    para identificarlo en forma absolutamente segura y a resguardo de terceros. Asi mismo ERREPAR
+                    ERREIUS no garantiza que el sistema de subida a la APP de novedades normativas o afines se
+                    produzca en forma instantánea o automática con la vigencia de tales, dado que como el USUARIO
+                    conoce existe un tiempo delay natural y necesario para verificación de las novedades, su revisión,
+                    eventualmente su contextualización y demás. Por tal razón EL USUARIO acepta y consiente que es
+                    posible que exista un delay incluso de varios días o el tiempo que demande la verificación y demás
+                    actos relacionados, entre la vigencia de eventuales novedades normativas o afines y su incorporación
+                    a la APP por lo que a todo efecto EL USUARIO deslinda toda responsabilidad de ERREPAR por esta
+                    circunstacias tomando a su cargo el rechequeo de contenidos por otras vías o modalidades que
+                    considere sobre la efectiva vigencia de os textos incorporados a la APP.
                 \n\n
-                4. El suscriptor (usuario) declara conocer que ERREPAR / ERREIUS(suministrador) le ha concedido un permiso de acceso intransferible,
-                    en los términos y bajo el alcance del producto suscripto. Por lo tanto, no se le permite cederlo o transferirlo bajo ninguna
-                    forma o modalidad. Tampoco le está permitido al suscriptor del/de los producto/s en soporte papel reproducirlo/s o publicarlo/s
-                    bajo cualquier forma o modalidad.
+                <b>3.USO DE LA APP:</b> LA APP permite mediante un procedimiento ágil, simple y directo que
+                    quien hubiera adquirido alguna de las obras y/o productos del Anexo 1 de estos (TDU) reciba en su
+                    dispositivo móvil gratuitamente y sin necesidad de ser suscriptor de ERREPAR ERREIUS las novedades
+                    y actualizaciones de la obra y/o el producto adquirido mientras no se lance a comercialización
+                    la nueva edición actualizada de la obra o producto en cuestión. Por tanto El acceso y uso de La App
+                    tienen carácter gratuito para el Usuario. El acceso a los contenidos e información de la App será
+                    irrestricto para el usuario de la APP sin perjuicio de reservar ERREPAR sujetar dicho acceso en el futuro
+                    a nuevos requisitos, condiciones o exigencias que a su solo criterio podrá implementar sin aviso previo
+                    y por la sola actualización de los (TDU). Para poder utilizar La App, deberá registrarse completando el
+                    formulario disponible a tal fin desde LA APP. Todos los datos ingresados por el USUARIO importan que
+                    este garantiza el carácter auténtico de los mismos. Asume además única responsabilidad de mantener
+                    debidamente actualizados los mismos asegurando a ERREPAR ERREIUS que los datos vigentes
+                    incorporados a LA APP en cada oportunidad de uso se corresponden con la situación real del Usuario. El
+                    Usuario será el único responsable de información falsa, o ilegítima que proporcione y de los perjuicios
+                    que pueda causar a ERREPAR ERREIUS o a terceros por semejante accionar. La App y todo su contenido,
+                    ya sean datos, imágenes, software, ilustraciones, video, mensajes, comunicaciones, recopilaciones,
+                    marcas, logos, mixturas de colores o cualquier otro elemento, su estructura y diseño, la selección
+                    y forma de presentación de los contenidos y los programas y herramientas aptos y/o necesarios
+                    para su funcionamiento, sin excluir el acceso y uso, son popiedad de ERREPAR ERREIUS y en
+                    consecuencia están amparados y protegidos najo las normas respectivas que protegen la propiedad
+                    intelectual, derechos de autor y copyright. De igual modo quedan bajo el mismo amparo normativo si
+                    los contenidos y progrmas fueran de propiedad de terceros licenciantes, que el Usuario debe respetar.
+                    ERREPAR ERREIUS, sus denominaciones, marcas, logotipos, patentes, diseños, gráficos, dominios, y
+                    demás relacionaods directa o indirectamente está protegido conforme a las leyes y disposiciones
+                    de derecho de autor, marcas, patentes, secretos comerciales y/o industriales. ERREPAR ERREIUS
+                    confiere al Usuario el derecho de visualización de La App y la utilización de los Servicios. Queda
+                    terminantemente prohibido copiar, duplicar, modificar, realizar ingeniería inversa, desmontar,
+                    traducir, o crear productos derivados del contenido de La App, en parte o en su totalidad. Asimismo,
+                    queda prohibido copiar, revelar, publicar, vender, o comercializar de cualquier modo incluyendo
+                    cualquier acto jurídico o contrato, arrendar, otorgar bajo licencia, o transferir el contenido y/o
+                    información de la App, o parte de éste, y utilizarlo de modo alguno que no se haya autorizado
+                    explícitamente en el presente por ERREPAR ERREIUS.
                 \n\n
-                5. El suministrador podrá acceder a información relacionada con quienes acceden al sitio. En especial mediante el uso de tecnología
-                    cookie o cualquier otra afín. También podrá acceder a información vinculada con el tipo de sistema utilizado por el usuario,
-                    clase de navegadores, tipo de sección o secciones más frecuentadas y, en general, a cualquier otra relacionada que le permita
-                    mejorar permanentemente el contenido del sitio y conocer las necesidades de los clientes. El usuario da su conformidad
-                    irrevocable para el ejercicio de esta facultad por el suministrador en los términos y alcances de esta cláusula.
-                En caso de requerirlo, el usuario puede modificar su programa de navegación para que lance una advertencia en el momento en el
-                    que ingresa una cookie o bien deshabilitarlas. Para ello deberá consultar el menú de Ayuda de su navegador.  Si se declinan,
-                    es posible que no pueda utilizar acceder a ciertas características o funcionalidades.
-                Es posible que sean enviados correos electrónicos periódicamente a través de nuestro sitio con ofertas especiales, nuevos productos
-                    y otra información publicitaria que consideremos relevante para usted o que pueda brindarle algún beneficio. Estos correos
-                    electrónicos serán enviados a la dirección que usted proporcione y podrán ser cancelados en cualquier momento.
+                <b>4.COMPROMISO:</b> El Usuario se compromete a (a) notificar inmediatamente a La App de cualquier
+                    uso no autorizado de su cuenta o cualquier otra violación de seguridad, y (b) a prestar atención de
+                    finalizar el uso de LA APP al final de cada sesión. ERREPAR ERREIUS no será responsable de ningún
+                    uso no autorizado o por cualquier pérdida de datos o información o cualquier evento que reconozca por
+                    causa la infracción al compromiso asumido en este capítulo.
                 \n\n
-                6. El suministrador recopila información personal, tal como nombre y apellido, domicilio, teléfono, dirección de correo electrónico
-                    y números de tarjeta de crédito, solo cuando es informada voluntariamente por usted. El suministrador no solicitará información
-                    que sea incompatible con la finalidad de sus actividades, ni que directa o indirectamente revele datos sensibles.
+                <b>5.COMPORTAMIENTO:</b> EL USUARIO comprende, reconoce y acepta que cada texto, software,
+                    imágenes, contenidos, fotos, gráficos, comunicaciones, y/o cualquier elemento, material
+                    porporcionado vía LA APP ya sea que se transmitan pública o privadamente, son responsabilidad
+                    exclusiva de la persona, órgano, autoridad, autor y/o DE quién originó dicho Contenido. Esto siginifica
+                    que EL USUARIO y NO ERREPAR ERREIUS, es únicamente responsable por verificar la exactitud
+                    y vigencia de la información recibida a través de la APP recurriendo a información oficial, resultando
+                    que ERREPAR ERREIUS no garantiza la exactitud, integridad o calidad de dicho Contenido. En
+                    ningún caso ERREPAR ERREIUS. Será responsable en cualquier forma por cualquier Contenido,
+                    incluyendo, pero no limitando a, cualquier error u omisión en cualquier Contenido, o cualquier
+                    daño o perjuicio de cualquier tipo incurridos como resultado del uso de cualquier Contenido
+                    publicado, o puesto a disposición a través de La App. El Usuario queda obligado a no utilizar o
+                    distorsionar de cualquier modo el uso de LA APP para: a. cargar, difundir, transmitir o permitir el
+                    acceso a cualquier contenido que sea ilegal, en cualquier modalidad; o b. Suplantar identidad y
+                    hacerse pasar por otra persona o entidad, o declarar falsamente o tergiversar los datos porpocionados;
+                    c. El usuario acuerda y acepta que ERREPAR puede acceder, conservar y revelar aquella información
+                    de la APP o que tuviera acceso por la App y el Contenido si así lo requiere la ley o en la convicción
+                    de buena fe que dicha revelación es necesaria para: (1) cumplir con procesos legales; (2) hacer
+                    cumplir las condiciones de servicio; (3) responder a reclamos de que algún Contenido viola derechos
+                    de terceros; (4) responder a cualquier demanda o requerimiento administrativo o cursado por
+                    autoridad administrativa, y/o judicial; o (5) proteger los derechos, propiedad o seguridad de ERREPAR
+                    ERREIUS, sus usuarios y en su caso cualquier tercero.
+                \n\n
+                <b>6.NO RESPONSABILIDAD:</b> ERREPAR ERREIUS no asume ningún tipo de responsabilidad por
+                    las interpretaciones del contenido de La App, ni del uso indebido del mismo y de sus Servicios
+                    e información, de igual manera no se hará responsable por los daños o perjuicios causados
+                    de forma directa o indirecta por o a quienes fueran estimulados a tomar decisiones o medidas al
+                    consultar La App. Tampoco se responsabilizará por los daños o perjuicios, directos, indirectos, o
+                    de cualquier otra forma, que acarree la suspensión o terminación de los servicios, contenido, o
+                    información que se suministra a través de La App. ERREPAR ERREIUS no se responsabiliza
+                    de las posibles discrepancias que puedan surgir entre la versión de sus documentos impresos y/o
+                    productos impresos y la versión electrónica de los mismos publicados en La App. ERREPAR
+                    no asume responsabilidad por aquellas informaciones o contenidos que no hayan sido
+                    creados exclusivamente por la propia ERREPAR ERREIUS, por lo que no responderá frente a
+                    aquellos daños o perjuicios que puedan derivarse del uso de dicha información cuando la misma
+                    fuera la comunicación de novedades legislativas, normativas, judiciales o de índole similar no
+                    considerándose creaciones propias la realización de sumarios, resúmenes o información abreviada
+                    de tales novedades, aceptando EL USUARIO QUE SIEMPRE y previo a cualquier comportamiento
+                    particular o profesional que pretendiera realizar o guiar o asesorar incluso a terceros a partir de
+                    información recibida desde la APP deberá consultar, asesorarse técnica y científicamente y/o en su caso
+                    consultar las fuentes oficiales normativas oficiales en las que se origina la información suministrada
+                    vía LA APP. ERREPAR ERREIUS no se responsabiliza de daños o perjuicios derivados del acceso, uso
+                    o mala utilización de los contenidos de La App. ERREPAR ERREIUS no se hace responsable por
+                    acceso no autorizado a cualquier comunicación de los Usuarios o su alteración. ERREPAR ERREIUS no
+                    ser responsabiliza por problemas o desperfectos técnicos de las redes o líneas telefónicas, sistemas
+                    informáticos en línea, servidores o proveedores, equipos de computación, software, desperfectos
+                    de correos electrónicos o de reproductores, derivados de inconvenientes técnicos o congestión
+                    en el tráfico en internet o en cualquiera de los Servicios o cualquier combinación de los mismos.
+                    Los inconvenientes antedichos incluyen los daños o lesiones a Usuarios, a la computadora
+
                 \n\n
                 El suministrador podrá contratar a terceros para llevar a cabo ciertas tareas tales como, envío de correos postales y electrónicos,
                     data entry, análisis estadístico de datos, entre otras. Dichos terceros sólo contarán con el acceso a la Información necesaria
