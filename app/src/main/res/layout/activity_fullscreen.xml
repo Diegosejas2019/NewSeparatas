@@ -8,19 +8,19 @@
     android:id="@+id/frameMain"
     tools:context=".SplashActivity">
 
-    <!--<pl.droidsonroids.gif.GifImageView
+    <pl.droidsonroids.gif.GifImageView
         android:id="@+id/gifImageView"
         android:layout_width="wrap_content"
         android:layout_height="543dp"
         android:layout_gravity="center"
-        android:src="@drawable/logo_errepar_ai"
-        tools:ignore="ImageContrastCheck" />-->
+        android:src="@drawable/logo_splash_errepar"
+        tools:ignore="ImageContrastCheck" />
 
-    <ImageView
+    <!--<ImageView
         android:layout_width="347dp"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:layout_centerVertical="true"
         android:layout_gravity="center"
-        android:src="@drawable/logo_errepar_ai" />
+        android:src="@drawable/logo_errepar_ai" />-->
 </FrameLayout>
