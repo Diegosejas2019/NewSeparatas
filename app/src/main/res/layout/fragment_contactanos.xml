@@ -79,6 +79,7 @@ tools:context=".views.ContactanosFragment">
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
+            android:layout_marginLeft="3dp"
             android:text="Paraná 725 | 1055 CABA"
             android:textColor="@android:color/black"
             android:textSize="18dp" />
@@ -106,7 +107,8 @@ tools:context=".views.ContactanosFragment">
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="15 6784-7420"
+            android:layout_marginLeft="3dp"
+            android:text="4370-2002"
             android:textColor="@android:color/black"
             android:textSize="18dp" />
     </LinearLayout>
@@ -133,7 +135,36 @@ tools:context=".views.ContactanosFragment">
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="contactenos@errepar.com"
+            android:text="clientes@errepar.com"
+            android:layout_marginLeft="3dp"
+            android:textColor="@android:color/black"
+            android:textSize="18dp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/Linear4"
+        android:layout_width="match_parent"
+        android:layout_height="25dp"
+        android:layout_marginStart="30dp"
+        android:layout_marginLeft="30dp"
+        android:layout_marginTop="35dp"
+        android:layout_marginEnd="30dp"
+        android:layout_marginRight="30dp"
+        android:paddingLeft="0dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/Linear3">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_whatsapp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="3dp"
+            android:text="11-5936-6406"
             android:textColor="@android:color/black"
             android:textSize="18dp" />
     </LinearLayout>
@@ -151,7 +182,7 @@ tools:context=".views.ContactanosFragment">
         android:background="@android:color/darker_gray"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/Linear3" />
+        app:layout_constraintTop_toBottomOf="@+id/Linear4" />
 
     <TextView
         android:id="@+id/textView5"
