@@ -7,25 +7,25 @@
 
     <fragment
         android:id="@+id/nav_home"
-        android:name="com.example.erreparseparatas.views.MisPublicacionesFragment"
+        android:name="com.example.mislibros.views.MisPublicacionesFragment"
         android:label="Mis Publicaciones"
         tools:layout="@layout/fragment_mis_publicaciones" />
 
     <fragment
         android:id="@+id/nav_activar"
-        android:name="com.example.erreparseparatas.views.DescargarContenidoFragment"
+        android:name="com.example.mislibros.views.DescargarContenidoFragment"
         android:label="Descargar Contenido"
         tools:layout="@layout/fragment_descargar_contenido" />
 
     <fragment
         android:id="@+id/nav_terminos"
-        android:name="com.example.erreparseparatas.views.TerminosYCondicionesFragment"
+        android:name="com.example.mislibros.views.TerminosYCondicionesFragment"
         android:label="Términos y condiciones"
         tools:layout="@layout/fragment_terminos_y_condiciones" />
 
     <fragment
         android:id="@+id/nav_contactanos"
-        android:name="com.example.erreparseparatas.views.ContactanosFragment"
+        android:name="com.example.mislibros.views.ContactanosFragment"
         android:label="Contactanos"
         tools:layout="@layout/fragment_contactanos" />
 </navigation>

@@ -4,16 +4,16 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:background="@drawable/launchbackground"
+    android:background="@color/white"
     android:id="@+id/frameMain"
-    tools:context=".SplashActivity">
+    tools:context="com.example.mislibros.SplashActivity">
 
     <pl.droidsonroids.gif.GifImageView
         android:id="@+id/gifImageView"
         android:layout_width="wrap_content"
         android:layout_height="543dp"
         android:layout_gravity="center"
-        android:src="@drawable/ezgif_com_gif_maker"
+        android:src="@drawable/logo_splash_errepar"
         tools:ignore="ImageContrastCheck" />
 
 </FrameLayout>

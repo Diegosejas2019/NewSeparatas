@@ -1,5 +1,55 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="DesignSurface">
+    <option name="filePathToZoomLevelMap">
+      <map>
+        <entry key="../../../../../layout/custom_preview.xml" value="0.246875" />
+        <entry key="..\:/Users/jonathan.castillo/Desktop/Separatas/ErreparSeparatas/app/src/main/res/drawable/buttonroundblack.xml" value="0.1" />
+        <entry key="..\:/Users/jonathan.castillo/Desktop/Separatas/ErreparSeparatas/app/src/main/res/drawable/ic_baseline_check.xml" value="0.1" />
+        <entry key="..\:/Users/jonathan.castillo/Desktop/Separatas/ErreparSeparatas/app/src/main/res/layout/activity_fullscreen.xml" value="0.1743659420289855" />
+        <entry key="..\:/Users/jonathan.castillo/Desktop/Separatas/ErreparSeparatas/app/src/main/res/layout/activity_login.xml" value="0.1743659420289855" />
+        <entry key="..\:/Users/jonathan.castillo/Desktop/Separatas/ErreparSeparatas/app/src/main/res/layout/activity_main.xml" value="0.1743659420289855" />
+        <entry key="..\:/Users/jonathan.castillo/Desktop/Separatas/ErreparSeparatas/app/src/main/res/layout/app_main_bar.xml" value="0.1743659420289855" />
+        <entry key="..\:/Users/jonathan.castillo/Desktop/Separatas/ErreparSeparatas/app/src/main/res/layout/content_main.xml" value="0.1743659420289855" />
+        <entry key="..\:/Users/jonathan.castillo/Desktop/Separatas/ErreparSeparatas/app/src/main/res/layout/fragment_activar_libro.xml" value="0.1743659420289855" />
+        <entry key="..\:/Users/jonathan.castillo/Desktop/Separatas/ErreparSeparatas/app/src/main/res/layout/fragment_book_code_success.xml" value="0.1743659420289855" />
+        <entry key="..\:/Users/jonathan.castillo/Desktop/Separatas/ErreparSeparatas/app/src/main/res/layout/fragment_contactanos.xml" value="0.1743659420289855" />
+        <entry key="..\:/Users/jonathan.castillo/Desktop/Separatas/ErreparSeparatas/app/src/main/res/layout/fragment_descargar_contenido.xml" value="0.1743659420289855" />
+        <entry key="..\:/Users/jonathan.castillo/Desktop/Separatas/ErreparSeparatas/app/src/main/res/layout/fragment_detalle.xml" value="0.20416666666666666" />
+        <entry key="..\:/Users/jonathan.castillo/Desktop/Separatas/ErreparSeparatas/app/src/main/res/layout/fragment_encontrar_codigo.xml" value="0.20416666666666666" />
+        <entry key="..\:/Users/jonathan.castillo/Desktop/Separatas/ErreparSeparatas/app/src/main/res/layout/fragment_login.xml" value="0.1743659420289855" />
+        <entry key="..\:/Users/jonathan.castillo/Desktop/Separatas/ErreparSeparatas/app/src/main/res/layout/fragment_mis_publicaciones.xml" value="0.20416666666666666" />
+        <entry key="..\:/Users/jonathan.castillo/Desktop/Separatas/ErreparSeparatas/app/src/main/res/layout/fragment_recuperar_password.xml" value="0.20416666666666666" />
+        <entry key="..\:/Users/jonathan.castillo/Desktop/Separatas/ErreparSeparatas/app/src/main/res/layout/fragment_registrar.xml" value="0.20416666666666666" />
+        <entry key="..\:/Users/jonathan.castillo/Desktop/Separatas/ErreparSeparatas/app/src/main/res/layout/fragment_registrar_p3.xml" value="0.20416666666666666" />
+        <entry key="..\:/Users/jonathan.castillo/Desktop/Separatas/ErreparSeparatas/app/src/main/res/layout/fragment_registrar_p_f.xml" value="0.20416666666666666" />
+        <entry key="..\:/Users/jonathan.castillo/Desktop/Separatas/ErreparSeparatas/app/src/main/res/layout/fragment_terminos_y_condiciones.xml" value="0.22" />
+        <entry key="..\:/Users/jonathan.castillo/Desktop/Separatas/ErreparSeparatas/app/src/main/res/layout/layout_detalle.xml" value="0.20416666666666666" />
+        <entry key="..\:/Users/jonathan.castillo/Desktop/Separatas/ErreparSeparatas/app/src/main/res/layout/layout_publicaciones.xml" value="0.20416666666666666" />
+        <entry key="..\:/Users/jonathan.castillo/Desktop/Separatas/ErreparSeparatas/app/src/main/res/layout/nav_header_main.xml" value="0.20416666666666666" />
+        <entry key="app/src/main/res/drawable/buttonroundblack.xml" value="0.327" />
+        <entry key="app/src/main/res/drawable/buttonroundprimary.xml" value="0.2815" />
+        <entry key="app/src/main/res/drawable/home_button.xml" value="0.327" />
+        <entry key="app/src/main/res/drawable/ic_twitter.xml" value="0.1895" />
+        <entry key="app/src/main/res/layout/activity_login.xml" value="0.28442028985507245" />
+        <entry key="app/src/main/res/layout/app_main_bar.xml" value="0.2545289855072464" />
+        <entry key="app/src/main/res/layout/content_main.xml" value="0.2830357869466146" />
+        <entry key="app/src/main/res/layout/fragment_activar_libro.xml" value="0.28442028985507245" />
+        <entry key="app/src/main/res/layout/fragment_contactanos.xml" value="0.3302880423409598" />
+        <entry key="app/src/main/res/layout/fragment_descargar_contenido.xml" value="0.37041497513239563" />
+        <entry key="app/src/main/res/layout/fragment_detalle.xml" value="0.4509582863585118" />
+        <entry key="app/src/main/res/layout/fragment_encontrar_codigo.xml" value="0.4414262633392777" />
+        <entry key="app/src/main/res/layout/fragment_login.xml" value="0.2545289855072464" />
+        <entry key="app/src/main/res/layout/fragment_mis_publicaciones.xml" value="0.4377158896436969" />
+        <entry key="app/src/main/res/layout/fragment_terminos_y_condiciones.xml" value="0.32484426711604064" />
+        <entry key="app/src/main/res/layout/layout_detalle.xml" value="0.36058886157846504" />
+        <entry key="app/src/main/res/layout/layout_publicaciones.xml" value="0.7470918517181839" />
+        <entry key="app/src/main/res/layout/nav_header_main.xml" value="0.2545289855072464" />
+        <entry key="app/src/main/res/menu/activity_main_drawer.xml" value="0.48999481201171874" />
+        <entry key="app/src/main/res/xml/provider_paths.xml" value="0.9127906976744186" />
+      </map>
+    </option>
+  </component>
   <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="11" project-jdk-type="JavaSDK">
     <output url="file://$PROJECT_DIR$/build/classes" />
   </component>

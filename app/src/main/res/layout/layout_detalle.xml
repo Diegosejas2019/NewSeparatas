@@ -2,11 +2,24 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical">
+
+    <ProgressBar
+        android:id="@+id/progressBar"
+        style="?android:attr/progressBarStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="0dp">
+        android:layout_marginTop="10dp">
+
         <androidx.cardview.widget.CardView
             android:id="@+id/card_view"
             android:layout_width="match_parent"
@@ -16,18 +29,14 @@
             <RelativeLayout
                 android:layout_width="400dp"
                 android:layout_height="wrap_content"
-                android:paddingTop="8dp"
-                android:paddingRight="8dp"
-                android:paddingLeft="8dp">
+                android:padding="8dp">
 
 
                 <TextView
-                    android:id="@+id/txtArchivo"
+                    android:id="@+id/txtFecha"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="50dp"
-                    android:layout_marginLeft="5dp"
-                    android:layout_marginTop="25dp"
+                    android:layout_alignParentTop="true"
                     android:gravity="left"
                     android:paddingRight="130dp"
                     android:textAlignment="gravity"
@@ -35,17 +44,39 @@
                     android:textColor="#000000" />
 
                 <TextView
-                    android:id="@+id/txtArchivo3"
+                    android:id="@+id/txtArchivo"
                     android:layout_width="match_parent"
-                    android:layout_height="15dp"
-                    android:layout_alignParentTop="true"
-                    android:layout_marginStart="50dp"
-                    android:layout_marginLeft="5dp"
-                    android:layout_marginTop="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/txtFecha"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginEnd="40dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_toEndOf="@+id/favorite2"
                     android:gravity="left"
                     android:paddingRight="130dp"
-                    android:text="Fecha : 11/02/2022"
                     android:textAlignment="gravity"
+                    android:textAppearance="@style/Base.TextAppearance.AppCompat.Small"
+                    android:textColor="#000000" />
+
+                <CheckBox
+                    android:id="@+id/check"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/txtFecha"
+                    android:layout_alignParentStart="false"
+                    android:layout_alignParentEnd="true"
+                    android:visibility="gone"
+                    android:gravity="end"></CheckBox>
+
+                <TextView
+                    android:id="@+id/txtLinkAudio"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/txtArchivo"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_toEndOf="@+id/favorite3"
+                    android:paddingRight="130dp"
                     android:textAppearance="@style/Base.TextAppearance.AppCompat.Small"
                     android:textColor="#000000" />
 
@@ -53,67 +84,50 @@
                     android:id="@+id/txtLinkVimeo"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_below="@id/txtArchivo"
-                    android:layout_alignParentStart="true"
-                    android:layout_marginStart="50dp"
-                    android:layout_marginLeft="50dp"
+                    android:layout_below="@+id/txtLinkAudio"
 
 
-                    android:layout_marginTop="40dp"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_toEndOf="@+id/favorite"
                     android:paddingRight="160dp"
-                    android:textAppearance="@style/Base.TextAppearance.AppCompat.Small"
-                    android:textColor="#000000" />
-
-                <TextView
-                    android:id="@+id/txtLinkAudio"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@id/txtArchivo"
-                    android:layout_marginStart="50dp"
-                    android:layout_marginLeft="5dp"
-                    android:layout_marginTop="10dp"
-                    android:paddingRight="130dp"
                     android:textAppearance="@style/Base.TextAppearance.AppCompat.Small"
                     android:textColor="#000000" />
 
                 <ImageView
                     android:id="@+id/favorite"
-                    android:layout_width="30dp"
-                    android:layout_height="25dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
 
+                    android:layout_below="@+id/txtLinkAudio"
                     android:layout_alignParentStart="true"
-                    android:layout_marginStart="0dp"
-                    android:layout_marginTop="80dp"
-                    android:layout_marginBottom="0dp"
+                    android:layout_marginTop="8dp"
                     android:background="@null"
                     android:src="@drawable/ic_video" />
 
                 <ImageView
                     android:id="@+id/favorite2"
-                    android:layout_width="30dp"
-                    android:layout_height="25dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
 
-                    android:layout_alignParentTop="true"
-                    android:layout_marginStart="0dp"
-                    android:layout_marginTop="20dp"
-                    android:layout_marginBottom="0dp"
+                    android:layout_below="@+id/txtFecha"
+                    android:layout_marginTop="8dp"
                     android:background="@null"
                     android:src="@drawable/ic_descargar" />
 
                 <ImageView
                     android:id="@+id/favorite3"
-                    android:layout_width="30dp"
-                    android:layout_height="25dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
 
-                    android:layout_alignParentTop="true"
-                    android:layout_marginStart="0dp"
-                    android:layout_marginTop="50dp"
-                    android:layout_marginBottom="0dp"
+                    android:layout_below="@+id/txtArchivo"
+                    android:layout_marginTop="8dp"
                     android:background="@null"
                     android:src="@drawable/ic_audiotrack" />
 
             </RelativeLayout>
 
         </androidx.cardview.widget.CardView>
+
     </LinearLayout>
 </RelativeLayout>

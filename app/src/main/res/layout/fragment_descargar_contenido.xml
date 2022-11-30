@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white"
-    tools:context=".views.DescargarContenidoFragment">
+    tools:context="com.example.mislibros.views.DescargarContenidoFragment">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -13,33 +13,34 @@
         tools:context=".views.RegisterFragment">
 
 
-        <TextView
-            android:id="@+id/textView"
+        <Switch
+            android:id="@+id/downloadSwitch"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="20dp"
-            android:layout_marginTop="20dp"
-            android:layout_marginEnd="20dp"
-            android:gravity="center|center_vertical"
-            android:text="Descarga de Contenido"
-            android:textColor="@color/Grey"
-            android:textSize="28sp"
-            android:textStyle="bold"
+            android:layout_marginStart="75dp"
+            android:layout_marginTop="29dp"
+            android:layout_marginEnd="76dp"
+            android:text="Habilitar la descarga de contenido"
+            android:textSize="16sp"
+            android:visibility="visible"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.482"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView6"
+            tools:ignore="TouchTargetSizeCheck" />
+
+        <TextView
+            android:id="@+id/textView6"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="40dp"
+            android:padding="10dp"
+            android:text="Usted tendrá acceso a los PDF en el modo offline una vez que acepte el botón que está debajo de esta pantalla. Si ya aceptó intente abrir un pdf entrando en el detalle de un libro, y el PDF se descargará en segundo plano."
+            android:textAlignment="center"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
-
-        <Switch
-            android:id="@+id/switch3"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="20dp"
-            android:layout_marginTop="20dp"
-            android:layout_marginEnd="20dp"
-            android:text="Habilitar descarga de contenido"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

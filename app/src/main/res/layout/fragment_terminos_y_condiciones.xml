@@ -5,7 +5,7 @@ android:layout_width="match_parent"
 android:layout_height="match_parent"
     android:background="@color/white"
 xmlns:app="http://schemas.android.com/apk/res-auto"
-tools:context=".views.TerminosYCondicionesFragment">
+tools:context="com.example.mislibros.views.TerminosYCondicionesFragment">
 <ScrollView android:layout_width="fill_parent"
     android:layout_height="wrap_content"
     android:fillViewport="true"
@@ -18,24 +18,21 @@ tools:context=".views.TerminosYCondicionesFragment">
 
         <ImageView
             android:id="@+id/imageView"
-            android:layout_width="120dp"
-            android:layout_height="120dp"
+            android:layout_width="80dp"
+            android:layout_height="100dp"
             android:layout_marginTop="12dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/logo" />
+            app:srcCompat="@drawable/logo_new" />
 
         <TextView
             android:id="@+id/textView"
-            android:layout_width="wrap_content"
+            android:layout_width="360dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="64dp"
-            android:layout_marginLeft="64dp"
-            android:layout_marginEnd="64dp"
-            android:layout_marginRight="64dp"
+            android:fontFamily="@font/raleway_bold"
             android:gravity="center|center_vertical"
-            android:text="CONDICIONES DE USO DE LA SUSCRIPCIÓN A TODAS LAS COLECCIONES DE ERREPAR \n Si sos suscriptor"
+            android:text="TÉRMINOS Y CONDICIONES PARTICULARES DE USO APP MIS LIBROS ERREPAR"
             android:textColor="@color/colorPrimary"
             android:textSize="28sp"
             android:textStyle="bold"

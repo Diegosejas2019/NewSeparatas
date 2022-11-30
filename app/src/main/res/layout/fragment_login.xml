@@ -5,7 +5,7 @@ android:layout_width="match_parent"
 android:layout_height="match_parent"
 android:background="@color/white"
 xmlns:app="http://schemas.android.com/apk/res-auto"
-tools:context=".views.LoginFragment">
+tools:context="com.example.mislibros.views.LoginFragment">
 
 <androidx.constraintlayout.widget.ConstraintLayout
     android:layout_width="match_parent"
@@ -14,13 +14,13 @@ tools:context=".views.LoginFragment">
 
     <ImageView
         android:id="@+id/imageView"
-        android:layout_width="120dp"
-        android:layout_height="120dp"
+        android:layout_width="80dp"
+        android:layout_height="100dp"
         android:layout_marginTop="12dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/logo" />
+        app:srcCompat="@drawable/logo_new" />
 
     <TextView
         android:id="@+id/textView"
@@ -29,8 +29,9 @@ tools:context=".views.LoginFragment">
         android:layout_marginStart="64dp"
         android:layout_marginEnd="64dp"
         android:gravity="center|center_vertical"
-        android:text="Inicia Sesion"
-        android:textColor="@color/browser_actions_title_color"
+        android:text="Inicia Sesión"
+        android:fontFamily="@font/raleway_bold"
+        android:textColor="@color/colorPrimary"
         android:textSize="28sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toTopOf="@+id/button"

@@ -5,7 +5,7 @@ android:layout_width="match_parent"
 android:layout_height="match_parent"
 android:background="@color/white"
 xmlns:app="http://schemas.android.com/apk/res-auto"
-tools:context=".views.ContactanosFragment">
+tools:context="com.example.mislibros.views.ContactanosFragment">
 
 <androidx.constraintlayout.widget.ConstraintLayout
     android:layout_width="match_parent"
@@ -14,13 +14,13 @@ tools:context=".views.ContactanosFragment">
 
     <ImageView
         android:id="@+id/imageView"
-        android:layout_width="120dp"
-        android:layout_height="120dp"
+        android:layout_width="80dp"
+        android:layout_height="100dp"
         android:layout_marginTop="12dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/logo" />
+        app:srcCompat="@drawable/logo_new" />
 
     <TextView
         android:id="@+id/textView"
@@ -32,6 +32,7 @@ tools:context=".views.ContactanosFragment">
         android:layout_marginRight="64dp"
         android:gravity="center|center_vertical"
         android:text="Datos de contacto"
+        android:fontFamily="@font/raleway_bold"
         android:textColor="@color/colorPrimary"
         android:textSize="28sp"
         android:textStyle="bold"
@@ -77,6 +78,7 @@ tools:context=".views.ContactanosFragment">
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
+            android:layout_marginLeft="4dp"
             android:text="Paraná 725 | 1055 CABA"
             android:textColor="@android:color/black"
             android:textSize="18dp" />
@@ -104,7 +106,8 @@ tools:context=".views.ContactanosFragment">
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="15 6784-7420"
+            android:layout_marginLeft="4dp"
+            android:text="4370-2002"
             android:textColor="@android:color/black"
             android:textSize="18dp" />
     </LinearLayout>
@@ -131,7 +134,36 @@ tools:context=".views.ContactanosFragment">
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="contactenos@errepar.com"
+            android:layout_marginLeft="4dp"
+            android:text="clientes@errepar.com"
+            android:textColor="@android:color/black"
+            android:textSize="18dp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/Linear4"
+        android:layout_width="match_parent"
+        android:layout_height="25dp"
+        android:layout_marginStart="30dp"
+        android:layout_marginLeft="30dp"
+        android:layout_marginTop="35dp"
+        android:layout_marginEnd="30dp"
+        android:layout_marginRight="30dp"
+        android:paddingLeft="0dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/Linear3">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_whatsapp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="4dp"
+            android:text="11-5936-6406"
             android:textColor="@android:color/black"
             android:textSize="18dp" />
     </LinearLayout>
@@ -149,7 +181,7 @@ tools:context=".views.ContactanosFragment">
         android:background="@android:color/darker_gray"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/Linear3" />
+        app:layout_constraintTop_toBottomOf="@+id/Linear4" />
 
     <TextView
         android:id="@+id/textView5"

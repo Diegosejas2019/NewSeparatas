@@ -5,7 +5,7 @@ android:layout_width="match_parent"
 android:layout_height="match_parent"
 android:background="@color/white"
 xmlns:app="http://schemas.android.com/apk/res-auto"
-tools:context=".views.ActivarLibroFragment">
+tools:context="com.example.mislibros.views.ActivarLibroFragment">
 
 <androidx.constraintlayout.widget.ConstraintLayout
     android:layout_width="match_parent"
@@ -31,14 +31,14 @@ tools:context=".views.ActivarLibroFragment">
 
     <ImageView
         android:id="@+id/imageView"
-        android:layout_width="120dp"
-        android:layout_height="120dp"
+        android:layout_width="80dp"
+        android:layout_height="100dp"
         android:layout_marginTop="12dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/logo"
+        app:srcCompat="@drawable/logo_new"
         tools:layout_editor_absoluteY="341dp" />
 
     <TextView
@@ -50,7 +50,8 @@ tools:context=".views.ActivarLibroFragment">
         android:layout_marginEnd="64dp"
         android:gravity="center|center_vertical"
         android:text="Activar código"
-        android:textColor="@color/Grey"
+        android:textColor="@color/colorPrimary"
+        android:fontFamily="@font/raleway_bold"
         android:textSize="28sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toTopOf="@+id/button"

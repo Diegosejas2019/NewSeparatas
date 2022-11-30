@@ -1,224 +1,304 @@
 <resources>
-    <string name="app_name">ErreparSeparatas</string>
+    <string name="app_name">Mis Libros Errepar</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="title_activity_fullscreen">ErreparSeparatas</string>
+    <string name="title_activity_fullscreen">Mis Libros Errepar</string>
     <string name="dummy_button">Dummy Button</string>
     <string name="dummy_content">DUMMY\nCONTENT</string>
-    <string name="texto_activar">Te damos la bienvenida a la \n <b>App Errepar Fondo Editorial</b>
-    \n Activá tus libros y descubri todos los
+    <string name="texto_activar">Te damos la bienvenida a la \n <b>App Mis Libros Errepar</b>
+    \n Activá tus libros y descubrí todos los
     \n beneficios que tenemos para vos</string>
     <string name="terminos">
-                1. Las bases, términos y condiciones aquí establecidas rigen, reglamentan y
-                   se aplican a todo tipo de suscripciones suministradas por ERREPAR SA.
-                   Esto incluye sus marcas comerciales Errepar y Erreius sean en soporte papel,
-                   bajo modalidad online o en cualquier otro soporte o medio, incluyendo sus módulos
-                   personalizables y demás aplicaciones individuales y/o asociadas.
-                \n\n
-                2. Cada suscripción, incluyendo las que se otorguen a modo de prueba o cortesía se rigen por las condiciones especiales
-                    convenidas según el tipo de producto suministrado, pero además se complementa con lo establecido en las presentes
-                    condiciones y términos de uso.
-                \n\n
-                3. Consideramos “usuario” al suscriptor y a las personas físicas y jurídicas autorizadas por él para el uso del producto
-                    suministrado. Si el suscriptor fuere empleador del usuario, el solo hecho de acceder por el último a este sitio implicará
-                    la aceptación de las presentes bases y condiciones por ambos. A tal fin consideraremos sin excepción que el referido usuario
-                    cuenta con expresa autorización y representación de su empleador para aceptar las presentes bases y condiciones, importando
-                    el acceso declaración explícita del usuario de que lo hace bajo su responsabilidad, en la representación invocada y bajo
-                    autorización de su empleador.
-                \n\n
-                4. El suscriptor (usuario) declara conocer que ERREPAR / ERREIUS(suministrador) le ha concedido un permiso de acceso intransferible,
-                    en los términos y bajo el alcance del producto suscripto. Por lo tanto, no se le permite cederlo o transferirlo bajo ninguna
-                    forma o modalidad. Tampoco le está permitido al suscriptor del/de los producto/s en soporte papel reproducirlo/s o publicarlo/s
-                    bajo cualquier forma o modalidad.
-                \n\n
-                5. El suministrador podrá acceder a información relacionada con quienes acceden al sitio. En especial mediante el uso de tecnología
-                    cookie o cualquier otra afín. También podrá acceder a información vinculada con el tipo de sistema utilizado por el usuario,
-                    clase de navegadores, tipo de sección o secciones más frecuentadas y, en general, a cualquier otra relacionada que le permita
-                    mejorar permanentemente el contenido del sitio y conocer las necesidades de los clientes. El usuario da su conformidad
-                    irrevocable para el ejercicio de esta facultad por el suministrador en los términos y alcances de esta cláusula.
-                En caso de requerirlo, el usuario puede modificar su programa de navegación para que lance una advertencia en el momento en el
-                    que ingresa una cookie o bien deshabilitarlas. Para ello deberá consultar el menú de Ayuda de su navegador.  Si se declinan,
-                    es posible que no pueda utilizar acceder a ciertas características o funcionalidades.
-                Es posible que sean enviados correos electrónicos periódicamente a través de nuestro sitio con ofertas especiales, nuevos productos
-                    y otra información publicitaria que consideremos relevante para usted o que pueda brindarle algún beneficio. Estos correos
-                    electrónicos serán enviados a la dirección que usted proporcione y podrán ser cancelados en cualquier momento.
-                \n\n
-                6. El suministrador recopila información personal, tal como nombre y apellido, domicilio, teléfono, dirección de correo electrónico
-                    y números de tarjeta de crédito, solo cuando es informada voluntariamente por usted. El suministrador no solicitará información
-                    que sea incompatible con la finalidad de sus actividades, ni que directa o indirectamente revele datos sensibles.
-                \n\n
-                El suministrador podrá contratar a terceros para llevar a cabo ciertas tareas tales como, envío de correos postales y electrónicos,
-                    data entry, análisis estadístico de datos, entre otras. Dichos terceros sólo contarán con el acceso a la Información necesaria
-                    para cumplir con sus tareas y funciones, no pudiendo utilizarla para otros fines.
-                \n\n
-                En el supuesto de comprobarse que los datos personales recolectados no resultan útiles o que no cumplen con el fin para el cual
-                    fueron recabados, los mismos deberán destruirse conforme al Procedimiento de eliminación segura de información.
-                \n\n
-                En cumplimiento con el Art. 10 de la Ley 25.326, el suministrador no venderá, alquilará o compartirá la información personal de
-                    suscriptores, proveedores y/o colaboradores excepto en las formas establecidas en esta política.
-                \n\n
-                El suministrador hará todo lo que esté a su alcance para proteger la privacidad de la información. Pero eventualmente, puede
-                    suceder que en virtud de órdenes judiciales o de regulaciones legales, se vea obligado a revelar información a las autoridades
-                    o terceras partes.
-                \n\n
-                El suministrador implementa todas las medidas necesarias para mantener la seguridad de la información personal que brindan los
-                    suscriptores, proveedores y/o empleados, contemplando las medidas técnicas y organizativas internas necesarias para garantizar
-                    la seguridad y confidencialidad de los datos, tratando por todos los medios de evitar el acceso no autorizado a los mismos.
-                \n\n
-                Sin embargo, en razón del estado actual de la tecnología, el suministrador no puede garantizar en un 100% que el acceso no
-                    autorizado nunca ocurrirá. El suministrador no responderá en caso de presentarse una violación a sus sistemas de seguridad
-                    cuando medie fuerza mayor o caso fortuito.
-                \n\n
-                El área responsable de Tecnología y Sistemas se encarga del cumplimiento de toda la normativa relacionada a la Seguridad de
-                    la Información, a través de las Políticas, Normas y Procedimientos aprobados para tal fin.
-                \n\n
-                7. El sitio web podría contener enlaces a otros sitios que pudieran ser de su interés. Una vez que usted hace clic en estos
-                    enlaces y abandona nuestra página, ya no tendremos control sobre al sitio al que es redirigido y por lo tanto no somos
-                    responsables de los términos o privacidad ni de la protección de sus datos en esos otros sitios terceros. Dichos sitios están
-                    sujetos a sus propias políticas de privacidad por lo cual es recomendable que los consulte para confirmar que usted está de acuerdo con ellas.
-                \n\n
-                8.  Los titulares de los datos cuentan con los siguientes derechos:
-                \n\n
-                Ponemos a disposición el formulario para el ejercicio del derecho al acceso y el formulario para la rectificación,
-                    actualización o supresión de datos personales.
-                \n\n
-                Descargar formularios:
-                \n\n
-                9. Los datos proporcionados por los usuarios deben ser adecuados y pertinentes. En caso de que éstos sean falsos,
-                    incompletos, inexactos o no estén actualizados, el suministrador se exime de toda responsabilidad sobre las
-                    consecuencias que dichos errores pudieren causar. El suministrador puede proporcionar los datos a terceros de
-                    ser necesario aunque sin fines comerciales. Los datos ingresados en cualquier aplicación o módulo del producto
-                    son de uso exclusivo y privado, siendo propiedad y responsabilidad del suscriptor.
-                \n\n
-                10. El suministrador tiene ahora o más adelante la facultad de modificar el formato, las secciones, las bases, la
-                    organización y, en general, podrá reformar, reformular e incluso discontinuar tanto la estructura como cualquier
-                    otro aspecto del presente sitio. También podrá hacerlo respecto de cualquiera de los productos en formato online,
-                    en soporte papel y/o bajo cualquier otra modalidad que considere necesario realizar, a su solo criterio y por cualquier causa.
-                    El ejercicio de esta facultad es aceptado por cada suscriptor por el solo hecho de acceder a este sitio,
-                    consintiendo que el suministrador no contraerá ningún tipo de responsabilidad por el ejercicio en ningún
-                    momento y bajo ninguna circunstancia de la facultad reservada en este punto.
-                \n\n
-                11. El suministrador incorpora permanentemente nueva tecnología y funcionalidades sobre los módulos que componen
-                    MI ERREPAR/ MI ERREIUS y las implementa de forma automática. La aceptación de estas condiciones de uso implica
-                    la autorización expresa por parte del suscriptor.
-                \n\n\n
-
-                Para realizar estas acciones es posible que deban realizarse cambios y migraciones de datos existentes hacia nuevas plataformas,
-                    ejecutándose de forma automática en cada implementación. Es responsabilidad del suscriptor, realizar el propio control sobre
-                    la información migrada y notificar al suministrador en el caso de notar cualquier anomalía sobre la misma. El suministrador
-                    no será responsable por modificaciones/omisiones surgidos como consecuencia de errores en los sistemas ocasionados por este
-                    o cualquier otro tipo de procedimiento.
-                \n\n
-                12. El usuario y/o suscriptor acepta y declara que conoce desde su mismo ingreso a este sitio que toda la información a la que
-                    acceda según el tipo y soporte de producto suscripto es de propiedad y titularidad exclusiva del suministrador. Sabe por lo
-                    tanto que solo podrá utilizarla bajo las condiciones de su suscripción y siempre para su uso personal y exclusivo, más allá
-                    de la eventual aplicación de la información obtenida a su actividad profesional, docente, académica y/o administrativa.
-                    El usuario conoce y acepta que dentro de la propiedad intelectual y exclusiva del suministrador se incluye no solo la
-                    información obtenida mediante su suscripción y/o acceso a este sitio, sino también los textos publicados, comentarios,
-                    sistematización, ordenamiento, índices, formatos y, en general, todo contenido en sustancia y forma al que acceda y/o
-                    que le fuere enviado al suscriptor por parte del suministrador.
-                \n\n
-                13. El suscriptor y/o usuario declara conocer que no le está permitido hacer uso ni del producto ni de los demás elementos
-                    mencionados en esta cláusula para ningún otro destino diverso del previsto en la suscripción correspondiente.
-                    En especial acepta que no le está permitido difundirlos, copiarlos, comercializarlos en ninguna forma o modo,
-                    cederlos ni transferirlos bajo ninguna modalidad y, en general, reproducirlos fuera de lo convenido y del fin
-                    contemplado. El suministrador informa que toda infracción a tal estipulación le dará derecho a ejercer los derechos
-                    y acciones civiles y criminales contemplados en la ley 11723, así como a reclamar los daños y perjuicios ocasionados
-                    sin perjuicio de cualquier otra acción o derecho que pudiere otorgársele por cualquier otra disposición normativa.
-                \n\n
-                14. El suministrador aclara que los contenidos gratuitos (libres, liberados, prueba y/o cortesía) tienen por objeto
-                    difundir la marca y/o producto, por lo que la utilización de/los mismos también se encuentra sujeto a las condiciones
-                    señaladas en los puntos 7 y 8.
-                \n\n
-                15. El suscriptor y/o usuario es y será responsable de cualquier desvío o infracción a los términos de uso y condiciones
-                    de suscripción reglamentados en el presente, sea para productos online y/o productos en soporte papel y/o en cualquier
-                    otro soporte. La vigencia de su suscripción será la convenida para cada producto con el suministrador. El solo ingreso
-                    al sitio web y/o utilización de funcionalidades o aplicaciones importará para el suscriptor y/o usuario la aceptación de
-                    las presentes bases, términos y condiciones. Los suscriptores de productos en soporte papel recibirán incorporado a su
-                    obra y/o actualización un ejemplar impreso del presente reglamento, junto con una recomendación expresa en cada factura a
-                    fin de que acceda a este sitio y lea atentamente las presentes bases. Dentro de los 30 días de recibida la primera
-                    factura con tal recomendación impresa, aquel suscriptor que estuviera en desacuerdo con alguna de las presentes
-                    disposiciones podrá observarla en forma escrita mediante el envío de un e-mail a clientes@errepar.com o utilizando cualquier
-                    otra forma de comunicación fehaciente. Transcurrido dicho lapso, el suministrador considerará este reglamento definitivamente aceptado.
-                \n\n
-                16. Toda información sobre textos legales, normativos, jurisprudencia, doctrina, modelos contractuales o afines y cálculos,
-                    fechas de referencia, alertas, en general, todo contenido al que pudiera acceder el suscriptor constituyen meramente una
-                    guía orientativa de ayuda profesional y/o académica que no reemplaza ni sustituye el conocimiento científico o el criterio
-                    lógico y racional del suscriptor, quien hará uso de ellos siempre bajo la órbita de su especialidad técnica y en la forma y
-                    modo que decida utilizarlos, bajo su única y exclusiva responsabilidad. El suscriptor es informado por la lectura de este
-                    reglamento y acepta conocer que todos los textos e información normativa, legal, dispositiva y judicial a que acceda con
-                    motivo de su suscripción provienen de fuentes oficiales y/o eventualmente privadas publicadas, susceptibles de contener
-                    erratas y/o errores de impresión ajenos al suministrador. También es posible que por la dinámica propia de tales contenidos
-                    puedan existir a su respecto actualizaciones o modificaciones no incorporadas, por razones de tiempo o por cualquier otra
-                    circunstancia, a los productos enviados en soporte papel o incluso a los contenidos publicados online. Por tal razón, cada
-                    suscriptor asume el expreso compromiso de contactarse vía e-mail o telefónicamente con el centro de atención del suministrador,
-                    siempre con carácter previo a la efectiva aplicación o uso de cualquier contenido publicado o que le hubiere sido enviado,
-                    con el objeto de validar y confirmar directamente la definitiva exactitud y vigencia de los contenidos de su interés.
-                    Teléfono de validación: 011-4370-2002, atención de lunes a viernes de 9 a 18 horas. Dirección de correo electrónico de validación:
-                    clientes@errepar.com. El suministrador no es ni será responsable por erratas, errores de impresión, desactualización de textos
-                    normativos o legales, publicación sintética o reducida de fallos judiciales y, en general, por cualquier distorsión y/o errata
-                    de cualquier naturaleza, ya sea en todos y/o en cada uno de sus contenidos, cuando el suscriptor omitiera la consulta y validación
-                    previa recomendada en esta cláusula. Asimismo, el suscriptor acepta y declara conocer que los datos, opiniones, comentarios o
-                    trabajos académicos y/o doctrinarios en general publicados online o en soporte papel corren por cuenta exclusiva de sus
-                    respectivos autores, los que no necesariamente pueden coincidir con o reflejar el pensamiento y opinión del suministrador
-                    ni representar una única corriente de criterio, siendo común, por el contrario, que existan discrepancias y multiplicidad
-                    de opiniones, diversidad de pensamientos e interpretaciones científicas y académicas cuya evaluación, conocimiento y
-                    efectivo uso y aplicación corren y correrán exclusivamente por cuenta y bajo responsabilidad exclusiva del suscriptor.
-                \n\n
-                17. El suministrador no es responsable por la veracidad de la información comercial, datos, publicidad y demás aspectos que
-                    puedan estar incorporados al sitio o a los diferentes contenidos por patrocinadores y/o enlaces comerciales y/o avisadores.
-                    Del mismo modo, toda relación comercial o de cualquier otra naturaleza que pudiera existir o trabarse entre un suscriptor y
-                    dichos terceros será considerada siempre y sin excepciones como completamente ajena al suministrador, quien no contrae
-                    ninguna responsabilidad sobre aquella. Tampoco el suministrador será responsable por interrupciones, discontinuidades o
-                    defectos técnicos de cualquier naturaleza inherentes al funcionamiento del servicio, accesibilidad de sus contenidos y,
-                    en general, por defectos propios de los sitios ajenos a su gestión o causados por equipos, software o cuestiones técnicas
-                    inherentes a cada suscriptor. Este último además toma a su cargo el compromiso de adoptar una adecuada protección de sus
-                    equipos y software a fin de evitar el envío y/o recepción a y/o desde el sitio de virus o alteraciones informáticas similares,
-                    no resultando responsable el suministrador bajo ninguna circunstancia de daños y perjuicios provocados o vinculados con esta causa.
-                \n\n
-                18. El precio de todos los productos comercializados bajo cualquier modo por la Editorial se entenderá siempre que reviste
-                    carácter provisorio, quedando el precio definitivo sujeto a las actualizaciones y/o reajustes que resulten menester
-                    aplicar sobre la base de los incrementos de costos que en virtud de las circunstancias macroeconómicas pudieran generarse
-                    en el futuro, tales como incrementos de materias primas, cualquier tipo de insumos, variaciones de alícuotas impositivas o
-                    tributarias, incrementos salariales y, en definitiva, cualquier variación trascendente que pudiera afectar los costos
-                    previsionados por la Compañía para la fijación del precio provisorio. En ese orden, y de producirse alguna de tales variaciones,
-                    ERREPAR informará mediante aviso o comunicación de rutina al cliente/suscriptor, con 30 días de anticipación, la modificación
-                    correspondiente y procederá a cambiar los importes futuros contemplados en el eventual débito mediante tarjeta de crédito y/o
-                    cualquier otra forma de cobro que considere pertinente. El suscriptor o cliente, dentro de los 30 días de recibido el aviso
-                    antes mencionado, podrá solicitar la cancelación del producto mediante alguna de las siguientes formas:
-                    a) por e-mail a clientes@errepar.com;
-                    b) por carta certificada con acuse de recibo. Transcurrido dicho plazo sin observaciones, se considerará aceptada y
-                    conformada la variación del precio provisorio del producto.
-                \n\n
-                19. Todo usuario que incumpla o infraccione de cualquier modo los términos de su suscripción y el presente
-                    reglamento podrá ser automáticamente y sin previo aviso discontinuado en su accesibilidad por el suministrador,
-                    sin perjuicio de las acciones y derechos que este último podrá ejercer para reclamar el resarcimiento de los daños y perjuicios ocasionados.
-                \n\n
-                20. Las presentes bases, términos y condiciones podrán ser modificados en un futuro al solo criterio del suministrador,
-                    sin dar derecho a reclamo alguno por el suscriptor. Las modificaciones comenzarán a regir desde su incorporación al
-                    presente reglamento sin perjuicio de su envío con las sucesivas actualizaciones del producto en soporte papel.
-                    Por tal razón cada suscriptor, en previsión de esta circunstancia, asume el compromiso de acceder regularmente,
-                    como mínimo una vez por mes, al sitio del suministrador y realizar una lectura íntegra de las bases y condiciones de su suscripción.
-                \n\n
-                21. Todo diferendo de interpretación o controversia que surgiera entre un suscriptor y el suministrador
-                    será dirimido en primer lugar amigablemente en mediación prejudicial y, de subsistir el diferendo,
-                    conocerán de él los Tribunales Nacionales de la Ciudad Autónoma de Buenos Aires.
-                \n\n
-                \n\n
-                    Dirección Nacional del Derecho de Autor. Hecho el depósito que marca la ley 11723
-                \n\n\n
-
-                    © ERREPAR SA - Parada - Errecaborde
-                \n\n\n
-
-                    Sistema patentado, modelos y marcas registrados
-                \n\n\n
-
-                    Dirección: Viamonte 1484 (1055) Buenos Aires - República Argentina
-                \n\n\n
-
-                    ERREPAR SA
-
+                <b>TÉRMINOS:</b>   Los   términos   y   condiciones   particulares   de   uso     (en
+adelante) los (“TDU”) reglamentan las condiciones de acceso y uso de
+la aplicación de propiedad de la Editorial   ERREPAR / ERREIUS, en
+adelante (ERREPAR) cuya denominación es (App Mis Libros Errepar)   en
+adelante (“La App”).  \n \n
+<b>1.CONFORMIDAD:</b>   La   obtención   de   (la   App)   e   incorporación   a
+cualquier dispositivo autorizado por ERREPAR / ERREIUS para su uso así
+como   la utilización efectiva de (La App) constituye   y otorga el
+carácter de “USUARIO” (en adelante: “EL USUARIO”) a quien lo realice e
+implica ante  cualquiera de tales eventos lo que ocurra primero - que
+el   mismo   ha   tomado   conocimiento   detenidamente   de   los   (TDU)
+aceptándolos y dando su completa conformidad a todos y cada uno de los
+mismos   en   forma   total   y   sin   cuestionamientos   ni   reservas,
+entendiéndose que ha prestado el consentimiento a la totalidad de las
+estipulaciones contenidas en dichos (TDU)   publicados al momento en
+que   el   USUARIO   acceda.   En   consecuencia,   es   imprescindible   que   EL
+USUARIO   efectúe   una   minuciosa   lectura   de   los   (TDU)     en   cada
+oportunidad en que acceda a  (La App), dado que siempre tales (TDU) se
+entienden provisorios y susceptibles de sufrir modificaciones sin que
+para ello sea necesario  difusión alguna o aviso de tales cambios,
+dando desde su primer acceso el “USUARIO” su conformidad para ello
+liberando de toda responsabilidad a ERREPAR por la omisión o eventual
+falta de lectura de las mismas, presumiéndose por tanto que el solo
+acceso a la App por el USUARIO importa ineludiblemente aceptación sin
+reservas de los TDU vigentes al momento del acceso.    \n\n
+<b>2.(“LA APP”):</b> Toda persona física o jurídica que hubiera adquirido
+las obras o productos, en adelante (LAS OBRAS) que se identifican en
+anexo 1 de los (TDU) podrá acceder a (LA APP) sin   costo alguno de
+activación ni uso. Esto significa que NO se requiere para ser USUARIO
+de (LA APP) ser suscriptor de ERREPAR/ERREIUS ni efectuar pago alguno
+para   poder   bajarla   al   dispositivo   autorizado   ni   efectuar   pago
+adicional   o   complementario   para   poder   una   vez   descargada   al
+dispositivo hacer uso ilimitado de la misma siempre de acuerdo a las
+presentes (TDU). Se accede a LA APP únicamente a través de la descarga
+en   terminales   móviles   Smartphone   con   sistema   operativo   Android   y
+IPhone con sistema operativo IOS. La aplicación es válida únicamente
+para USUARIOS que al menos hubieran adquirido alguna de “(LAS OBRAS”)
+y en su caso además haber cumplido alguna de las condiciones exigidas
+por   ERREPAR   ERREIUS   para   acceder   a   (LA   APP)   si   es   que   estas   se
+hubieran  eventualmente  establecido  y surgieran  la mismas  del (TDU)
+vigente al momento de la descarga. En defecto de esto último solo se
+requerirá la adquisición de alguna de “(LAS OBRAS”). la descarga de la
+aplicación   en   el   dispositivo   móvil   del   USUARIO   permite   acceder
+gratuitamente a las actualizaciones normativas o de legislación y/o
+relacionadas con la obra y/o el producto comprado, siendo que dicha
+información y actualización será completamente gratuita y sin costo
+alguno.   Además   el   USUARIO   se   beneficiará   accediendo   a   contenidos
+afines adicionales proporcionados por ERREPAR /ERREIUS según el último
+considere. Adicionalmente (LA APP) puede incluir alertas de novedades
+y/o   notificaciones   que   pongan   en   conocimiento   de   (EL   USUARIO)   la
+existencia de modificaciones o actualizaciones ocurridas respecto el
+producto comprado. También podrá incluir todo tipo de comunicación que
+a criterio de ERREPAR ERREIUS esta considere pertinente tales como
+novedades de nuevos productos, obras, promociones y general cualquier
+contenido   que   a   solo   criterio   de   ERREPAR   ERREIUS   se   considere   de
+interés para EL USUARIO.  EL USUARIO  entiende y acepta que ERREPAR
+ERREIUS no asume ninguna responsabilidad  por la demora, supresión,
+envío equivocado o desperfecto al guardar cualquier comunicación del
+USUARIO o sus configuraciones personales. EL USUARIO será considerado
+siempre único responsable del adecuado uso de LA APP, por lo que queda
+obligado a mantener su contraseña y/o PIN y/o cualquier elemento que
+se   utilice   para   identificarlo   en   forma   absolutamente   segura   y   a
+resguardo de terceros. Asimismo ERREPAR ERREIUS no garantiza que el
+sistema   de   subida   a   la   APP   de   novedades   normativas   o   afines   se
+produzca en forma instantánea o automática con la vigencia de tales,
+dado  que  como   el  USUARIO  conoce   existe   un  tiempo  delay   natural  y
+necesario   para   la   verificación   de   las   novedades,   su   revisión,
+eventualmente su contextualización y demás. Por tal razón EL USUARIO
+acepta  y  consiente  que   es  posible  que   exista  un  delay   incluso   de
+varios días o el tiempo que demande la verificación y demás actos
+relacionados, entre la vigencia de eventuales novedades normativas o
+afines y su incorporación a la APP por lo que a todo efecto EL USUARIO
+deslinda   toda   responsabilidad   de   ERREPAR   por   esta   circunstancias
+tomando   a   su   cargo   el   rechequeo   de   contenidos   por   otras   vías   o
+modalidades que considere sobre la efectiva vigencia de los textos
+incorporados a la APP. \n\n
+<b>3.  USO DE LA APP:</b>  LA APP permite mediante un procedimiento ágil,
+simple y directo que quien hubiera adquirido alguna de las obras y/o
+productos del Anexo 1 de estos (TDU) reciba en su dispositivo móvil
+gratuitamente y sin necesidad de ser suscriptor de ERREPAR ERREIUS las
+novedades y actualizaciones de la obra y/o el producto adquirido mientras
+no se lance a comercialización la nueva edición actualizada de la obra o
+producto en cuestión. Por tanto "El acceso y uso de La App" tienen carácter
+gratuito para el Usuario. El acceso a los contenidos e información de la App
+será irrestricto para el usuario de la APP sin perjuicio de reservar ERREPAR
+sujetar   dicho   acceso   en   el   futuro   a   nuevos   requisitos,   condiciones   o
+exigencias que a su solo criterio podrá implementar sin aviso previo y por la
+sola   actualización   de   los   (TDU).   Para   poder   utilizar   La   App,   deberá
+registrarse completando el formulario disponible a tal fin desde LA APP.
+Todos los datos ingresados por el USUARIO importan que este garantiza el
+carácter auténtico de los mismos. Asume además única responsabilidad de
+mantener debidamente actualizados los mismos asegurando a ERREPAR
+ERREIUS que los datos vigentes incorporados a LA APP en cada oportunidad
+de uso se corresponden con la situación real del Usuario. El Usuario será el
+único responsable de la información falsa, o ilegítima que proporcione y de
+los perjuicios que pueda causar a ERREPAR ERREIUS o a terceros por
+semejante accionar. La App y todo su contenido, ya sean datos, imágenes,
+software, ilustraciones, video, mensajes, comunicaciones, recopilaciones,
+marcas, logos, mixturas de colores o cualquier otro elemento, su estructura
+y diseño, la selección y forma de presentación de los contenidos y los
+programas y herramientas aptos y/o necesarios para su funcionamiento, sin
+excluir   el   acceso   y   uso,   son   propiedad   de   ERREPAR   ERREIUS   y   en
+consecuencia están amparados y protegidos bajo las normas respectivas
+que protegen la propiedad intelectual, derechos de autor y copyright. De
+igual modo quedan bajo el mismo amparo normativo si los contenidos y
+programas fueran de propiedad de terceros licenciantes, que el Usuario
+debe respetar. ERREPAR ERREIUS, sus denominaciones, marcas, logotipos,
+patentes,   diseños,   gráficos,   dominios,   y   demás   relacionados   directa   o
+indirectamente está protegido conforme a las leyes y disposiciones de
+derecho de autor, marcas, patentes, secretos comerciales y/o industriales.
+ERREPAR ERREIUS confiere al Usuario el derecho de visualización de La
+App y la utilización de los Servicios. Queda terminantemente prohibido
+copiar, duplicar, modificar, realizar ingeniería inversa, desmontar,
+traducir,   o crear productos derivados del contenido de La App, en
+parte o en su totalidad. Asimismo, queda prohibido copiar, revelar,
+publicar,   vender,   o   comercializar   de   cualquier   modo   incluyendo
+cualquier acto jurídico o contrato, arrendar, otorgar bajo licencia, o
+transferir el contenido y/o información de la App, o parte de éste, y
+utilizarlo de modo alguno que no se haya autorizado explícitamente en
+el presente por ERREPAR ERREIUS.  \n\n
+<b>4.COMPROMISO:</b> El Usuario se compromete a
+(a) notificar inmediatamente a La App de cualquier uso no autorizado
+de su cuenta o cualquier otra violación de seguridad, y
+(b) a prestar atención de finalizar el uso de LA APP al final de cada
+sesión. ERREPAR ERREIUS no será responsable de ningún uso no
+autorizado   o   por   cualquier   pérdida   de   datos   o   información   o
+cualquier   evento   que   reconozca   por   causa   la   infracción   al
+compromiso asumido en este capítulo.  \n\n
+5.COMPORTAMIENTO: EL USUARIO comprende, reconoce y acepta que cada
+texto,   software,   imágenes,   contenidos,   fotos,   gráficos,
+comunicaciones, y/o cualquier elemento, material proporcionado vía LA
+APP   ya   sea   que   se   transmitan   pública   o   privadamente,   son
+responsabilidad exclusiva de la persona, órgano, autoridad, autor y/o
+DE quién originó dicho Contenido. Esto significa que EL USUARIO y NO
+ERREPAR ERREIUS, es únicamente responsable por verificar la exactitud
+y vigencia de la información recibida a través de la APP recurriendo a
+información oficial, resultando que ERREPAR ERREIUS no garantiza la
+exactitud, integridad o calidad de dicho Contenido. En ningún caso
+ERREPAR ERREIUS.  será responsable  en cualquier  forma por cualquier
+Contenido, incluyendo, pero no limitando a, cualquier error u omisión
+en cualquier Contenido, o cualquier daño o perjuicio de cualquier tipo
+incurridos como resultado del uso de cualquier Contenido publicado, o
+puesto a disposición a través de La App. El Usuario queda obligado a
+no utilizar o distorsionar de cualquier modo el uso de LA APP para:
+a.   cargar,   difundir,   transmitir   o   permitir   el   acceso   a   cualquier
+contenido que sea ilegal, en cualquier modalidad; o
+b. Suplantar identidad y hacerse pasar por otra persona o entidad, o
+declarar falsamente o tergiversar los datos proporcionados;
+ c El usuario acuerda y acepta que ERREPAR puede acceder, conservar y
+revelar aquella información de la APP o que tuviera acceso por la App
+y el Contenido si así lo requiere la ley o en la convicción de buena
+fe que dicha revelación es necesaria para: (1) cumplir con procesos
+legales; (2) hacer cumplir las condiciones de servicio; (3) responder
+a reclamos de que algún Contenido viola los derechos de terceros; (4)
+responder a cualquier demanda o requerimiento administrativo o cursado
+por   autoridad   administrativa,   y/   judicial;   o   (5)   proteger   los
+derechos, propiedad o seguridad de ERREPAR ERREIUS, sus usuarios y en
+su caso cualquier tercero. \n\n
+<b>6.NO RESPONSABILIDAD:</b>  ERREPAR   ERREIUS   no   asume   ningún   tipo   de
+responsabilidad por las interpretaciones del contenido de La App, ni
+del uso indebido del mismo y de sus Servicios e información; de igual
+manera no se hará responsable por los daños o perjuicios causados de
+forma directa o indirecta por o a quienes fueran estimulados a tomar
+decisiones o medidas al consultar La App. Tampoco se responsabilizará
+por los daños o perjuicios, directos, indirectos, o de cualquier otra
+forma,   que   acarree   la   suspensión   o   terminación   de   los   servicios,
+contenido, o información que se suministra a través de La App. ERREPAR
+ERREIUS no se responsabiliza de las posibles discrepancias que puedan
+surgir   entre   la   versión   de   sus   documentos   impresos   y/o   productos
+impresos y la versión electrónica de los mismos publicados en La App.
+ERREPAR   no   asume   responsabilidad   por   aquellas   informaciones   o
+contenidos   que   no   hayan   sido   creados   exclusivamente   por   la   propia
+ERREPAR ERREIUS, por lo que no responderá frente a aquellos daños o
+perjuicios que puedan derivarse del uso de dicha información cuando la
+misma   fuera   la   comunicación   de   novedades   legislativas,   normativas,
+judiciales o de índole similar no considerándose creaciones propias la
+realización de sumarios, resúmenes o información abreviada de tales
+novedades,   aceptando   EL   USUARIO   QUE   SIEMPRE   y   previo   a   cualquier
+comportamiento   particular   o   profesional   que   pretendiera   realizar   o
+guiar o asesorar incluso a terceros a partir de información recibida
+desde la APP deberá consultar, asesorarse técnica y científicamente
+y/o en su caso consultar las fuentes oficiales normativas oficiales en
+las que se origina la información suministrada vía LA APP. ERREPAR
+ERREIUS   no   se   responsabiliza   de   daños   o   perjuicios   derivados   del
+acceso, uso o mala utilización de los contenidos de La App. ERREPAR
+ERREIUS no se hace responsable por acceso no autorizado a cualquier
+comunicación de los Usuarios o su alteración. ERREPAR ERREIUS no se
+responsabiliza por problemas o desperfectos técnicos de las redes o
+líneas   telefónicas,   sistemas   informáticos   en   línea,   servidores   o
+proveedores, equipos de computación, software, desperfectos de correos
+electrónicos o de reproductores, derivados de inconvenientes técnicos
+o   congestión   en   el   tráfico   en   internet   o   en   cualquiera   de   los
+Servicios o cualquier combinación de los mismos. Los inconvenientes
+antedichos incluyen los daños o lesiones a Usuarios, a la computadora
+o dispositivo  Móvil de cualquier persona que tenga relación  o que
+resulte de la participación o la descarga de materiales en relación
+con   los   Servicios.   Bajo   ningún   concepto   ERREPAR   ERREIUS,   sus
+autoridades,   sus   funcionarios,   empleados   o   representantes   serán
+responsables   por   cualquier   daño   directo,   indirecto,   incidental,
+especial   o   punitivo   que   pudiera   ser   causado   por   (i)   errores   o
+inexactitudes en el contenido; (ii) daños de cualquier naturaleza a la
+persona o a la propiedad emergentes de su acceso a La App o de la
+utilización de la misma; (iii) cualquier acceso no autorizado a sus
+servidores seguros y/o a toda información personal almacenada en dicho
+servidor o utilización de los mismos; (iv) cualquier interrupción o
+cese de la transmisión desde o hacia la App; (iv) cualquier “bug”,
+virus, troyano o virus similares que pudieran ser transmitidos por
+terceros desde o hacia La App; El Usuario reconoce que ERREPAR no será
+responsable   por   el   material   enviado   o   por   conductas   difamatorias,
+ofensivas o ilegales de terceros, y el Usuario asume total riesgo de
+sufrir algún daño o menoscabo causado por dicho material o conducta.
+Esta App es controlada y llega al Usuario por ERREPAR ERREIUS desde
+sus instalaciones en Argentina. ERREPAR no garantiza que la App es
+apropiada para otros territorios, como así tampoco que se encuentre
+disponible en éstos. Aquellas personas que habiendo adquirido obras
+y/o   productos   del   anexo   1   pretendieran   luego   acceder   a   La   App
+cumpliendo las condiciones de acceso y requisitos exigidos desde otras
+jurisdicciones nacionales lo hacen por su propia voluntad y asumen la
+responsabilidad   de   respetar   la   legislación   local   sin   que   esté
+garantizado  que  en  cualquier   otro  territorio  que  no  sea   el  de  la
+República Argentina pueda accederse a LA APP. \n\n
+7.El Usuario expresa bajo juramento que cuenta con capacidad para
+aceptar los (TDU) y se obliga a cumplir estrictamente con los mismos. \n
+8.NO ESTÀ PERMITIDO ceder o transferir los presentes (TDU) ni los
+derechos y licencias que pudieran concederse en virtud del presente;
+en   cambio   ERREPAR   ERREIUS   reserva   la   facultad   irrestricta   de
+transferir   todo   o   parte   de   los   derechos   y   licencias   derivados   o
+incluidos o que pudieran incluirse en LA APP, sus contenidos y demás
+relacionados. \n\n
+9.ERREPAR ERREIUS se reserva el derecho a su solo criterio y de
+manera inapelable e irrecurrible a modificar o interrumpir, temporal o
+permanentemente,   el   Servicio   de   actualización   de   la   obra   y/o   el
+producto a través de LA APP incluso a discontinuarla en forma total o
+parcial   o   a   arancelar   o   establecer   requisitos   no   gratuitos   en   un
+futuro para acceder a ciertos contenidos, reservas que son totalmente
+aceptadas por EL USUARIO. No será necesario para el ejercicio de los
+derechos   reservados   el   previo   aviso   al   USUARIO   bastando   la
+incorporación a los (TDU). \n\n
+<b>10.TERMINACIÓN:</b>  El usuario consiente que ERREPAR ERREIUS tiene la
+facultad     sin   previo   aviso,   de   terminar   inmediatamente   su   cuenta
+dentro de La App, y el acceso al Servicio. Causa de dicha terminación
+deberá incluir, pero no limitarse a: (a) infracciones o violaciones de
+aplicación   de   la   ley,   (b)   una   solicitud   por   el   usuario,   ©
+interrupción o modificación material del Servicio (o cualquier parte
+del   mismo),   (d)   cuestiones   o   problemas   técnicos   o   de   seguridad
+inesperados, (e) cese del carácter gratuito del acceso a los servicios
+de LA APP, (f) Publicación de nueva edición de la obra adquirida por
+el   USUARIO   que   él   permitiera   acceder   a   LA   APP,   G)     actividad
+fraudulenta o ilegal del usuario. Si Errepar finalizara la cuenta,
+esto podrá determinar (a) la eliminación del acceso a los Servicios,
+(b) la eliminación de su contraseña y toda la información relacionada,
+archivos y contenido asociado con o dentro de su cuenta (o cualquier
+parte del mismo), y © prohibición de su uso posterior del Servicio.
+Además, el usuario acepta que todas las terminaciones con causa que se
+hicieren   a   la   discreción   de   ERREPAR   ERREIUS   no   producen
+responsabilidad   alguna   ante   el   usuario   o   cualquier   tercero   por
+cualquier   terminación   de   cuenta,   cualquier   dirección   de   correo
+electrónico asociada o acceso al Servicio.  \n\n
+<b>11.ACEPTACION DE TÉRMINOS Y CONDICIONES GENERALES:</b> La aceptación de
+estos TDU, importan además para EL USUARIO sea o no SUSCRIPTOR de
+ERREPAR   ERREIUS,   la   aceptación   y   consentimiento   de   los   términos   y
+condiciones generales para suscriptores de cualquier publicación de
+ERREPAR que se publican en el Anexo II los que serán aplicables desde
+el primer acceso a LA APP en todas y cada una de sus cláusulas y
+párrafos   en   tanto   no   fueren   expresamente   incompatibles   con   los
+presentes TDU. \n\n
+12.Estos TDU y sus anexos incluyendo los términos y condiciones
+generales del anexo II   son obligatorios y regulan las relaciones
+entre el Usuario y ERREPAR ERREIUS. con respecto al uso de la APP. Si
+ERREPAR ERREIUS no ejerciera facultades o derechos conferidos por los
+mismos   bajo   ningún   aspecto   podrá   ser   interpretado   como   renuncia   a
+hacerlo en un futuro. El Usuario acepta que (i) todo conflicto reclamo
+o controversia que genere el uso de LA APP da lugar a que el Usuario
+y/o ERREPAR ERREIUS ejerza las acciones o derechos consecuentes única
+y exclusivamente ante los Tribunales con competencia territorial de la
+Capital Federal de la República Argentina con renuncia a cualquier
+otra   jurisdicción nacional, provincial, municipal, de la CABA y/o
+administrativa   sobre   el   mismo,   de   carácter   especial   o   general,   en
+otras jurisdicciones que no sean las indicadas. Asimismo los TDU y sus
+anexos   quedan   alcanzados   y   regulados   exclusivamente   por   la   ley   en
+sentido amplio de la República Argentina. \n\n
+<b>13.</b>SE DECLARA BAJO JURAMENTO QUE EN MI CONDICIÓN DE COMPRADOR DE
+ALGUNA OBRA, COLECCIÓN O PRODUCTO DE ERREPAR ERREIUS PUBLICADO EN EL
+ANEXO   1   HE   ACCEDIDO   DESDE   LA   PLATAFORMA   QUE   ASÌ   LO   AUTORIZA   A
+DESCARGAR LA APP EN MI DISPOSITIVO MÒVIL AUTORIZADO ACEPTANDO Y DANDO
+CONFORMIDAD CON LOS TDU, LOS TÉRMINOS GENERALES INDICADOS EN EL ANEXO
+2 Y ACEPTO ADEMÁS TODA NORMATIVA APLICABLE AL QUE REMITEN LOS MISMOS. \n\n
+<b>14.Anexo 1:</b> OBRAS QUE DAN DERECHO A BAJAR LA APP GRATUITAMENTE. \n\n
+<b>15.Anexo 2:</b> TÉRMINOS Y CONDICIONES GENERALES PARA SUSCRIPTORES DE
+CUALQUIER PUBLICACION DE ERREPAR. \n
                     </string>
     <string name="startbackground">startBackground</string>
 

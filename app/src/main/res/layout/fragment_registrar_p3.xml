@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     android:background="@color/white"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".views.RegistrarP3Fragment">
+    tools:context="com.example.mislibros.views.RegistrarP3Fragment">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -13,13 +13,13 @@
 
         <ImageView
             android:id="@+id/imageView"
-            android:layout_width="120dp"
-            android:layout_height="120dp"
+            android:layout_width="80dp"
+            android:layout_height="100dp"
             android:layout_marginTop="12dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/logo" />
+            app:srcCompat="@drawable/logo_new" />
 
         <TextView
             android:id="@+id/textView"
@@ -31,6 +31,7 @@
             android:layout_marginRight="64dp"
             android:gravity="center|center_vertical"
             android:text="Contraseña"
+            android:fontFamily="@font/raleway_bold"
 
             android:textColor="@color/colorPrimary"
             android:textSize="28sp"
