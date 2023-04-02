@@ -11,8 +11,8 @@ android {
         applicationId 'com.errepar.mislibros'
         minSdkVersion 21
         targetSdkVersion 32
-        versionCode 7
-        versionName "1.4"
+        versionCode 12
+        versionName "1.6"
         multiDexEnabled true
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }

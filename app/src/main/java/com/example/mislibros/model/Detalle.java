@@ -12,8 +12,10 @@ public class Detalle {
     private String audioUrl;
     private String fileTitle;
     private String fileUrl;
+    private String PublicacionTitle;
+    private String PublicacionUrl;
 
-    public Detalle(int id, String fecha, String videoTitle, String videoUrl, String audioTitle, String audioUrl, String fileTitle, String fileUrl) {
+    public Detalle(int id, String fecha, String videoTitle, String videoUrl, String audioTitle, String audioUrl, String fileTitle, String fileUrl, String PublicacionTitle, String PublicacionUrl) {
         this.id = id;
         this.fecha = fecha;
         this.videoTitle = videoTitle;
@@ -22,6 +24,8 @@ public class Detalle {
         this.audioUrl = audioUrl;
         this.fileTitle = fileTitle;
         this.fileUrl = fileUrl;
+        this.PublicacionTitle = PublicacionTitle;
+        this.PublicacionUrl = PublicacionUrl;
     }
 
     public Detalle() {
@@ -55,6 +59,22 @@ public class Detalle {
 
     public void setVideoUrl(String videoUrl) {
         this.videoUrl = videoUrl;
+    }
+
+    public String getPublicacionTitle() {
+        return PublicacionTitle;
+    }
+
+    public void setPublicacionTitle(String publicacionTitle) {
+        PublicacionTitle = publicacionTitle;
+    }
+
+    public String getPublicacionUrl() {
+        return PublicacionUrl;
+    }
+
+    public void setPublicacionUrl(String publicacionUrl) {
+        PublicacionUrl = publicacionUrl;
     }
 
     public String getAudioTitle() {

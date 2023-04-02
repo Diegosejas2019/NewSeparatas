@@ -1,16 +1,21 @@
 package com.example.mislibros.utils;
 
+import static android.content.ContentValues.TAG;
 import static android.content.Context.CONNECTIVITY_SERVICE;
 import static android.content.Context.MODE_PRIVATE;
 
+import android.accounts.Account;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.DownloadManager;
+import android.content.AbstractThreadedSyncAdapter;
 import android.content.BroadcastReceiver;
+import android.content.ContentProviderClient;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
+import android.content.SyncResult;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
 import android.net.ConnectivityManager;
@@ -20,6 +25,7 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
 import android.os.StrictMode;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -50,7 +56,15 @@ import org.apache.poi.ss.usermodel.CellValue;
 import org.apache.poi.ss.usermodel.FormulaEvaluator;
 import org.apache.poi.ss.usermodel.Row;
 
+import java.io.BufferedOutputStream;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.util.List;
 
@@ -97,138 +111,145 @@ public class DetallesAdapter extends RecyclerView.Adapter<DetallesAdapter.Produc
         StrictMode.VmPolicy.Builder builder = new StrictMode.VmPolicy.Builder();
         StrictMode.setVmPolicy(builder.build());
 
-        BroadcastReceiver receiver = new BroadcastReceiver() {
-            @Override
-            public void onReceive(Context context, Intent intent) {
-
-                if (validDownload){
-                    validDownload = false;
-                    Bundle extras = intent.getExtras();
-                    DownloadManager.Query q = new DownloadManager.Query();
-                    q.setFilterById(extras.getLong(DownloadManager.EXTRA_DOWNLOAD_ID));
-                    Cursor c = dm.query(q);
-
-                    if (c.moveToFirst()) {
-                        @SuppressLint("Range") int status = c.getInt(c.getColumnIndex(DownloadManager.COLUMN_STATUS));
-                        if (status == DownloadManager.STATUS_SUCCESSFUL) {
-                            // process download
-                            @SuppressLint("Range") String TypeFile = c.getString(c.getColumnIndex(DownloadManager.COLUMN_TITLE));
-                            @SuppressLint("Range") String title = c.getString(c.getColumnIndex(DownloadManager.COLUMN_DESCRIPTION));
-                            // get other required data by changing the constant passed to getColumnIndex
-                            String[] titulo = title.split("#");
-                            String tituloFinal = titulo[1];
-                            String filepath = titulo[2];
-                            //Uri uri = Uri.parse(titulo[3]);
-                            String namePath = titulo[3];
-                            String downloadDirectory = String.valueOf(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS));
-                            File file = new File(downloadDirectory + "/" + namePath);
-                            if (checkshare)
-                            {
-                                /*File file = new File(Environment.getExternalStorageDirectory().toString() + "/" + "abc.txt");
-                                Intent sharingIntent = new Intent(Intent.ACTION_SEND);
-                                sharingIntent.setType("text/*");
-                                sharingIntent.putExtra(Intent.EXTRA_STREAM, Uri.parse(filepath));
-                                sharingIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION) ;
-
-                                List<ResolveInfo> resolvedInfoActivities =
-                                        mCtx.getPackageManager().queryIntentActivities(sharingIntent, PackageManager.MATCH_DEFAULT_ONLY);
-
-                                for (ResolveInfo ri : resolvedInfoActivities) {
-
-                                    mCtx.grantUriPermission(ri.activityInfo.packageName,Uri.parse(filepath), Intent.FLAG_GRANT_READ_URI_PERMISSION);
-
-                                }
-                                mCtx.startActivity(Intent.createChooser(sharingIntent, "share file with"));*/
-                                /*Intent i = new Intent(Intent.ACTION_SEND);
-                                Uri uri = FileProvider.getUriForFile(context, context.getApplicationContext().getPackageName() + ".provider", file);
-
-                                List<ResolveInfo> resInfoList = mCtx.getPackageManager().queryIntentActivities(i, PackageManager.MATCH_DEFAULT_ONLY);
-
-                                for (ResolveInfo resolveInfo : resInfoList) {
-                                    String packageName = resolveInfo.activityInfo.packageName;
-                                    mCtx.grantUriPermission(packageName, uri, Intent.FLAG_GRANT_WRITE_URI_PERMISSION | Intent.FLAG_GRANT_READ_URI_PERMISSION);
-                                }
-
-
-                                i.putExtra(Intent.EXTRA_EMAIL, new String[]{"fake@fake.edu"});
-                                i.putExtra(Intent.EXTRA_SUBJECT,"On The Job");
-                                //Log.d("URI@!@#!#!@##!", Uri.fromFile(pic).toString() + "   " + pic.exists());
-                                i.putExtra(Intent.EXTRA_TEXT,"All Detail of Email are here in message");
-                                i.putExtra(Intent.EXTRA_STREAM,uri);
-                                i.setType("application/pdf");
-                                i.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION
-                                        | Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
-                                mCtx.startActivity(Intent.createChooser(i,"Share you on the jobing"));*/
-
-                                Intent sharableIntent = new Intent();
-                                sharableIntent.setAction(Intent.ACTION_SEND);
-                                sharableIntent.setFlags(Intent.FLAG_GRANT_PERSISTABLE_URI_PERMISSION );
-
-                                Uri uri = FileProvider.getUriForFile(mCtx, mCtx.getApplicationContext().getPackageName() + ".provider", file);
-                                File imageFile = new File(String.valueOf(uri));
-                                String Author = "";
-
-                                List<ResolveInfo> resInfoList = mCtx.getPackageManager().queryIntentActivities(sharableIntent, PackageManager.MATCH_DEFAULT_ONLY);
-                                for (ResolveInfo resolveInfo : resInfoList) {
-                                    String packageName = resolveInfo.activityInfo.packageName;
-                                    mCtx.grantUriPermission(packageName, uri, Intent.FLAG_GRANT_WRITE_URI_PERMISSION | Intent.FLAG_GRANT_READ_URI_PERMISSION);
-                                }
-                                sharableIntent.setType("application/pdf");
-                                sharableIntent.putExtra(Intent.EXTRA_STREAM, uri);
-                                sharableIntent.putExtra(Intent.EXTRA_TITLE, title);
-                                sharableIntent.putExtra(Intent.EXTRA_TEXT, "a");
-
-
-
-                                mCtx.startActivity(sharableIntent);
-
-                                //checkshare = false;
-                                /*Toast toast = Toast.makeText(mCtx, "Enviando correo...", Toast.LENGTH_LONG);
-                                toast.setGravity(Gravity.CENTER, 0, 0);
-                                toast.show();
-                                mHandler = new Handler();
-                                new Thread(new Runnable() {
-
-                                    public void run() {
-
-                                        try {
-
-                                            SharedPreferences prefs = mCtx.getSharedPreferences(MainActivity.MY_PREFS_NAME, MODE_PRIVATE);
-                                            String email = prefs.getString("email", "");
-                                            GMailSender sender = new GMailSender("erreparseparatas@errepar.com",
-                                                    "#gh6b0pU541#hazP");
-                                            sender.addAttachment(filepath, tituloFinal);
-                                            sender.sendMail("App Libros Errepar - " + tituloFinal,
-                                                    "Adjunto \n ",
-                                                    "erreparseparatas@errepar.com",
-                                                    email);
-                                            // Toast.makeText(getApplicationContext(),"envio",Toast.LENGTH_LONG).show();
-                                        } catch (Exception e) {
-                                            Toast.makeText(mCtx,"Hubo un problema al enviar el correo.",Toast.LENGTH_LONG).show();
-                                        }
-                                        mHandler.post(new Runnable() {
-                                            @Override
-                                            public void run () {
-
-                                                //Toast.makeText(mCtx,"Recibiras por email el archivo seleccionado.",Toast.LENGTH_LONG).show();
-                                                Toast toast = Toast.makeText(mCtx, "Recibiras por email el archivo seleccionado.", Toast.LENGTH_LONG);
-                                                toast.setGravity(Gravity.CENTER, 0, 0);
-                                                toast.show();
-
-                                            }
-                                        });
-
-
-                                    }
-                                }).start();*/
-                            }
-                        }
-                    }
-                }
-            }
-        };
-        mCtx.registerReceiver(receiver, new IntentFilter(
-                DownloadManager.ACTION_DOWNLOAD_COMPLETE));
+//        BroadcastReceiver receiver = new BroadcastReceiver() {
+//            @Override
+//            public void onReceive(Context context, Intent intent) {
+//
+//                if (validDownload){
+//                    validDownload = false;
+//                    Bundle extras = intent.getExtras();
+//                    DownloadManager.Query q = new DownloadManager.Query();
+//                    q.setFilterById(extras.getLong(DownloadManager.EXTRA_DOWNLOAD_ID));
+//                    Cursor c = dm.query(q);
+//
+//                    if (c.moveToFirst()) {
+//                        @SuppressLint("Range") int status = c.getInt(c.getColumnIndex(DownloadManager.COLUMN_STATUS));
+//                        if (status == DownloadManager.STATUS_SUCCESSFUL) {
+//                            // process download
+//                            @SuppressLint("Range") String TypeFile = c.getString(c.getColumnIndex(DownloadManager.COLUMN_TITLE));
+//                            @SuppressLint("Range") String title = c.getString(c.getColumnIndex(DownloadManager.COLUMN_DESCRIPTION));
+//                            // get other required data by changing the constant passed to getColumnIndex
+//                            String[] titulo = title.split("#");
+//                            String tituloFinal = titulo[1];
+//                            String filepath = titulo[2];
+//                            //Uri uri = Uri.parse(titulo[3]);
+//                            String namePath = titulo[3];
+//                            String downloadDirectory = String.valueOf(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS));
+//                            File file = new File(downloadDirectory + "/" + namePath);
+//
+//                            if (checkshare)
+//                            {
+//                                /*File file = new File(Environment.getExternalStorageDirectory().toString() + "/" + "abc.txt");
+//                                Intent sharingIntent = new Intent(Intent.ACTION_SEND);
+//                                sharingIntent.setType("text/*");
+//                                sharingIntent.putExtra(Intent.EXTRA_STREAM, Uri.parse(filepath));
+//                                sharingIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION) ;
+//
+//                                List<ResolveInfo> resolvedInfoActivities =
+//                                        mCtx.getPackageManager().queryIntentActivities(sharingIntent, PackageManager.MATCH_DEFAULT_ONLY);
+//
+//                                for (ResolveInfo ri : resolvedInfoActivities) {
+//
+//                                    mCtx.grantUriPermission(ri.activityInfo.packageName,Uri.parse(filepath), Intent.FLAG_GRANT_READ_URI_PERMISSION);
+//
+//                                }
+//                                mCtx.startActivity(Intent.createChooser(sharingIntent, "share file with"));*/
+//                                /*Intent i = new Intent(Intent.ACTION_SEND);
+//                                Uri uri = FileProvider.getUriForFile(context, context.getApplicationContext().getPackageName() + ".provider", file);
+//
+//                                List<ResolveInfo> resInfoList = mCtx.getPackageManager().queryIntentActivities(i, PackageManager.MATCH_DEFAULT_ONLY);
+//
+//                                for (ResolveInfo resolveInfo : resInfoList) {
+//                                    String packageName = resolveInfo.activityInfo.packageName;
+//                                    mCtx.grantUriPermission(packageName, uri, Intent.FLAG_GRANT_WRITE_URI_PERMISSION | Intent.FLAG_GRANT_READ_URI_PERMISSION);
+//                                }
+//
+//
+//                                i.putExtra(Intent.EXTRA_EMAIL, new String[]{"fake@fake.edu"});
+//                                i.putExtra(Intent.EXTRA_SUBJECT,"On The Job");
+//                                //Log.d("URI@!@#!#!@##!", Uri.fromFile(pic).toString() + "   " + pic.exists());
+//                                i.putExtra(Intent.EXTRA_TEXT,"All Detail of Email are here in message");
+//                                i.putExtra(Intent.EXTRA_STREAM,uri);
+//                                i.setType("application/pdf");
+//                                i.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION
+//                                        | Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
+//                                mCtx.startActivity(Intent.createChooser(i,"Share you on the jobing"));*/
+//
+//                                try {
+//                                    Intent sharableIntent = new Intent();
+//                                    sharableIntent.setAction(Intent.ACTION_SEND);
+//                                    sharableIntent.setFlags(Intent.FLAG_GRANT_PERSISTABLE_URI_PERMISSION );
+//
+//                                    Uri uri = FileProvider.getUriForFile(mCtx, mCtx.getApplicationContext().getPackageName() + ".provider", file);
+//
+//                                    File imageFile = new File(String.valueOf(uri));
+//                                    String Author = "";
+//
+//                                    List<ResolveInfo> resInfoList = mCtx.getPackageManager().queryIntentActivities(sharableIntent, PackageManager.MATCH_DEFAULT_ONLY);
+//                                    for (ResolveInfo resolveInfo : resInfoList) {
+//                                        String packageName = resolveInfo.activityInfo.packageName;
+//                                        mCtx.grantUriPermission(packageName, uri, Intent.FLAG_GRANT_WRITE_URI_PERMISSION | Intent.FLAG_GRANT_READ_URI_PERMISSION);
+//                                    }
+//                                    sharableIntent.setType("*/*");
+//                                    sharableIntent.putExtra(Intent.EXTRA_STREAM, uri);
+//                                    sharableIntent.putExtra(Intent.EXTRA_TITLE, title);
+//
+//
+//
+//                                    mCtx.startActivity(sharableIntent);
+//                                }
+//                                catch (Exception e){
+//                                    Toast.makeText(mCtx,e.getMessage(),Toast.LENGTH_LONG).show();
+//                                }
+//
+//
+//                                //checkshare = false;
+//                                /*Toast toast = Toast.makeText(mCtx, "Enviando correo...", Toast.LENGTH_LONG);
+//                                toast.setGravity(Gravity.CENTER, 0, 0);
+//                                toast.show();
+//                                mHandler = new Handler();
+//                                new Thread(new Runnable() {
+//
+//                                    public void run() {
+//
+//                                        try {
+//
+//                                            SharedPreferences prefs = mCtx.getSharedPreferences(MainActivity.MY_PREFS_NAME, MODE_PRIVATE);
+//                                            String email = prefs.getString("email", "");
+//                                            GMailSender sender = new GMailSender("erreparseparatas@errepar.com",
+//                                                    "#gh6b0pU541#hazP");
+//                                            sender.addAttachment(filepath, tituloFinal);
+//                                            sender.sendMail("App Libros Errepar - " + tituloFinal,
+//                                                    "Adjunto \n ",
+//                                                    "erreparseparatas@errepar.com",
+//                                                    email);
+//                                            // Toast.makeText(getApplicationContext(),"envio",Toast.LENGTH_LONG).show();
+//                                        } catch (Exception e) {
+//                                            Toast.makeText(mCtx,"Hubo un problema al enviar el correo.",Toast.LENGTH_LONG).show();
+//                                        }
+//                                        mHandler.post(new Runnable() {
+//                                            @Override
+//                                            public void run () {
+//
+//                                                //Toast.makeText(mCtx,"Recibiras por email el archivo seleccionado.",Toast.LENGTH_LONG).show();
+//                                                Toast toast = Toast.makeText(mCtx, "Recibiras por email el archivo seleccionado.", Toast.LENGTH_LONG);
+//                                                toast.setGravity(Gravity.CENTER, 0, 0);
+//                                                toast.show();
+//
+//                                            }
+//                                        });
+//
+//
+//                                    }
+//                                }).start();*/
+//                            }
+//                        }
+//                    }
+//                }
+//            }
+//        };
+//        mCtx.registerReceiver(receiver, new IntentFilter(
+//                DownloadManager.ACTION_DOWNLOAD_COMPLETE));
 
         return new ProductViewHolder(view);
     }
@@ -285,8 +306,12 @@ public class DetallesAdapter extends RecyclerView.Adapter<DetallesAdapter.Produc
         if (detalle.getFileTitle() == null) {
             holder.txtArchivo.setVisibility(View.GONE);
             holder.pdfIco.setVisibility(View.GONE);
-        } else if (detalle.getFileUrl() != null) {
+        } else if (detalle.getFileUrl() != null || detalle.getPublicacionTitle() != null) {
             holder.txtArchivo.setText(detalle.getFileTitle());
+            if (detalle.getPublicacionTitle() != null){
+                holder.txtArchivo.setText(detalle.getPublicacionTitle());
+                holder.pdfIco.setVisibility(View.GONE);
+            }
             String finalURL = URL;
             String finalDownloadURL = DownloadURL;
             String finalFileName = fileName;
@@ -343,21 +368,29 @@ public class DetallesAdapter extends RecyclerView.Adapter<DetallesAdapter.Produc
                             }).start();
                         }
                         else{
-                            final WebSettings webSettings = webView.getSettings();
-                            webSettings.setJavaScriptEnabled(true);
-                            webSettings.setDomStorageEnabled(true);
-                            webView.setWebViewClient(new WebViewClient());
-                            webView.loadUrl(finalURL);
-                            webView.setVisibility(View.VISIBLE);
-                            if (downloadPermited && !file.exists()) {
-                                dm = (DownloadManager) mCtx.getSystemService(Context.DOWNLOAD_SERVICE);
-                                Uri uri = Uri.parse(finalDownloadURL);
-                                DownloadManager.Request request = new DownloadManager.Request(uri);
-                                request.setTitle(finalFileName);
-                                request.setDescription("Descargando libro - " + finalTitulo);
-                                request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED);
-                                request.setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS, finalFileName);
-                                dm.enqueue(request);
+                            if (detalle.getPublicacionTitle() != null){
+
+                                Intent browserIntent = new Intent(Intent.ACTION_VIEW,
+                                        Uri.parse(detalle.getPublicacionUrl()));
+                                mCtx.startActivity(browserIntent);
+                            }
+                            else{
+                                final WebSettings webSettings = webView.getSettings();
+                                webSettings.setJavaScriptEnabled(true);
+                                webSettings.setDomStorageEnabled(true);
+                                webView.setWebViewClient(new WebViewClient());
+                                webView.loadUrl(finalURL);
+                                webView.setVisibility(View.VISIBLE);
+                                if (downloadPermited && !file.exists()) {
+                                    dm = (DownloadManager) mCtx.getSystemService(Context.DOWNLOAD_SERVICE);
+                                    Uri uri = Uri.parse(finalDownloadURL);
+                                    DownloadManager.Request request = new DownloadManager.Request(uri);
+                                    request.setTitle(finalFileName);
+                                    request.setDescription("Descargando libro - " + finalTitulo);
+                                    request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED);
+                                    request.setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS, finalFileName);
+                                    dm.enqueue(request);
+                                }
                             }
                         }
                     } else {
@@ -415,74 +448,109 @@ public class DetallesAdapter extends RecyclerView.Adapter<DetallesAdapter.Produc
             @Override
             public void onClick(View view) {
                 if (holder.share.isChecked()){
-                    /*Intent sendIntent = new Intent();
-                    sendIntent.setAction(Intent.ACTION_SEND);
-                    sendIntent.putExtra(Intent.EXTRA_TEXT, finalTitulo1);
-                    sendIntent.setType("text/plain");
-                    mCtx.startActivity(sendIntent);*/
-                    Toast toast = Toast.makeText(mCtx, "Descargando archivo..", Toast.LENGTH_LONG);
-                    toast.setGravity(Gravity.CENTER, 0, 0);
-                    toast.show();
-                    if (downloadPermited) {
-                        checkshare = true;
-                        validDownload = true;
-                        dm = (DownloadManager) mCtx.getSystemService(Context.DOWNLOAD_SERVICE);
-                        Uri uri = Uri.parse(finalDownloadURL);
-                        DownloadManager.Request request = new DownloadManager.Request(uri);
-                        request.setTitle(finalFileName);
-                        request.setDescription("Descargando libro #" + finalTitulo + "#" + file.getPath() + "#" + finalFileName);
-                        request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED);
-                        request.setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS, finalFileName);
-                        dm.enqueue(request);
+
+                    try {
+                        File.createTempFile(finalTitulo + detalle.getFileUrl(), null, mCtx.getCacheDir());
+                    } catch (IOException e) {
+                        e.printStackTrace();
                     }
-                    else{
-                        toast = Toast.makeText(mCtx, "Debe permitir la descarga de archivos.", Toast.LENGTH_LONG);
-                        toast.setGravity(Gravity.CENTER, 0, 0);
-                        toast.show();
+                    File cacheFile = new File(mCtx.getCacheDir(), finalTitulo + detalle.getFileUrl());
+                    if(!cacheFile.exists()){
+                        cacheFile.mkdirs();
+                    }
+                    String name = downloadFile(finalDownloadURL,cacheFile.getAbsolutePath());
+
+                    Uri uri = FileProvider.getUriForFile(mCtx, mCtx.getApplicationContext().getPackageName() + ".provider", cacheFile);
+                    Intent sharableIntent = new Intent();
+                    List<ResolveInfo> resInfoList = mCtx.getPackageManager().queryIntentActivities(sharableIntent, PackageManager.MATCH_DEFAULT_ONLY);
+                    for (ResolveInfo resolveInfo : resInfoList) {
+                        String packageName = resolveInfo.activityInfo.packageName;
+                        mCtx.grantUriPermission(packageName, uri, Intent.FLAG_GRANT_WRITE_URI_PERMISSION | Intent.FLAG_GRANT_READ_URI_PERMISSION);
                     }
 
+                    sharableIntent.setAction(Intent.ACTION_SEND);
+                    sharableIntent.setFlags(Intent.FLAG_GRANT_PERSISTABLE_URI_PERMISSION );
+                    sharableIntent.setFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+
+
+                    sharableIntent.setType("*/*");
+                    sharableIntent.putExtra(Intent.EXTRA_STREAM, uri);
+                    sharableIntent.putExtra(Intent.EXTRA_SUBJECT, finalTitulo);
+                    sharableIntent.putExtra(Intent.EXTRA_TITLE, finalTitulo);
+
+                    mCtx.startActivity(sharableIntent);
+                    holder.share.setChecked(false);
                 }
             }
         });
     }
 
-    protected String getCellAsString(Row row, int c, FormulaEvaluator formulaEvaluator) {
-        String value = "";
-        try {
-            Cell cell = row.getCell(c);
-            CellValue cellValue = formulaEvaluator.evaluate(cell);
-            switch (cellValue.getCellType()) {
-                case Cell.CELL_TYPE_BOOLEAN:
-                    value = ""+cellValue.getBooleanValue();
-                    break;
-                case Cell.CELL_TYPE_NUMERIC:
-                    double numericValue = cellValue.getNumberValue();
-                    if(HSSFDateUtil.isCellDateFormatted(cell)) {
-                        double date = cellValue.getNumberValue();
-                        SimpleDateFormat formatter =
-                                new SimpleDateFormat("dd/MM/yyyy");
-                        value = formatter.format(HSSFDateUtil.getJavaDate(date));
-                    } else {
-                        value = ""+numericValue;
-                    }
-                    break;
-                case Cell.CELL_TYPE_STRING:
-                    value = ""+cellValue.getStringValue();
-                    break;
-                default:
-            }
-        } catch (NullPointerException e) {
-            /* proper error handling should be here */
+    public String downloadFile(String fileURL, String fileName) {
 
+        StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+        StrictMode.setThreadPolicy(policy);
+
+        Log.d(TAG, "Downloading...");
+        try {
+            int lastDotPosition = fileName.lastIndexOf('/');
+            if( lastDotPosition > 0 ) {
+                String folder = fileName.substring(0, lastDotPosition);
+                File fDir = new File(folder);
+                fDir.mkdirs();
+            }
+
+            //Log.i(TAG, "URL: " + fileURL);
+            //Log.i(TAG, "File: " + fileName);
+            URL u = new URL(fileURL);
+            HttpURLConnection c = (HttpURLConnection) u.openConnection();
+            c.setRequestMethod("GET");
+            c.setReadTimeout(30000);
+            c.connect();
+            double fileSize  = (double) c.getContentLength();
+            int counter = 0;
+            while ( (fileSize == -1) && (counter <=30)){
+                c.disconnect();
+                u = new URL(fileURL);
+                c = (HttpURLConnection) u.openConnection();
+                c.setRequestMethod("GET");
+                c.setReadTimeout(30000);
+                c.connect();
+                fileSize  = (double) c.getContentLength();
+                counter++;
+            }
+
+            File fOutput = new File(fileName);
+            if (fOutput.exists())
+                fOutput.delete();
+
+            BufferedOutputStream f = new BufferedOutputStream(new FileOutputStream(fOutput));
+            InputStream in = c.getInputStream();
+            byte[] buffer = new byte[8192];
+            int len1 = 0;
+            int downloadedData = 0;
+            while ((len1 = in.read(buffer)) > 0) {
+                downloadedData += len1;
+                f.write(buffer, 0, len1);
+            }
+            Log.d(TAG, "Finished");
+            f.close();
+
+            return fileName;
         }
-        return value;
+        catch (Exception e) {
+            e.printStackTrace();
+            Log.e(TAG, e.toString());
+            return null;
+        }
     }
+
 
 
     @Override
     public int getItemCount() {
         return detalleList.size();
     }
+
 
     static class ProductViewHolder extends RecyclerView.ViewHolder {
 
