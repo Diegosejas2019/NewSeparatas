@@ -5,6 +5,7 @@ import android.content.Context;
 import com.example.mislibros.interfaces.APIService;
 import com.example.mislibros.interfaces.MainContract;
 import com.example.mislibros.model.Detalle;
+import com.example.mislibros.model.LogEvento;
 import com.example.mislibros.model.Publicaciones;
 import com.example.mislibros.model.ResponseUSER;
 import com.example.mislibros.model.User;
@@ -252,6 +253,30 @@ public class MainInteractor implements MainContract.Interactor{
 
             @Override
             public void onFailure(Call<ResponseUSER> call, Throwable t) {
+                mListner.onSuccess();
+                mListner.onEnd();
+            }
+        });
+    }
+
+    @Override
+    public void performCreateLog(LogEvento log) {
+        mListner.onStart();
+        mAPIService.logEvento(log.getDescripcionEvento(),log.getOrigenEvento(),log.getUsuarioEntidad()
+        ).enqueue(new Callback<LogEvento>() {
+            @Override
+            public void onResponse(Call<LogEvento> call, Response<LogEvento> response) {
+
+                if(response.isSuccessful()) {
+                    mListner.onEnd();
+                }
+                else  {
+                    mListner.onEnd();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<LogEvento> call, Throwable t) {
                 mListner.onSuccess();
                 mListner.onEnd();
             }

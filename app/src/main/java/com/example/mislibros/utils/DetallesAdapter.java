@@ -21,6 +21,7 @@ import android.content.pm.ResolveInfo;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
@@ -48,6 +49,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.mislibros.MainActivity;
 import com.example.mislibros.R;
 import com.example.mislibros.model.Detalle;
+import com.example.mislibros.model.LogEvento;
+import com.example.mislibros.presenter.MainPresenter;
 import com.github.barteksc.pdfviewer.PDFView;
 
 import org.apache.poi.hssf.usermodel.HSSFDateUtil;
@@ -72,6 +75,7 @@ import android.database.Cursor;
 
 import static android.Manifest.permission.READ_EXTERNAL_STORAGE;
 import static android.Manifest.permission.WRITE_EXTERNAL_STORAGE;
+import static com.example.mislibros.MainActivity.MY_PREFS_NAME;
 
 public class DetallesAdapter extends RecyclerView.Adapter<DetallesAdapter.ProductViewHolder> implements  android.view.View.OnClickListener {
 
@@ -92,19 +96,29 @@ public class DetallesAdapter extends RecyclerView.Adapter<DetallesAdapter.Produc
     public boolean checkshare = false;
     public int visibilidad = 8;
     public Activity act;
-    public DetallesAdapter(Context mCtx, List<Detalle> productList, WebView webView, PDFView pdfView, FragmentActivity activity) {
+    public Integer midUser = 0;
+    public Context context;
+    public MainPresenter mPresenter;
+    public DetallesAdapter(Context mCtx, List<Detalle> productList, WebView webView, PDFView pdfView, FragmentActivity activity, MainPresenter mPresenter) {
         this.mCtx = mCtx;
         this.detalleList = productList;
         this.webView = webView;
         this.pdfView = pdfView;
         this.act = activity;
+        this.mPresenter = mPresenter;
     }
 
     @Override
     public DetallesAdapter.ProductViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(mCtx);
         android.view.View view = inflater.inflate(R.layout.layout_detalle, null);
+        context = inflater.getContext();
+        SharedPreferences prefs = context.getSharedPreferences(MY_PREFS_NAME, MODE_PRIVATE);
+        Integer UserId = prefs.getInt("iduser", 0);
+        if (UserId != 0) {
 
+            midUser = UserId;
+        }
 
         ActivityCompat.requestPermissions(this.act , new String[]{READ_EXTERNAL_STORAGE, WRITE_EXTERNAL_STORAGE}, PackageManager.PERMISSION_GRANTED);
 
@@ -255,7 +269,7 @@ public class DetallesAdapter extends RecyclerView.Adapter<DetallesAdapter.Produc
     }
 
     @Override
-    public void onBindViewHolder(final DetallesAdapter.ProductViewHolder holder, final int position) {
+    public void onBindViewHolder(final ProductViewHolder holder, final int position) {
         detalle = detalleList.get(position);
         String DownloadURL = "";
         String URL = "";
@@ -263,9 +277,10 @@ public class DetallesAdapter extends RecyclerView.Adapter<DetallesAdapter.Produc
         String fileName = "";
         String titulo = "";
         if(detalle.getFileUrl() != null){
+            holder.txtArchivo.setVisibility(View.VISIBLE);
             if (detalle.getFileUrl().contains("new-")){
-                DownloadURL = "https://old.errepar.com/resources/images/appseparatas/" + detalle.getFileUrl().replace("new-", "");
-                URL = "http://docs.google.com/gview?embedded=true&url=https://old.errepar.com/resources/images/appseparatas/" + detalle.getFileUrl().replace("new-", "");
+                DownloadURL = "https://portalerrepar.errepar.com/resources/images/appseparatas/" + detalle.getFileUrl().replace("new-", "");
+                URL = "http://docs.google.com/gview?embedded=true&url=https://portalerrepar.errepar.com/resources/images/appseparatas/" + detalle.getFileUrl().replace("new-", "");
                 if (detalle.getFileUrl().contains(".xls")){
                     fileName = (detalle.getId() + ".xls").replace(" ", "_");
                 }
@@ -274,8 +289,8 @@ public class DetallesAdapter extends RecyclerView.Adapter<DetallesAdapter.Produc
                 }
             }
             else{
-                DownloadURL = "https://old.errepar.com/resources/images/appseparatas/" + detalle.getId() + detalle.getFileUrl();
-                URL = "http://docs.google.com/gview?embedded=true&url=https://old.errepar.com/resources/images/appseparatas/" + detalle.getId() + detalle.getFileUrl();
+                DownloadURL = "https://portalerrepar.errepar.com/resources/images/appseparatas/" + detalle.getId() + detalle.getFileUrl();
+                URL = "http://docs.google.com/gview?embedded=true&url=https://portalerrepar.errepar.com/resources/images/appseparatas/" + detalle.getId() + detalle.getFileUrl();
                 if(detalle.getFileUrl().contains("xls")){
                     fileName = (detalle.getId() + ".xls").replace(" ", "_");
                 }
@@ -301,137 +316,221 @@ public class DetallesAdapter extends RecyclerView.Adapter<DetallesAdapter.Produc
         } else {
             holder.txtFecha.setText("Sin fecha");
         }
-        SharedPreferences preferences = mCtx.getSharedPreferences("Configs", Context.MODE_PRIVATE);
+        SharedPreferences preferences = mCtx.getSharedPreferences("Configs", MODE_PRIVATE);
         downloadPermited = preferences.getBoolean("downloadPermited", false);
-        if (detalle.getFileTitle() == null) {
+        if (detalle.getFileUrl() == null && detalle.getPublicacionUrl() == null) {
             holder.txtArchivo.setVisibility(View.GONE);
             holder.pdfIco.setVisibility(View.GONE);
-        } else if (detalle.getFileUrl() != null || detalle.getPublicacionTitle() != null) {
-            holder.txtArchivo.setText(detalle.getFileTitle());
-            if (detalle.getPublicacionTitle() != null){
-                holder.txtArchivo.setText(detalle.getPublicacionTitle());
-                holder.pdfIco.setVisibility(View.GONE);
-            }
-            String finalURL = URL;
-            String finalDownloadURL = DownloadURL;
-            String finalFileName = fileName;
-            String finalTitulo = titulo;
-            holder.txtArchivo.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(android.view.View v) {
-                    if (isConnected()) {
-                        if (file.getName().contains("xls") || file.getName().contains("doc"))
-                        {
-                            mHandler = new Handler();
-                            Toast toast = Toast.makeText(mCtx, "Enviando correo...", Toast.LENGTH_LONG);
-                            toast.setGravity(Gravity.CENTER, 0, 0);
-                            toast.show();
-                            new Thread(new Runnable() {
-
-                                public void run() {
-
-                                    try {
-
-                                        SharedPreferences prefs = mCtx.getSharedPreferences(MainActivity.MY_PREFS_NAME, MODE_PRIVATE);
-                                        String email = prefs.getString("email", "");
-                                        GMailSender sender = new GMailSender("appmislibros@errepar.com",
-                                                "#gh6b0pU541#hazP");
-                                        /*sender.addAttachment(file.getPath(), finalTitulo);*/
-                                        sender.sendMail("App Libros Errepar - " + finalTitulo,
-                                                "Hola!\n" +
-                                                        "\n" +
-                                                        "\n" +
-                                                        "Descarga el archivo " + finalTitulo +" haciendo clic a continuación. \n" +
-                                                        "\n" +
-                                                        "\n" +
-                                                        "<a href=" + finalDownloadURL.replace(" ","%20") +" target=\"_blank\"> Descargar </a> \n ",
-                                                "appmislibros@errepar.com|||||||||||||||||||||||||||",
-                                                email);
-                                        // Toast.makeText(getApplicationContext(),"envio",Toast.LENGTH_LONG).show();
-                                    } catch (Exception e) {
-                                        Toast.makeText(mCtx,"Hubo un problema al enviar el correo.",Toast.LENGTH_LONG).show();
-                                    }
-                                    mHandler.post(new Runnable() {
-                                        @Override
-                                        public void run () {
-
-                                            //Toast.makeText(mCtx,"Recibiras por email el archivo seleccionado.",Toast.LENGTH_LONG).show();
-                                            Toast toast = Toast.makeText(mCtx, "Recibiras por email el archivo seleccionado.", Toast.LENGTH_LONG);
-                                            toast.setGravity(Gravity.CENTER, 0, 0);
-                                            toast.show();
-
-                                        }
-                                    });
-
-
-                                }
-                            }).start();
-                        }
-                        else{
-                            if (detalle.getPublicacionTitle() != null){
-
-                                Intent browserIntent = new Intent(Intent.ACTION_VIEW,
-                                        Uri.parse(detalle.getPublicacionUrl()));
-                                mCtx.startActivity(browserIntent);
-                            }
-                            else{
-                                final WebSettings webSettings = webView.getSettings();
-                                webSettings.setJavaScriptEnabled(true);
-                                webSettings.setDomStorageEnabled(true);
-                                webView.setWebViewClient(new WebViewClient());
-                                webView.loadUrl(finalURL);
-                                webView.setVisibility(View.VISIBLE);
-                                if (downloadPermited && !file.exists()) {
-                                    dm = (DownloadManager) mCtx.getSystemService(Context.DOWNLOAD_SERVICE);
-                                    Uri uri = Uri.parse(finalDownloadURL);
-                                    DownloadManager.Request request = new DownloadManager.Request(uri);
-                                    request.setTitle(finalFileName);
-                                    request.setDescription("Descargando libro - " + finalTitulo);
-                                    request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED);
-                                    request.setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS, finalFileName);
-                                    dm.enqueue(request);
-                                }
-                            }
-                        }
-                    } else {
-                        if (file.exists()) {
-                            if (!file.getName().contains("xls"))
-                            {
-                                pdfView.fromFile(file).load();
-                                pdfView.setVisibility(View.VISIBLE);
-                            }
-                        } else {
-                            Toast.makeText(mCtx,"Archivo no descargado previamente.",Toast.LENGTH_LONG).show();
-                        }
+        }
+        else{
+            if (detalle.getFileUrl() != null || detalle.getPublicacionTitle() != null) {
+                holder.txtArchivo.setText(detalle.getFileTitle());
+                if (detalle.getPublicacionTitle() != null){
+                    holder.txtArchivo.setText(detalle.getPublicacionTitle());
+                    holder.txtArchivo.setVisibility(View.VISIBLE);
+                    holder.pdfIco.setVisibility(View.GONE);
+                }
+                String finalURL = URL;
+                String finalDownloadURL = DownloadURL;
+                String finalFileName = fileName;
+                String finalTitulo = titulo;
+                if (detalle.getPublicacionUrl() != null){
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                        holder.txtArchivo.setTooltipText(detalle.getPublicacionUrl());
                     }
                 }
-            });
+                else{
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                        holder.txtArchivo.setTooltipText(null);
+                    }
+                    holder.pdfIco.setVisibility(View.VISIBLE);
+                }
+                holder.txtArchivo.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        if (isConnected()) {
+                            if (file.getName().contains("xls") || file.getName().contains("doc"))
+                            {
+                                mHandler = new Handler();
+                                Toast toast = Toast.makeText(mCtx, "Enviando correo...", Toast.LENGTH_LONG);
+                                toast.setGravity(Gravity.CENTER, 0, 0);
+                                toast.show();
+                                new Thread(new Runnable() {
+
+                                    public void run() {
+
+                                        try {
+
+                                            SharedPreferences prefs = mCtx.getSharedPreferences(MainActivity.MY_PREFS_NAME, MODE_PRIVATE);
+                                            String email = prefs.getString("email", "");
+                                            GMailSender sender = new GMailSender("appmislibros@errepar.com",
+                                                    "#gh6b0pU541#hazP");
+                                            /*sender.addAttachment(file.getPath(), finalTitulo);*/
+                                            sender.sendMail("App Libros Errepar - " + finalTitulo,
+                                                    "Hola!\n" +
+                                                            "\n" +
+                                                            "\n" +
+                                                            "Descarga el archivo " + finalTitulo +" haciendo clic a continuación. \n" +
+                                                            "\n" +
+                                                            "\n" +
+                                                            "<a href=" + finalDownloadURL.replace(" ","%20") +" target=\"_blank\"> Descargar </a> \n ",
+                                                    "appmislibros@errepar.com|||||||||||||||||||||||||||",
+                                                    email);
+                                            // Toast.makeText(getApplicationContext(),"envio",Toast.LENGTH_LONG).show();
+                                        } catch (Exception e) {
+                                            Toast.makeText(mCtx,"Hubo un problema al enviar el correo.",Toast.LENGTH_LONG).show();
+                                        }
+                                        mHandler.post(new Runnable() {
+                                            @Override
+                                            public void run () {
+
+                                                //Toast.makeText(mCtx,"Recibiras por email el archivo seleccionado.",Toast.LENGTH_LONG).show();
+                                                Toast toast = Toast.makeText(mCtx, "Recibiras por email el archivo seleccionado.", Toast.LENGTH_LONG);
+                                                toast.setGravity(Gravity.CENTER, 0, 0);
+                                                toast.show();
+                                                LogEvento event = new LogEvento();
+                                                event.setOrigenEvento("Android");
+                                                event.setDescripcionEvento("Envio Excel :" + finalTitulo);
+                                                event.setUsuarioEntidad(midUser.toString());
+                                                mPresenter.createLog(event);
+                                            }
+                                        });
+
+
+                                    }
+                                }).start();
+                            }
+                            else{
+                                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                                    if (v.getTooltipText() != null){
+                                        ;
+
+
+                                        Intent browserIntent = null;
+                                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                                            browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(v.getTooltipText().toString()));
+                                        }
+                                        LogEvento event = new LogEvento();
+                                        event.setOrigenEvento("Android");
+                                        event.setDescripcionEvento("Apertura Errepar.com :" + finalTitulo);
+                                        event.setUsuarioEntidad(midUser.toString());
+                                        mPresenter.createLog(event);
+                                        mCtx.startActivity(browserIntent);
+                                    }
+                                    else{
+
+                                        LogEvento event = new LogEvento();
+                                        event.setOrigenEvento("Android");
+                                        event.setDescripcionEvento("Apertura documento :" + finalTitulo);
+                                        event.setUsuarioEntidad(midUser.toString());
+                                        mPresenter.createLog(event);
+                                        final WebSettings webSettings = webView.getSettings();
+                                        webSettings.setJavaScriptEnabled(true);
+                                        webSettings.setDomStorageEnabled(true);
+                                        webView.setWebViewClient(new WebViewClient());
+                                        webView.loadUrl(finalURL);
+                                        webView.setVisibility(View.VISIBLE);
+                                        if (downloadPermited && !file.exists()) {
+                                            dm = (DownloadManager) mCtx.getSystemService(Context.DOWNLOAD_SERVICE);
+                                            Uri uri = Uri.parse(finalDownloadURL);
+                                            DownloadManager.Request request = new DownloadManager.Request(uri);
+                                            request.setTitle(finalFileName);
+                                            request.setDescription("Descargando libro - " + finalTitulo);
+                                            request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED);
+                                            request.setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS, finalFileName);
+                                            dm.enqueue(request);
+                                        }
+                                        /*else{
+                                            if (file.exists())
+                                            {
+                                                pdfView.fromFile(file).load();
+                                                pdfView.setVisibility(View.VISIBLE);
+
+                                            }
+                                            else{
+                                                Toast toast = Toast.makeText(mCtx, "Debe permitir la descarga de contenido.", Toast.LENGTH_LONG);
+                                                toast.setGravity(Gravity.CENTER, 0, 0);
+                                                toast.show();
+                                            }
+                                        }*/
+                                    }
+                                }
+                            }
+                        } else {
+                            if (file.exists()) {
+                                if (!file.getName().contains("xls"))
+                                {
+                                    LogEvento event = new LogEvento();
+                                    event.setOrigenEvento("Android");
+                                    event.setDescripcionEvento("Preview PDF :" + finalTitulo);
+                                    event.setUsuarioEntidad(midUser.toString());
+                                    mPresenter.createLog(event);
+                                    pdfView.fromFile(file).load();
+                                    pdfView.setVisibility(View.VISIBLE);
+                                }
+                            } else {
+                                Toast.makeText(mCtx,"Archivo no descargado previamente.",Toast.LENGTH_LONG).show();
+                            }
+                        }
+                    }
+                });
+            }
         }
         if (detalle.getVideoTitle() == null || detalle.getVideoTitle().equals("")) {
             holder.txtLinkVimeo.setVisibility(View.GONE);
             holder.vidIco.setVisibility(View.GONE);
-        } else  if (detalle.getVideoUrl() != null){
-            holder.txtLinkVimeo.setText(detalle.getVideoTitle());
-            holder.txtLinkVimeo.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(android.view.View v) {
-                    Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(detalle.getVideoUrl()));
-                    mCtx.startActivity(browserIntent);
+        } else  {
+            if (detalle.getVideoUrl() != null){
+                holder.txtLinkVimeo.setText(detalle.getVideoTitle());
+                holder.txtLinkVimeo.setVisibility(View.VISIBLE);
+                holder.vidIco.setVisibility(View.VISIBLE);
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                    holder.txtLinkVimeo.setTooltipText(detalle.getVideoUrl());
                 }
-            });
+                holder.txtLinkVimeo.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent browserIntent = null;
+                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                            browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(v.getTooltipText().toString()));
+                        }
+                        LogEvento event = new LogEvento();
+                        event.setOrigenEvento("Android");
+                        event.setDescripcionEvento("Apertura video :" + holder.txtLinkVimeo.getText());
+                        event.setUsuarioEntidad(midUser.toString());
+                        mPresenter.createLog(event);
+                        mCtx.startActivity(browserIntent);
+                    }
+                });
+            }
         }
         if (detalle.getAudioTitle() == null) {
             holder.txtLinkAudio.setVisibility(View.GONE);
             holder.audIco.setVisibility(View.GONE);
-        } else  if (detalle.getAudioUrl() != null) {
-            holder.txtLinkAudio.setText(detalle.getAudioTitle());
-            holder.txtLinkAudio.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(android.view.View v) {
-                    Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(detalle.getAudioUrl()));
-                    mCtx.startActivity(browserIntent);
+        } else{
+            if (detalle.getAudioUrl() != null) {
+                holder.txtLinkAudio.setText(detalle.getAudioTitle());
+                holder.txtLinkAudio.setVisibility(View.VISIBLE);
+                holder.audIco.setVisibility(View.VISIBLE);
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                    holder.txtLinkAudio.setTooltipText(detalle.getAudioUrl());
                 }
-            });
+                holder.txtLinkAudio.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent browserIntent = null;
+                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                            browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(v.getTooltipText().toString()));
+                        }
+                        LogEvento event = new LogEvento();
+                        event.setOrigenEvento("Android");
+                        event.setDescripcionEvento("Apertura Audio :" + holder.txtLinkAudio.getText());
+                        event.setUsuarioEntidad(midUser.toString());
+                        mPresenter.createLog(event);
+                        mCtx.startActivity(browserIntent);
+                    }
+                });
+            }
         }
         if (visibilidad == 0)
         {
@@ -477,6 +576,12 @@ public class DetallesAdapter extends RecyclerView.Adapter<DetallesAdapter.Produc
                     sharableIntent.putExtra(Intent.EXTRA_STREAM, uri);
                     sharableIntent.putExtra(Intent.EXTRA_SUBJECT, finalTitulo);
                     sharableIntent.putExtra(Intent.EXTRA_TITLE, finalTitulo);
+
+                    LogEvento event = new LogEvento();
+                    event.setOrigenEvento("Android");
+                    event.setDescripcionEvento("Compartir archivo :" + finalTitulo);
+                    event.setUsuarioEntidad(midUser.toString());
+                    mPresenter.createLog(event);
 
                     mCtx.startActivity(sharableIntent);
                     holder.share.setChecked(false);

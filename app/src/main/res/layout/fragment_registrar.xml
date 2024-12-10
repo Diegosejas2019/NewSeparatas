@@ -84,7 +84,7 @@ tools:context="com.example.mislibros.views.RegistrarFragment">
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/txtNombre" />
 
-    <EditText
+    <!--<EditText
         android:id="@+id/txtTelefono"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -94,12 +94,13 @@ tools:context="com.example.mislibros.views.RegistrarFragment">
         android:layout_marginEnd="40dp"
         android:layout_marginRight="40dp"
         android:ems="10"
+        android:visibility="invisible"
         android:hint="Telefono"
         android:inputType="number"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txtEmail" />
+        app:layout_constraintTop_toBottomOf="@+id/txtEmail" />-->
 
     <Button
         android:id="@+id/btnContinuar"
@@ -116,7 +117,7 @@ tools:context="com.example.mislibros.views.RegistrarFragment">
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txtTelefono" />
+        app:layout_constraintTop_toBottomOf="@+id/txtEmail" />
 
     <TextView
         android:id="@+id/errorMsg"
@@ -128,7 +129,7 @@ tools:context="com.example.mislibros.views.RegistrarFragment">
         android:textColor="#FF0000"
         android:visibility="invisible"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txtTelefono" />
+        app:layout_constraintTop_toBottomOf="@+id/btnContinuar" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
 

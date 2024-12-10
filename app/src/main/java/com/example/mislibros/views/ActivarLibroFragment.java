@@ -26,6 +26,7 @@ import androidx.fragment.app.Fragment;
 import com.example.mislibros.R;
 import com.example.mislibros.interfaces.MainContract;
 import com.example.mislibros.model.Detalle;
+import com.example.mislibros.model.LogEvento;
 import com.example.mislibros.model.Publicaciones;
 import com.example.mislibros.model.ResponseUSER;
 import com.example.mislibros.model.User;
@@ -63,7 +64,7 @@ public class ActivarLibroFragment extends Fragment implements  MainContract.View
     @BindView(R.id.bookActivateError)
     TextView mBookError;
     public MainPresenter mPresenter;
-    public Integer midUser;
+    public Integer midUser = 0;
     public Context context;
     public String mToken;
 
@@ -189,6 +190,7 @@ public class ActivarLibroFragment extends Fragment implements  MainContract.View
                 }
             }
         });
+
         return view;
     }
 

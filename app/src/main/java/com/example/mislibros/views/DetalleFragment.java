@@ -204,7 +204,7 @@ public class DetalleFragment extends Fragment implements  MainContract.View{
                     .into(mImage);
         }
 
-        DetallesAdapter adapter = new DetallesAdapter(context, detalles, webView, pdfView,getActivity());
+        DetallesAdapter adapter = new DetallesAdapter(context, detalles, webView, pdfView,getActivity(),mPresenter);
         recyclerView.setAdapter(adapter);
         mImageShare.setOnClickListener(new View.OnClickListener() {
             @Override

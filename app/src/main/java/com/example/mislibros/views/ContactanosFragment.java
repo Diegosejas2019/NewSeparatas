@@ -1,8 +1,12 @@
 package com.example.mislibros.views;
 
+import static android.content.Context.MODE_PRIVATE;
+import static com.example.mislibros.MainActivity.MY_PREFS_NAME;
+
 import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 
@@ -14,6 +18,14 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import com.example.mislibros.R;
+import com.example.mislibros.interfaces.MainContract;
+import com.example.mislibros.model.Detalle;
+import com.example.mislibros.model.LogEvento;
+import com.example.mislibros.model.Publicaciones;
+import com.example.mislibros.model.ResponseUSER;
+import com.example.mislibros.presenter.MainPresenter;
+
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -23,7 +35,7 @@ import butterknife.ButterKnife;
  * Use the {@link ContactanosFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class ContactanosFragment extends Fragment {
+public class ContactanosFragment extends Fragment implements  MainContract.View{
 
     @BindView(R.id.imageView3)
     ImageView fbImage;
@@ -36,7 +48,8 @@ public class ContactanosFragment extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
-
+    public Integer midUser = 0;
+    public MainPresenter mPresenter;
     public ContactanosFragment() {
         // Required empty public constructor
     }
@@ -62,6 +75,7 @@ public class ContactanosFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        mPresenter = new MainPresenter(this);
         if (getArguments() != null) {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
@@ -74,8 +88,12 @@ public class ContactanosFragment extends Fragment {
 
         View view = inflater.inflate(R.layout.fragment_contactanos, container, false);
         ButterKnife.bind(this,view);
-
-
+        Context context = inflater.getContext();
+        SharedPreferences prefs = context.getSharedPreferences(MY_PREFS_NAME, MODE_PRIVATE);
+        Integer UserId = prefs.getInt("iduser", 0);
+        if (UserId != 0) {
+            midUser = UserId;
+        }
         fbImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -112,6 +130,7 @@ public class ContactanosFragment extends Fragment {
 
             }
         });
+
 
         return view;
     }
@@ -174,5 +193,45 @@ public class ContactanosFragment extends Fragment {
             context.startActivity(new Intent(Intent.ACTION_VIEW,
                     Uri.parse("https://www.linkedin.com/company/errepar")));
         }
+    }
+
+    @Override
+    public void onCreatePlayerSuccessful() {
+
+    }
+
+    @Override
+    public void onCreatePlayerFailure(String mensaje) {
+
+    }
+
+    @Override
+    public void onProcessStart() {
+
+    }
+
+    @Override
+    public void onProcessEnd() {
+
+    }
+
+    @Override
+    public void onUserRead(ResponseUSER user) {
+
+    }
+
+    @Override
+    public void onUserCreate(ResponseUSER user) {
+
+    }
+
+    @Override
+    public void onGetBook(List<Publicaciones> publicaciones) {
+
+    }
+
+    @Override
+    public void onGetBookDetail(List<Detalle> detalles) {
+
     }
 }

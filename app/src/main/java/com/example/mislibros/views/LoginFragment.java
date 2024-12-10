@@ -1,15 +1,23 @@
 package com.example.mislibros.views;
 
+import android.Manifest;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Build;
 import android.os.Bundle;
 
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.RequiresApi;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
 import android.text.Editable;
@@ -225,6 +233,68 @@ public class LoginFragment extends Fragment implements MainContract.View {
         return view;
     }
 
+
+    private final ActivityResultLauncher<String> requestPermissionLauncher =
+            registerForActivityResult(new ActivityResultContracts.RequestPermission(), isGranted -> {
+                if (isGranted) {
+                    // Permission is granted. Continue the action or workflow in your
+                    // app.
+
+                } else {
+                    showAlertDialog();
+                }
+
+            });
+    public void makePermissionRequest() {
+        requestPermissionLauncher.launch(Manifest.permission.POST_NOTIFICATIONS);
+    }
+    public void checkPermissionRequest() {
+        if (ContextCompat.checkSelfPermission(getActivity(),
+                android.Manifest.permission.POST_NOTIFICATIONS)
+                == PackageManager.PERMISSION_GRANTED) {
+            // continue running app
+
+        } else {
+            showAlertDialog();
+
+            //makePermissionRequest();
+        }
+    }
+    public void showAlertDialog() {
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(getActivity());
+        alertDialogBuilder.setMessage("Para poder recibir las notificaciones de la aplicación debe otorgar el permiso en el menu de ajustes.");
+                alertDialogBuilder.setPositiveButton("Aceptar",
+                        new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface arg0, int arg1) {
+                                //makePermissionRequest();
+                                ActivityCompat.requestPermissions(getActivity(), new String[] {Manifest.permission.POST_NOTIFICATIONS}, 1);
+                            }
+                        });
+
+        AlertDialog alertDialog = alertDialogBuilder.create();
+        alertDialog.show();
+
+    }
+  /*  private void checkPermission(){
+        if (ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.POST_NOTIFICATIONS)
+                != PackageManager.PERMISSION_GRANTED) {
+            //permission not granted
+
+            if (ActivityCompat.shouldShowRequestPermissionRationale(getActivity(),
+                    Manifest.permission.ACCESS_COARSE_LOCATION)) {
+                ActivityCompat.requestPermissions(getActivity(), new String[] {Manifest.permission.POST_NOTIFICATIONS}, 1);
+            } else {
+                //request the permission
+                ActivityCompat.requestPermissions(getActivity(), new String[] {Manifest.permission.POST_NOTIFICATIONS}, 1);
+            }
+        } else {
+            ActivityCompat.requestPermissions(this,
+                    arrayOf(Manifest.permission.ACCESS_COARSE_LOCATION),
+                    ACCESS_COARSE_LOCATION_CODE)
+        }
+    }*/
+
     public boolean isConnected() {
         ConnectivityManager connectivityManager = (ConnectivityManager) context.getSystemService(CONNECTIVITY_SERVICE);
         NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
@@ -273,6 +343,15 @@ public class LoginFragment extends Fragment implements MainContract.View {
 
         mPresenter.getBooks(userAux);
 
+       /* if (Build.VERSION.SDK_INT >= 32) {
+            if (ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.POST_NOTIFICATIONS) != PackageManager.PERMISSION_GRANTED) {
+                ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.POST_NOTIFICATIONS},101);
+            }
+            if (ContextCompat.checkSelfPermission(this, POST_NOTIFICATIONS) == PackageManager.PERMISSION_DENIED) {
+                ActivityCompat.requestPermissions(this, new String[]{POST_NOTIFICATIONS}, 1);
+            }
+        }*/
+
         startActivity(new Intent(getActivity(), MainActivity.class));
         getActivity().finish();
     }
@@ -284,6 +363,7 @@ public class LoginFragment extends Fragment implements MainContract.View {
     @Override
     public void onGetBook(List<Publicaciones> publicaciones) {
         mCreateAndSaveFile("BooksJson", publicaciones);
+
         publicaciones.forEach(publicacion -> {
             FirebaseMessaging.getInstance().subscribeToTopic(String.valueOf(publicacion.getCode())).addOnSuccessListener(new OnSuccessListener<Void>() {
                         @Override

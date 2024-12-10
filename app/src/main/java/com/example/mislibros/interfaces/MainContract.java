@@ -3,6 +3,7 @@ package com.example.mislibros.interfaces;
 import android.content.Context;
 
 import com.example.mislibros.model.Detalle;
+import com.example.mislibros.model.LogEvento;
 import com.example.mislibros.model.Publicaciones;
 import com.example.mislibros.model.ResponseUSER;
 import com.example.mislibros.model.User;
@@ -28,6 +29,7 @@ public interface MainContract {
         void codeBook(User user);
         void getBooks(User user);
         void getBooksDetails(User user, Context context);
+        void createLog(LogEvento log);
     }
 
     interface Interactor{
@@ -37,6 +39,7 @@ public interface MainContract {
         void performCreatePlayer(User user);
         void performReadPlayers(User user);
         void performRecoveryPlayers(User user);
+        void performCreateLog(LogEvento log);
     }
 
     interface onOperationListener{

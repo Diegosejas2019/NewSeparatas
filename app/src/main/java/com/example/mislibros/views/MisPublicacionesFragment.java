@@ -15,6 +15,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import androidx.fragment.app.Fragment;
@@ -58,6 +59,8 @@ public class MisPublicacionesFragment extends Fragment implements MainContract.V
     @BindView(R.id.pullToRefresh) SwipeRefreshLayout pullToRefresh;
     @BindView(R.id.homeTitleText) TextView homeTitleText;
     RecyclerView recyclerView;
+    @BindView(R.id.progressBar)
+    ProgressBar mProgressBar;
     public MainPresenter mPresenter;
     public Context context;
     Boolean offlineList = false;
@@ -234,10 +237,10 @@ public class MisPublicacionesFragment extends Fragment implements MainContract.V
     }
 
     @Override
-    public void onProcessStart() { }
+    public void onProcessStart() {mProgressBar.setVisibility(View.VISIBLE); }
 
     @Override
-    public void onProcessEnd() { }
+    public void onProcessEnd() { mProgressBar.setVisibility(View.INVISIBLE);}
 
     @Override
     public void onUserRead(ResponseUSER user) { }

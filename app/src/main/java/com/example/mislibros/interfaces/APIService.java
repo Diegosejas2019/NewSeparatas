@@ -1,6 +1,7 @@
 package com.example.mislibros.interfaces;
 
 import com.example.mislibros.model.Detalle;
+import com.example.mislibros.model.LogEvento;
 import com.example.mislibros.model.Publicaciones;
 import com.example.mislibros.model.ResponseUSER;
 
@@ -20,7 +21,7 @@ public interface APIService {
     @POST("/api/User/Login")
     @FormUrlEncoded
     Call<ResponseUSER> authenticateUser(@Field("email") String email,
-                                        @Field("password") String password
+                                                                @Field("password") String password
     );
 
     @POST("/api/User/ForgotPassword")
@@ -28,14 +29,21 @@ public interface APIService {
     Call<ResponseUSER> recoveryUser(@Field("email") String email
     );
 
+    @POST("/api/Log/LogEvent")
+    @FormUrlEncoded
+    Call<LogEvento> logEvento(@Field("DescripcionEvento") String nombre,
+                              @Field("OrigenEvento") String apellido,
+                              @Field("UsuarioEntidad") String email
+    );
+
     @POST("/api/User/Register")
     @FormUrlEncoded
     Call<ResponseUSER> registeruser(@Field("nombre") String nombre,
-                            @Field("apellido") String apellido,
-                            @Field("email") String email,
-                            @Field("telefono") String telefono,
-                            @Field("password") String password,
-                            @Field("repassword") String repassword
+                                    @Field("apellido") String apellido,
+                                    @Field("email") String email,
+                                    @Field("telefono") String telefono,
+                                    @Field("password") String password,
+                                    @Field("repassword") String repassword
     );
 
     @Headers({ "Content-Type: application/json;charset=UTF-8"})

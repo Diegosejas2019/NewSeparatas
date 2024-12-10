@@ -32,7 +32,7 @@ public class RegistrarFragment extends Fragment {
     @BindView(R.id.txtEmail)
     EditText mEmail;
     @BindView(R.id.txtNombre) EditText mNombre;
-    @BindView(R.id.txtTelefono) EditText mTelefono;
+    /*@BindView(R.id.txtTelefono) EditText mTelefono;*/
     @BindView(R.id.errorMsg)
     TextView mErrorMsg;
 
@@ -79,12 +79,12 @@ public class RegistrarFragment extends Fragment {
                 View focusView = null;
                 boolean cancel = false;
 
-                if (TextUtils.isEmpty(mTelefono.getText())){
+                /*if (TextUtils.isEmpty(mTelefono.getText())){
                     mErrorMsg.setVisibility(View.VISIBLE);
                     mErrorMsg.setText("Debe ingresar un Email, Contraseña y Teléfono");
                     focusView = mTelefono;
                     cancel = true;
-                }
+                }*/
 
                 if (TextUtils.isEmpty(mNombre.getText())){
                     mErrorMsg.setVisibility(View.VISIBLE);
@@ -114,13 +114,13 @@ public class RegistrarFragment extends Fragment {
 
                     String email = mEmail.getText().toString().trim();
                     String nombre = mNombre.getText().toString().trim();
-                    String telefono = mTelefono.getText().toString().trim();
+                    /*String telefono = mTelefono.getText().toString().trim();*/
 
                     RegistrarP3Fragment nextFrag= new RegistrarP3Fragment();
                     Bundle bundle=new Bundle();
                     bundle.putString("email", email);
                     bundle.putString("nombre", nombre);
-                    bundle.putString("telefono", telefono);
+                    bundle.putString("telefono", "99999");
                     nextFrag.setArguments(bundle);
 
                     getActivity().getSupportFragmentManager().beginTransaction()
@@ -153,7 +153,7 @@ public class RegistrarFragment extends Fragment {
             public void afterTextChanged(Editable s) {}
         });
 
-        mTelefono.addTextChangedListener(new TextWatcher() {
+        /*mTelefono.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
             @Override
@@ -162,7 +162,7 @@ public class RegistrarFragment extends Fragment {
             }
             @Override
             public void afterTextChanged(Editable s) {}
-        });
+        });*/
 
         return view;
     }

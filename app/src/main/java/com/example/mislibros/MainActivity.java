@@ -1,7 +1,9 @@
 package com.example.mislibros;
 
 import android.Manifest;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentSender;
 import android.content.SharedPreferences;
@@ -20,6 +22,8 @@ import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
@@ -44,10 +48,11 @@ import com.google.android.play.core.install.InstallStateUpdatedListener;
 import com.google.android.play.core.install.model.AppUpdateType;
 import com.google.android.play.core.install.model.InstallStatus;
 import com.google.android.play.core.install.model.UpdateAvailability;
+import com.google.firebase.FirebaseApp;
 import com.google.firebase.messaging.FirebaseMessaging;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
-
+import com.google.android.gms.tasks.Task;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
@@ -68,6 +73,7 @@ public class MainActivity extends AppCompatActivity {
     private static final int RC_APP_UPDATE = 11;
     private InstallStateUpdatedListener mInstallStateUpdatedListener;
     public static final String MY_PREFS_NAME = "MyPrefsFile";
+    final int PERMISSION_REQUEST_CODE =112;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -80,8 +86,23 @@ public class MainActivity extends AppCompatActivity {
         toolbar.setOverflowIcon(null);
         setSupportActionBar(toolbar);
         Fragment nextFrag= new Fragment();
-
+        FirebaseApp.initializeApp(this);
         checkUpdate();
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            if (ActivityCompat.checkSelfPermission(this,Manifest.permission.POST_NOTIFICATIONS) != PackageManager.PERMISSION_GRANTED) {
+
+                if (ActivityCompat.shouldShowRequestPermissionRationale(this,
+                        Manifest.permission.POST_NOTIFICATIONS)) {
+                    ActivityCompat.requestPermissions(this, new String[] {Manifest.permission.POST_NOTIFICATIONS}, 1);
+                } else {
+                    //request the permission
+                    ActivityCompat.requestPermissions(this, new String[] {Manifest.permission.POST_NOTIFICATIONS}, 1);
+                }
+
+            }
+
+        }
 
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
 
@@ -219,6 +240,21 @@ public class MainActivity extends AppCompatActivity {
             }
 
         }
+
+
+    }
+
+
+    public void getNotificationPermission(){
+        try {
+            if (Build.VERSION.SDK_INT > 32) {
+                ActivityCompat.requestPermissions(this,
+                        new String[]{Manifest.permission.POST_NOTIFICATIONS},
+                        PERMISSION_REQUEST_CODE);
+            }
+        }catch (Exception e){
+
+        }
     }
 
     private boolean hasStoragePermission(int requestCode) {
@@ -237,11 +273,31 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        if (grantResults.length > 0
-                && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-
-
+        if (requestCode == 1)
+            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED){
+                // if user denies permission then Dialog would be pop up. That's why I commented out both toast and finish() method below.
+            }
+        if (ActivityCompat.shouldShowRequestPermissionRationale(this,
+                Manifest.permission.POST_NOTIFICATIONS)) {
+            showAlertDialog();
         }
+    }
+
+    public void showAlertDialog() {
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
+        alertDialogBuilder.setMessage("Para poder recibir las notificaciones de la aplicación debe otorgar el permiso en el menu de ajustes.");
+        alertDialogBuilder.setPositiveButton("Aceptar",
+                new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface arg0, int arg1) {
+                        //makePermissionRequest();
+                        ActivityCompat.requestPermissions(MainActivity.this, new String[] {Manifest.permission.POST_NOTIFICATIONS}, 1);
+                    }
+                });
+
+        AlertDialog alertDialog = alertDialogBuilder.create();
+        alertDialog.show();
+
     }
     public void mReadJsonData(String params) {
         try {

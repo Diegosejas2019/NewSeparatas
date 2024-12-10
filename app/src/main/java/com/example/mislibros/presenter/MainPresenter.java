@@ -5,6 +5,7 @@ import android.content.Context;
 import com.example.mislibros.interactor.MainInteractor;
 import com.example.mislibros.interfaces.MainContract;
 import com.example.mislibros.model.Detalle;
+import com.example.mislibros.model.LogEvento;
 import com.example.mislibros.model.Publicaciones;
 import com.example.mislibros.model.ResponseUSER;
 import com.example.mislibros.model.User;
@@ -49,6 +50,11 @@ public class MainPresenter implements MainContract.Presenter, MainContract.onOpe
     @Override
     public void getBooksDetails(User user, Context context) {
         mInteractor.performGetCodeDetail(user, context);
+    }
+
+    @Override
+    public void createLog(LogEvento log) {
+        mInteractor.performCreateLog(log);
     }
 
 

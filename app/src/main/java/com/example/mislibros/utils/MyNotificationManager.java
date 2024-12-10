@@ -44,6 +44,9 @@ public class MyNotificationManager extends Application {
         SharedPreferences prefs = PreferenceManager
                 .getDefaultSharedPreferences(mCtx);
         //if (!prefs.getString("suscriptor", "").equals("") && !prefs.getString("clave", "").equals("")) {
+        //if (!prefs.getString("suscriptor", "").equals("") && !prefs.getString("clave", "").equals("")) {
+        //if (!prefs.getString("suscriptor", "").equals("") && !prefs.getString("clave", "").equals("")) {
+        //if (!prefs.getString("suscriptor", "").equals("") && !prefs.getString("clave", "").equals("")) {
 
             Uri soundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
 
@@ -51,24 +54,30 @@ public class MyNotificationManager extends Application {
             resultIntent.putExtra("publicacionid", id);
             resultIntent.putExtra("linkImg", link);
 
-            PendingIntent resultPendingIntent =
-                    PendingIntent.getActivity(
-                            mCtx,
-                            ID_SMALL_NOTIFICATION,
-                            resultIntent,
-                            PendingIntent.FLAG_UPDATE_CURRENT
-                    );
+            PendingIntent resultPendingIntent = null;
+        TaskStackBuilder stackBuilder = TaskStackBuilder.create(mCtx);
+        stackBuilder.addParentStack(MainActivity.class);
+        stackBuilder.addNextIntent(resultIntent);
 
-            TaskStackBuilder stackBuilder = TaskStackBuilder.create(mCtx);
-            stackBuilder.addParentStack(MainActivity.class);
-            stackBuilder.addNextIntent(resultIntent);
-
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.S) {
+            resultPendingIntent = PendingIntent.getActivity
+                    (mCtx, ID_SMALL_NOTIFICATION, resultIntent, PendingIntent.FLAG_MUTABLE);
+            resultPendingIntent = stackBuilder.getPendingIntent(0,PendingIntent.FLAG_MUTABLE);
+        }
+        else
+        {
+            resultPendingIntent = PendingIntent.getActivity
+                    (mCtx, ID_SMALL_NOTIFICATION, resultIntent, PendingIntent.FLAG_ONE_SHOT);
             resultPendingIntent = stackBuilder.getPendingIntent(0,PendingIntent.FLAG_UPDATE_CURRENT);
+        }
+
+
+
 
             NotificationManager mNotificationManager =
                     (NotificationManager) mCtx.getSystemService(Context.NOTIFICATION_SERVICE);
 
-            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
+            if (android.os.Build.VERSION.SDK_INT >= 32) {
                 String CHANNEL_ID = "my_channel_01";
                 CharSequence name = "my_channel";
                 String Description = "This is my channel";
