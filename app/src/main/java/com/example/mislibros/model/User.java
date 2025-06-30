@@ -26,6 +26,8 @@ public class User {
 
     @SerializedName("Email")
     public String Email;
+    @SerializedName("Codigo")
+    public String Codigo;
 
     @SerializedName("Telefono")
     public String Telefono;
@@ -57,6 +59,14 @@ public class User {
 
     public String getEmail() {
         return Email;
+    }
+
+    public String getCodigo() {
+        return Codigo;
+    }
+
+    public void setCodigo(String codigo) {
+        Codigo = codigo;
     }
 
     public String getTelefono() {

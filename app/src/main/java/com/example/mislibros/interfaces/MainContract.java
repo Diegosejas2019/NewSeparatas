@@ -26,6 +26,7 @@ public interface MainContract {
         void createNewPlayer(User user);
         void readPlayers(User user);
         void recoveryPlayers(User user);
+        void resetPassword(User user);
         void codeBook(User user);
         void getBooks(User user);
         void getBooksDetails(User user, Context context);
@@ -39,6 +40,9 @@ public interface MainContract {
         void performCreatePlayer(User user);
         void performReadPlayers(User user);
         void performRecoveryPlayers(User user);
+
+        void performResetPassword(User user);
+
         void performCreateLog(LogEvento log);
     }
 

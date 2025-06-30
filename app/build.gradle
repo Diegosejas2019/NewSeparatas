@@ -11,8 +11,8 @@ android {
         applicationId 'com.errepar.mislibros'
         minSdkVersion 21
         targetSdkVersion 35
-        versionCode 28
-        versionName "1.21"
+        versionCode 32
+        versionName "1.24"
         multiDexEnabled true
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -58,7 +58,7 @@ dependencies {
     implementation 'com.google.android.play:review:2.0.1'
     implementation 'com.google.android.play:app-update:2.1.0'
 
-
+    implementation(platform("org.jetbrains.kotlin:kotlin-bom:1.8.0"))
     // For Kotlin users also add the Kotlin extensions library for Play In-App Update:
     //implementation 'com.google.android.play:app-update-ktx:2.1.0'
     implementation 'androidx.multidex:multidex:2.0.0'

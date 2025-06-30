@@ -260,6 +260,34 @@ public class MainInteractor implements MainContract.Interactor{
     }
 
     @Override
+    public void performResetPassword(User user) {
+        mListner.onStart();
+        mAPIService.resetPassword(user.getEmail(),user.getCodigo(),user.getPassword()
+        ).enqueue(new Callback<String>() {
+            @Override
+            public void onResponse(Call<String> call, Response<String> response) {
+
+                if(response.isSuccessful()) {
+                    mListner.onSuccess();
+                    mListner.onEnd();
+                }
+                else  {
+
+                        mListner.onFailure("Error");
+                        mListner.onEnd();
+
+                }
+            }
+
+            @Override
+            public void onFailure(Call<String> call, Throwable t) {
+                mListner.onSuccess();
+                mListner.onEnd();
+            }
+        });
+    }
+
+    @Override
     public void performCreateLog(LogEvento log) {
         mListner.onStart();
         mAPIService.logEvento(log.getDescripcionEvento(),log.getOrigenEvento(),log.getUsuarioEntidad()

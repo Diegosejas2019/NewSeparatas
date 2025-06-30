@@ -36,7 +36,10 @@ public class MainPresenter implements MainContract.Presenter, MainContract.onOpe
     public void recoveryPlayers(User user) {
         mInteractor.performRecoveryPlayers(user);
     }
-
+    @Override
+    public void resetPassword(User user) {
+        mInteractor.performResetPassword(user);
+    }
     @Override
     public void codeBook(User user) {
         mInteractor.performCodeBook(user);

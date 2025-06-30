@@ -197,8 +197,10 @@ public class DetalleFragment extends Fragment implements  MainContract.View{
         if (detalles.isEmpty()) {
             Log.d("detalle", "vacio");
             emptyDetail.setVisibility(View.VISIBLE);
+            mImageShare.setVisibility(View.GONE);
         } else {
             emptyDetail.setVisibility(View.GONE);
+            mImageShare.setVisibility(View.VISIBLE);
             Picasso.with(getLayoutInflater().getContext())
                     .load(mParam1)
                     .into(mImage);

@@ -1,6 +1,8 @@
 package com.example.mislibros.views;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.graphics.Color;
 import android.os.Bundle;
 
@@ -96,12 +98,8 @@ public class RecuperarPasswordFragment extends Fragment implements MainContract.
         View view = inflater.inflate(R.layout.fragment_recuperar_password, container, false);
         context = inflater.getContext();
         ButterKnife.bind(this,view);
-
-
-        ButterKnife.bind(this,view);
-
-
         mProgressbar.bringToFront();
+
         mContinuar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -150,9 +148,27 @@ public class RecuperarPasswordFragment extends Fragment implements MainContract.
 
     @Override
     public void onCreatePlayerSuccessful() {
-        mRecoverError.setVisibility(View.VISIBLE);
-        mRecoverError.setTextColor(Color .rgb(0,185,0));
-        mRecoverError.setText("Se le ha enviado un Email para cambiar la contraseña");
+        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        builder.setMessage("Se ha enviado un código a tu email para cambiar la contraseña.")
+                .setTitle("Código enviado!");
+        builder.setPositiveButton("Aceptar", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+                Bundle bundle=new Bundle();
+                bundle.putString("email", mEmail.getText().toString());
+
+                ConfirmarContrasenaFragment nextFrag = new ConfirmarContrasenaFragment();
+                nextFrag.setArguments(bundle);
+                getActivity().getSupportFragmentManager()
+
+                        .beginTransaction()
+                        //.setCustomAnimations(R.anim.slide_out)
+                        .replace(R.id.host_fragment, nextFrag, "findThisFragment")
+                        .addToBackStack(null)
+                        .commit();
+            }
+        });
+        AlertDialog dialog = builder.create();
+        dialog.show();
     }
 
     @Override

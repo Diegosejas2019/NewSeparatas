@@ -24,9 +24,13 @@ public interface APIService {
                                                                 @Field("password") String password
     );
 
-    @POST("/api/User/ForgotPassword")
-    @FormUrlEncoded
-    Call<ResponseUSER> recoveryUser(@Field("email") String email
+    @POST("/api/User/ForgetPassword")
+    Call<ResponseUSER> recoveryUser(@Query("email") String email
+    );
+    @POST("/api/User/ResetPassword")
+    Call<String> resetPassword(@Query("email") String email,
+                                    @Query("codigo") String codigo,
+                                    @Query("nuevaContrasena") String nuevaContrasena
     );
 
     @POST("/api/Log/LogEvent")

@@ -79,7 +79,7 @@ tools:context="com.example.mislibros.views.ContactanosFragment">
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_marginLeft="4dp"
-            android:text="Paraná 725 | 1055 CABA"
+            android:text="Viamonte 1484 | 1055 CABA"
             android:textColor="@android:color/black"
             android:textSize="18dp" />
     </LinearLayout>
